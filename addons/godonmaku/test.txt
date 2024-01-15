@@ -1,0 +1,5 @@
+from_origin[scn_name_from_autoload]
+	repeat[0.075]
+		do_fire[velocity, acceleration]
+			radial[4] # spawn at locations based on count, and fire out in those directions
+				spin[clockwise, rate] # rotate after firing; the repeat function above will take care of firing at next position

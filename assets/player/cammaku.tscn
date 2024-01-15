@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://12j1iu2pu3d0"]
+
+[ext_resource type="Script" path="res://addons/godonmaku/Cammaku.gd" id="1_q5cev"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77dit"]
+size = Vector2(320, 180)
+
+[node name="Camera2D" type="Camera2D" groups=["camera"]]
+zoom = Vector2(4, 4)
+script = ExtResource("1_q5cev")
+
+[node name="Area" type="Area2D" parent="." groups=["camera_area"]]
+collision_layer = 128
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area"]
+shape = SubResource("RectangleShape2D_77dit")

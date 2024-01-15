@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhy12l5pctagh"]
+
+[ext_resource type="Script" path="res://addons/godonmaku/graph/BulletNodeEdit.gd" id="1_rrnpm"]
+
+[node name="BulletNodeEdit" type="GraphNode"]
+custom_minimum_size = Vector2(100, 150)
+offset_left = 592.0
+offset_top = 344.0
+offset_right = 692.0
+offset_bottom = 494.0
+mouse_filter = 1
+script = ExtResource("1_rrnpm")

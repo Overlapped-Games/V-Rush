@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1wgyjdscbwsw"]
+
+[ext_resource type="Script" path="res://addons/godonmaku/graph/BulletNodeEdit.gd" id="1_3pckr"]
+
+[node name="MainGraph" type="GraphEdit"]
+offset_right = 1312.0
+offset_bottom = 704.0
+pivot_offset = Vector2(376, 240)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_offset = Vector2(-592, -344)
+minimap_enabled = false
+show_zoom_label = true
+script = ExtResource("1_3pckr")

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0v35oaje1v4m"]
+
+[ext_resource type="Script" path="res://addons/godonmaku/logic/BulletUtil.gd" id="1_u36hp"]
+
+[node name="BulletUtil" type="Node"]
+script = ExtResource("1_u36hp")
+
+[node name="Pool" type="Node2D" parent="."]
