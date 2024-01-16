@@ -5,10 +5,11 @@
 
 [node name="Danmaku" type="Node2D"]
 script = ExtResource("1_ij6c6")
+bullet_type = null
+bullet_shape = null
+shape_properties = null
 
 [node name="Pool" type="Node2D" parent="."]
-
-[node name="Timers" type="Node" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(1, 0.635294, 1, 1)

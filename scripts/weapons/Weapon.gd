@@ -8,5 +8,5 @@ func _start(player : Player) -> void:
 	pass
 
 
-func _attack(origin : Vector2, target_pos : Vector2) -> void:
+func _attack(delta : float, origin : Vector2, target_pos : Vector2) -> void:
 	pass

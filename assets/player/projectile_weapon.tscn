@@ -4,6 +4,8 @@
 
 [node name="Weapon" type="Node2D"]
 script = ExtResource("1_cjbb5")
+max_projectiles = null
+attack_rate = null
 
 [node name="AttackTimer" type="Timer" parent="."]
 

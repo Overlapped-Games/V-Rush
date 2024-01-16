@@ -1,63 +1,121 @@
-class_name BulletUtil extends Node
+extends Node2D
 
 
 enum BulletType {
 	NON_DIRECTIONAL,
+	NON_DIRECTIONAL_MEDIUM,
 	DIRECTIONAL,
 	VECTOR
 }
 
-
-const BULLETS := {
-	BulletType.NON_DIRECTIONAL: preload("res://addons/godonmaku/bullet.tscn")
+enum BulletShape {
+	CIRCLE,
+	BOX
 }
 
+
+# TODO: if making an actual plugin, make load bullets from a folder or something
+const BULLETS := {
+	BulletType.NON_DIRECTIONAL: preload("res://addons/godonmaku/bullet.tscn"),
+	BulletType.NON_DIRECTIONAL_MEDIUM: preload("res://assets/bullets/bullet_medium.tscn")
+}
 
 const BULLET_SPRITES := {
 	BulletType.NON_DIRECTIONAL: preload("res://addons/godonmaku/bullet_1.png")
 }
 
+const PLAYER_BULLETS := preload("res://addons/godonmaku/player_bullet.tscn")
 
-const MAX_BULLETS := 10000
+const MAX_ENEMY_BULLETS := 10000
+const MAX_PLAYER_BULLETS := 1000
 
 
-@onready var pool : Node2D = $Pool
+#@onready var enemy_pool : Node2D = $EnemyPool
+#@onready var player_pool : Node2D = $PlayerPool
+
+var enemy_pool : Node2D
+var player_pool : Node2D
+@onready var direct_space_state : PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 
 
 var bullet_scn : PackedScene
 var bullet_index := 0
+var player_bullet_index := 0
 
 
 func _ready() -> void:
-	_BulletUtil.kill_bullets()
+	#var world : Node2D = get_tree().get_first_node_in_group("world")
+	enemy_pool = Node2D.new()
+	player_pool = Node2D.new()
+	add_child(enemy_pool)
+	add_child(player_pool)
+	enemy_pool.name = "EnemyPool"
+	player_pool.name = "PlayerPool"
+	#direct_space_state = get_world_2d().direct_space_state
+	kill_bullets()
 
 
 func _exit_tree() -> void:
-	_BulletUtil.kill_bullets()
+	kill_bullets()
 
 
-func get_bullet_scene(bullet_type : BulletType) -> PackedScene:
+func get_bullet_shape(bullet_shape : BulletShape, properties : Dictionary) -> Shape2D:
+	if bullet_shape == BulletShape.CIRCLE:
+		var circle = CircleShape2D.new()
+		circle.radius = properties["radius"]
+		return circle
+	else:
+		var box = RectangleShape2D.new()
+		box.size.x = properties["x"]
+		box.size.y = properties["y"]
+		return box
+
+
+func get_bullet_scene(bullet_type : BulletUtil.BulletType) -> PackedScene:
 	return BULLETS.get(bullet_type, BULLETS[BulletType.NON_DIRECTIONAL])
 
 
-func get_next_bullet(bullet_type : BulletType) -> Bullet:
-	if pool.get_child_count() >= MAX_BULLETS:
-		bullet_index = (bullet_index + 1) % pool.get_child_count()
-		var bullet : Bullet = pool.get_child(bullet_index) as Bullet
+func get_next_bullet(bullet_type : BulletUtil.BulletType) -> Bullet:
+	if enemy_pool.get_child_count() >= MAX_ENEMY_BULLETS:
+		bullet_index = (bullet_index + 1) % enemy_pool.get_child_count()
+		var bullet : Bullet = enemy_pool.get_child(bullet_index) as Bullet
 		bullet._swap(bullet_type)
 		return bullet
 	else:
-		pool.add_child(get_bullet_scene(bullet_type).instantiate())
-		var b = pool.get_child(bullet_index)
+		enemy_pool.add_child(get_bullet_scene(bullet_type).instantiate())
+		var b = enemy_pool.get_child(bullet_index)
 		bullet_index += 1
+		return b
+
+
+func intersect_shape(query : PhysicsShapeQueryParameters2D, max_results := 32) -> Array[Dictionary]:
+	return direct_space_state.intersect_shape(query, max_results)
+
+
+func get_player_bullet() -> Bullet:
+	if player_pool.get_child_count() >= MAX_PLAYER_BULLETS:
+		player_bullet_index = (player_bullet_index + 1) % player_pool.get_child_count()
+		var bullet : Bullet = player_pool.get_child(player_bullet_index) as Bullet
+		#bullet._swap(bullet_type)
+		return bullet
+	else:
+		player_pool.add_child(PLAYER_BULLETS.instantiate())
+		var b = player_pool.get_child(player_bullet_index)
+		player_bullet_index += 1
 		return b
 
 
 func reset_bullets() -> void:
 	bullet_index = 0
+	player_bullet_index = 0
 
 
 func kill_bullets() -> void:
 	reset_bullets()
-	for bullet in pool.get_children():
+	
+	for bullet in enemy_pool.get_children():
 		bullet.queue_free()
+		
+	for bullet in player_pool.get_children():
+		bullet.queue_free()
+		

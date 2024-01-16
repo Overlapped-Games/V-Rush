@@ -16,7 +16,7 @@ signal expired
 var direction : Vector2
 var current_distance := 0.0
 var active := false
-var velocity := 1
+var velocity := 500
 
 # Should only be called once weapon is started
 var player_stats : Stats:
@@ -88,7 +88,8 @@ func _disable():
 
 
 func _on_stats_changed(stats : Stats) -> void:
-	velocity = base_velocity * stats.velocity
+	#velocity = base_velocity * stats.velocity
+	pass
 
 
 func _on_exited_screen():

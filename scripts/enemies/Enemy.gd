@@ -21,6 +21,6 @@ func _on_hit_by_player(area : Area2D) -> void:
 
 
 func _on_projectile_collide(projectile : ProjectileBase, damage : int) -> void:
-	print("hit by player for %s damage" % [damage])
+	#print("hit by player for %s damage" % [damage])
 	pass
 

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c23wtupl3th7v"]
+
+[ext_resource type="Texture2D" uid="uid://bxrxgvhay4bnc" path="res://assets/art/bullets/enemy_bullets.png" id="1_b235e"]
+[ext_resource type="Script" path="res://addons/godonmaku/logic/Bullet.gd" id="2_2p3j6"]
+
+[node name="Bullet" type="Sprite2D"]
+texture = ExtResource("1_b235e")
+region_enabled = true
+region_rect = Rect2(8, 0, 16, 16)
+script = ExtResource("2_2p3j6")
+properties = {
+"radius": 7
+}
