@@ -1,50 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbegfoka0n8io"]
+[gd_scene load_steps=5 format=3 uid="uid://cbegfoka0n8io"]
 
 [ext_resource type="Script" path="res://addons/godonmaku/DanmakuTest.gd" id="1_xiarx"]
-[ext_resource type="Script" path="res://addons/godonmaku/Cammaku.gd" id="2_w46du"]
+[ext_resource type="PackedScene" uid="uid://cmt1ixwslwsfj" path="res://addons/godonmaku/cammaku.tscn" id="2_ebxon"]
 [ext_resource type="Texture2D" uid="uid://boulhs6lt0o52" path="res://icon.svg" id="3_dq541"]
-[ext_resource type="Texture2D" uid="uid://gg6d3urba687" path="res://addons/godonmaku/black_tile.png" id="3_s4ysv"]
 [ext_resource type="PackedScene" uid="uid://cwf7w3h8xlg15" path="res://assets/player/player.tscn" id="4_jjr3t"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ts2vx"]
-size = Vector2(426.667, 240)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hjvut"]
-texture = ExtResource("3_s4ysv")
-0:0/0 = 0
-0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-0:0/0/physics_layer_0/angular_velocity = 0.0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-
-[sub_resource type="TileSet" id="TileSet_3xgug"]
-physics_layer_0/collision_layer = 32
-sources/0 = SubResource("TileSetAtlasSource_hjvut")
 
 [node name="Node2D" type="Node2D" groups=["world"]]
 script = ExtResource("1_xiarx")
 
-[node name="Cammaku" type="Camera2D" parent="." groups=["camera"]]
-zoom = Vector2(3, 3)
-script = ExtResource("2_w46du")
-
-[node name="Area" type="Area2D" parent="Cammaku" groups=["camera_area"]]
-visible = false
-collision_layer = 128
-collision_mask = 10
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cammaku/Area"]
-shape = SubResource("RectangleShape2D_ts2vx")
-
-[node name="TileMap" type="TileMap" parent="Cammaku"]
-tile_set = SubResource("TileSet_3xgug")
-format = 2
-layer_0/tile_data = PackedInt32Array(327676, 0, 0, 393212, 0, 0, 458748, 0, 0, 524284, 0, 0, 327677, 0, 0, 393213, 0, 0, 458749, 0, 0, 524285, 0, 0, 327678, 0, 0, 393214, 0, 0, 458750, 0, 0, 524286, 0, 0, 327679, 0, 0, 393215, 0, 0, 458751, 0, 0, 524287, 0, 0, -458764, 0, 0, -393228, 0, 0, -327692, 0, 0, -262156, 0, 0, -458763, 0, 0, -393227, 0, 0, -327691, 0, 0, -262155, 0, 0, -458762, 0, 0, -393226, 0, 0, -327690, 0, 0, -262154, 0, 0, -458761, 0, 0, -393225, 0, 0, -327689, 0, 0, -262153, 0, 0, -524282, 0, 0, -458746, 0, 0, -393210, 0, 0, -327674, 0, 0, -524281, 0, 0, -458745, 0, 0, -393209, 0, 0, -327673, 0, 0, -524280, 0, 0, -458744, 0, 0, -393208, 0, 0, -327672, 0, 0, -524279, 0, 0, -458743, 0, 0, -393207, 0, 0, -327671, 0, 0, -524278, 0, 0, -458742, 0, 0, -393206, 0, 0, -327670, 0, 0, -65533, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, -65532, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Cammaku"]
-collision_layer = 32
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Cammaku/StaticBody2D"]
-polygon = PackedVector2Array(214, -124, 214, 120, -214, 120, -214, -120, 214, -120, 214, -124, -217, -124, -217, 124, 217, 124, 217, -124)
+[node name="Cammaku" parent="." instance=ExtResource("2_ebxon")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false

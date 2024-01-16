@@ -105,11 +105,7 @@ func _input(event: InputEvent) -> void:
 				#d.fixed(Vector2(-1, 0), BulletUtil.BulletType.NON_DIRECTIONAL, 
 					#d.repeat.bind(8, 6,
 						#d.fire.bind(
-							#d.lines.bind(16, 180, 2, 5, 48, 100, 0, 500,
-								#d.random_angle.bind(-5, 5)
-								##d.spin.bind(0.25,
-									##d.stack.bind(4, 0.3)
-								##)
+							#d.lines.bind(16, 180, 2, 5, 48, 100, 0, 500
 							#)
 						#)
 					#)
@@ -119,7 +115,8 @@ func _input(event: InputEvent) -> void:
 						d.fire.bind(
 							d.lines.bind(16, 0, 1, 5, 48, 100, 0, 500,
 								d.random_angle.bind(-5, 20,
-									d.spin.bind(0.125
+									d.spin.bind(0.125,
+										d.bounce.bind(1)
 										#d.stack.bind(4, 0.3)
 									)
 								)
