@@ -22,8 +22,8 @@ func _ready() -> void:
 	pass
 
 
-func _physics_process(delta: float) -> void:
-	print("FPS:", Engine.get_frames_per_second())
+#func _physics_process(delta: float) -> void:
+	#print("FPS:", Engine.get_frames_per_second())
 
 
 func _input(event: InputEvent) -> void:
@@ -169,7 +169,7 @@ func _input(event: InputEvent) -> void:
 						d.fire.bind(
 							d.lines.bind(1, 0, 7, 5, 0, 70, 0, 500,
 								d.stack.bind(4, 0.3,
-									d.bounce.bind(1)
+									d.bounce.bind(2)
 								)
 							)
 						)

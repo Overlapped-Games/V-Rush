@@ -20,12 +20,14 @@ config/icon="res://icon.svg"
 
 Physics2dUtil="res://addons/godonmaku/logic/Physics2DUtil.gd"
 BulletUtil="*res://addons/godonmaku/logic/BulletUtil.gd"
+GameManager="*res://scripts/GameManager.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/stretch/mode="canvas_items"
+window/size/viewport_width=426
+window/size/viewport_height=240
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
@@ -123,3 +125,4 @@ escape_menu={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+2d/snap/snap_2d_vertices_to_pixel=true

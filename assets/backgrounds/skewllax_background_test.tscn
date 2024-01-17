@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt1alb4imhgnc"]
+
+[ext_resource type="Script" path="res://assets/backgrounds/skewllax_background.gd" id="1_61ypk"]
+[ext_resource type="Texture2D" uid="uid://cvh61b7ocx2gb" path="res://assets/art/background/wire_frame_bg.png" id="2_dysa2"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.75, 0.75)
+
+[node name="SkewllaxBackground" type="Node2D" parent="Camera2D"]
+script = ExtResource("1_61ypk")
+scroll_rate = 0.5
+
+[node name="WireFrameBg" type="Sprite2D" parent="Camera2D/SkewllaxBackground"]
+texture = ExtResource("2_dysa2")
