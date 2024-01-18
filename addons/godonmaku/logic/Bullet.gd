@@ -24,7 +24,7 @@ enum FiringState {
 
 @onready var query : PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 
-
+@export var damage := 10
 @export var type := Type.ENEMY
 @export var bullet_type := BulletUtil.BulletType.NON_DIRECTIONAL
 @export var base_velocity := 100
@@ -42,6 +42,7 @@ var pre_position : Vector2
 var max_velocity := 1000
 var velocity := base_velocity
 var acceleration := 0
+var t := 0.0
 
 var max_bounces := 0
 var current_bounces := 0
@@ -144,6 +145,30 @@ func _physics_process(delta: float) -> void:
 				can_graze = false
 				var coll = hit[0]["collider"]
 				coll._on_grazed()
+
+
+func move_wave(delta : float, period := 1.0, amplitude := 1.0, frequency := 1.0) -> void:
+	velocity = clamp(velocity + acceleration, 0, max_velocity)
+	amplitude * sin(frequency * period * velocity * delta)
+	var distance := velocity * delta
+	var motion := direction * distance
+	
+	#sub_pos += motion
+	#position = (sub_pos).round()
+	global_position += motion
+	current_distance += distance
+
+
+func move_straight(delta : float) -> void:
+	velocity = clamp(velocity + acceleration, 0, max_velocity)
+	t += delta
+	var distance := velocity * delta
+	var motion := direction * distance
+	
+	#sub_pos += motion
+	#position = (sub_pos).round()
+	global_position += motion
+	current_distance += distance
 
 
 # Useful for moving bullet to a position before actually firing

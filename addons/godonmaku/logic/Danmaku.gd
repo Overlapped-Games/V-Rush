@@ -119,7 +119,6 @@ func _pattern_process(delta : float) -> void:
 	if t >= 1:
 		#print("sec")
 		t = 0
-		update_target()
 		repeatable.call()
 		repeats += 1
 		if spin_rate > 0:
@@ -217,6 +216,7 @@ func repeat(rate := 1.0, max := 0, f : Callable = func(): pass) -> void:
 func fire(f : Callable) -> void:
 	#while pool.get_child_count() < MAX_BULLETS:
 		#pool.add_child(bullet_scn.instantiate())
+	update_target()
 	f.call()
 
 

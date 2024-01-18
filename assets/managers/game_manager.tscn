@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvpaospjlmejf"]
+
+[ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_aqmqm"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_aqmqm")
+
+[node name="Gauge" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AbilityMenu" type="GridContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

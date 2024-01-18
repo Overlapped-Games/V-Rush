@@ -145,7 +145,6 @@ func _input(event: InputEvent) -> void:
 				d = danmaku.instantiate()
 				d_e.add_child(d)
 				
-			if !d.active:
 				#d.from_origin(bullet_scn, 
 					#d.repeat.bind(8, 1,
 						#d.fire.bind(
@@ -164,36 +163,32 @@ func _input(event: InputEvent) -> void:
 						#)
 					#)
 				#)
-				d.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
-					d.repeat.bind(8, 1,
-						d.fire.bind(
-							d.lines.bind(1, 0, 7, 5, 0, 70, 0, 500,
-								d.stack.bind(4, 0.3,
-									d.bounce.bind(2)
-								)
-							)
+			d.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
+				d.fire.bind(
+					d.lines.bind(1, 0, 7, 5, 0, 70, 0, 500,
+						d.stack.bind(4, 0.3,
+							d.bounce.bind(2)
 						)
 					)
 				)
-				#print(d.get_children())
-				d._start()
+			)
+			#print(d.get_children())
+			d._start()
+			
+			if !e:
+				e_e = enemy_scn.instantiate()
+				add_child(e_e)
+				e = danmaku.instantiate() as Danmaku
+				e_e.add_child(e)
 				
-				if !e:
-					e_e = enemy_scn.instantiate()
-					add_child(e_e)
-					e = danmaku.instantiate() as Danmaku
-					e_e.add_child(e)
-					
-				e.chase(BulletUtil.BulletType.NON_DIRECTIONAL_MEDIUM, 
-					e.repeat.bind(8, 1,
-						e.fire.bind(
-							e.lines.bind(1, 0, 4, 10, 0, 80, 0, 500,
-								e.stack.bind(4, 0.3)
-							)
-						)
+			e.chase(BulletUtil.BulletType.NON_DIRECTIONAL_MEDIUM, 
+				e.fire.bind(
+					e.lines.bind(1, 0, 4, 10, 0, 80, 0, 500,
+						e.stack.bind(4, 0.3)
 					)
 				)
-				e._start()
+			)
+			e._start()
 		elif Input.is_action_just_pressed("ui_cancel"):
 			if d and d.active:
 				d._kill()

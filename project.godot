@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 
 Physics2dUtil="res://addons/godonmaku/logic/Physics2DUtil.gd"
 BulletUtil="*res://addons/godonmaku/logic/BulletUtil.gd"
-GameManager="*res://scripts/GameManager.gd"
+GameManager="*res://assets/managers/game_manager.tscn"
 
 [display]
 
