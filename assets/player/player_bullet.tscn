@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cpv5tlqxx5cws"]
 
-[ext_resource type="Script" path="res://addons/godonmaku/logic/Bullet.gd" id="1_iuese"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Bullet.gd" id="1_iuese"]
 [ext_resource type="Texture2D" uid="uid://dgnd1lnuc5jw2" path="res://assets/art/bullets/player_bullets.png" id="1_v2qv8"]
 
 [node name="PlayerBullet" type="Sprite2D"]

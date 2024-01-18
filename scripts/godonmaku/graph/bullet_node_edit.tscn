@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bhy12l5pctagh"]
 
-[ext_resource type="Script" path="res://addons/godonmaku/graph/BulletNodeEdit.gd" id="1_rrnpm"]
+[ext_resource type="Script" path="res://scripts/godonmaku/graph/BulletNodeEdit.gd" id="1_rrnpm"]
 
 [node name="BulletNodeEdit" type="GraphNode"]
 custom_minimum_size = Vector2(100, 150)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c1wgyjdscbwsw"]
 
-[ext_resource type="Script" path="res://addons/godonmaku/graph/BulletNodeEdit.gd" id="1_3pckr"]
+[ext_resource type="Script" path="res://scripts/godonmaku/graph/BulletNodeEdit.gd" id="1_3pckr"]
 
 [node name="MainGraph" type="GraphEdit"]
 offset_right = 1312.0

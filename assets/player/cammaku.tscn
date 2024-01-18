@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://12j1iu2pu3d0"]
 
-[ext_resource type="Script" path="res://addons/godonmaku/Cammaku.gd" id="1_q5cev"]
+[ext_resource type="Script" path="res://scripts/godonmaku/Cammaku.gd" id="1_q5cev"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_77dit"]
 size = Vector2(320, 180)

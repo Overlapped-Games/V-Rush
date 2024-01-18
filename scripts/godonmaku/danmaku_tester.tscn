@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cbegfoka0n8io"]
 
-[ext_resource type="Script" path="res://addons/godonmaku/DanmakuTest.gd" id="1_xiarx"]
-[ext_resource type="PackedScene" uid="uid://cmt1ixwslwsfj" path="res://addons/godonmaku/cammaku.tscn" id="2_ebxon"]
+[ext_resource type="Script" path="res://scripts/godonmaku/DanmakuTest.gd" id="1_xiarx"]
+[ext_resource type="PackedScene" uid="uid://cmt1ixwslwsfj" path="res://scripts/godonmaku/cammaku.tscn" id="2_ebxon"]
 [ext_resource type="Script" path="res://assets/backgrounds/skewllax_background.gd" id="2_r8mg6"]
 [ext_resource type="Texture2D" uid="uid://boulhs6lt0o52" path="res://icon.svg" id="3_dq541"]
 [ext_resource type="Texture2D" uid="uid://cvh61b7ocx2gb" path="res://assets/art/background/wire_frame_bg.png" id="3_nyuf3"]

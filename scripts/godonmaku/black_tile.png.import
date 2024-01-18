@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djybca1aelv41"
-path="res://.godot/imported/bullet_1.png-6fae46494c784f413cfeed236fa047d5.ctex"
+uid="uid://gg6d3urba687"
+path="res://.godot/imported/black_tile.png-7eeac286ea1b83ab42749005b33c2ba6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godonmaku/bullet_1.png"
-dest_files=["res://.godot/imported/bullet_1.png-6fae46494c784f413cfeed236fa047d5.ctex"]
+source_file="res://scripts/godonmaku/black_tile.png"
+dest_files=["res://.godot/imported/black_tile.png-7eeac286ea1b83ab42749005b33c2ba6.ctex"]
 
 [params]
 

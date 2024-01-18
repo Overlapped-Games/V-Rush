@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://84rk7porgm8g"]
 
-[ext_resource type="Script" path="res://addons/godonmaku/logic/Danmaku.gd" id="1_ij6c6"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="1_ij6c6"]
 [ext_resource type="Texture2D" uid="uid://boulhs6lt0o52" path="res://icon.svg" id="2_k1pfn"]
 
 [node name="Danmaku" type="Node2D"]

@@ -1,7 +1,7 @@
 class_name DanmakuTest extends Node2D
 
 
-@onready var danmaku : PackedScene = preload("res://addons/godonmaku/danmaku.tscn")
+@onready var danmaku : PackedScene = preload("res://scripts/godonmaku/danmaku.tscn")
 
 @onready var enemy_scn : PackedScene = preload("res://assets/enemies/base_enemy.tscn")
 

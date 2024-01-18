@@ -16,15 +16,15 @@ enum BulletShape {
 
 # TODO: if making an actual plugin, make load bullets from a folder or something
 const BULLETS := {
-	BulletType.NON_DIRECTIONAL: preload("res://addons/godonmaku/bullet.tscn"),
+	BulletType.NON_DIRECTIONAL: preload("res://assets/bullets/bullet.tscn"),
 	BulletType.NON_DIRECTIONAL_MEDIUM: preload("res://assets/bullets/bullet_medium.tscn")
 }
 
 const BULLET_SPRITES := {
-	BulletType.NON_DIRECTIONAL: preload("res://addons/godonmaku/bullet_1.png")
+	BulletType.NON_DIRECTIONAL: preload("res://assets/art/bullet_1.png")
 }
 
-const PLAYER_BULLETS := preload("res://addons/godonmaku/player_bullet.tscn")
+const PLAYER_BULLETS := preload("res://assets/player/player_bullet.tscn")
 
 const MAX_ENEMY_BULLETS := 10000
 const MAX_PLAYER_BULLETS := 1000

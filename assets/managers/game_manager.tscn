@@ -30,7 +30,7 @@ bbcode_enabled = true
 text = "HEALTH:"
 scroll_active = false
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="HealthCounter" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2

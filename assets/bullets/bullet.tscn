@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxl3m4s7qfypi"]
+
+[ext_resource type="Texture2D" uid="uid://djybca1aelv41" path="res://assets/art/bullet_1.png" id="1_gyc5j"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Bullet.gd" id="2_iqa6w"]
+
+[node name="Bullet" type="Sprite2D"]
+texture = ExtResource("1_gyc5j")
+script = ExtResource("2_iqa6w")
+properties = {
+"radius": 4
+}
