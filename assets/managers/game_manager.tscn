@@ -1,14 +1,66 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvpaospjlmejf"]
+[gd_scene load_steps=3 format=3 uid="uid://bvpaospjlmejf"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_aqmqm"]
+[ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="2_eiqmw"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_aqmqm")
 
-[node name="Gauge" type="TextureProgressBar" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2(0.5, 0.5)
+transform = Transform2D(0.5, 0, 0, 0.5, 0, 0)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(852, 32)
+offset_right = 852.0
+offset_bottom = 14.0
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HealthCounter" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_eiqmw")
+bbcode_enabled = true
+text = "Health:"
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScoreLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_eiqmw")
+bbcode_enabled = true
+text = "[color=yellow]SCORE[/color]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 0
+
+[node name="Score" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("2_eiqmw")
+bbcode_enabled = true
+text = "[right]999999999999[/right]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 0
+
+[node name="Gauge" type="TextureProgressBar" parent="CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="AbilityMenu" type="GridContainer" parent="."]
+[node name="AbilityMenu" type="GridContainer" parent="CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0

@@ -131,11 +131,12 @@ func _physics_process(delta: float) -> void:
 	# TODO: fix expire on reaching screen extents
 	if hit:
 		##expired.emit(self)
-		var coll = hit[0]["collider"]
+		var coll : Node2D = hit[0]["collider"]
 		#print_debug("colliding with %s" % [coll])
+		
+		#print("rest_info=%s" % [BulletUtil.direct_space_state.get_rest_info(query)])
 		if coll.has_method("_on_hit"):
 			coll._on_hit(self)
-		#print("rest_info=%s" % [BulletUtil.direct_space_state.get_rest_info(query)])
 		_disable()
 	else:
 		if type == Type.ENEMY:

@@ -2,6 +2,7 @@ class_name Player extends CharacterBody2D
 
 
 signal stats_changed()
+signal health_updated(new_health : int)
 
 
 const BASE_SPEED := 150.0
@@ -15,11 +16,17 @@ const BASE_SPEED := 150.0
 @onready var weapon : Weapon = $Weapon
 @onready var abilities : Node = $Abilities # meant for use with the cards
 @onready var animator : AnimationPlayer = $AnimationPlayer
+@onready var invuln_timer : Timer = $InvulnTimer
 
 
 ## Health
 @export var max_health : int = 50
-@export var current_health : int = 50
+@export var current_health : int = 50:
+	set(value):
+		current_health = value
+		health_updated.emit(current_health)
+## Memory
+@export var max_memory : int = 4
 ## Attack
 @export var attack : int = 5
 ## Defense
@@ -31,7 +38,13 @@ const BASE_SPEED := 150.0
 ## Ability gauge fill rate
 @export var gauge_fill_rate : float = 1.0
 
-var dead := false
+# gain 1 additional memory every 1024 pieces collected
+var memory_experience : int = 0 # in kilobytes
+
+var invulnerable : bool = false
+var dead : bool = false
+
+var t_fire : float = 0.0
 var can_fire : bool = true
 var firing : bool = false
 var speed_multiplier : float = 1.0
@@ -49,6 +62,13 @@ func _ready() -> void:
 	camera = get_tree().get_first_node_in_group("camera") as Cammaku
 	screen_extents = get_viewport_rect().size / (2 * camera.zoom)
 
+	animator.animation_finished.connect(func(anim_name): 
+		if anim_name == &"invulnerable_flash":
+			print("finished '%s'" % [anim_name])
+			set_invulnerable(false)
+			animator.play("RESET")
+			show()
+	)
 
 func _physics_process(delta : float) -> void:
 	if Input.is_action_pressed("focus"):
@@ -72,12 +92,7 @@ func _physics_process(delta : float) -> void:
 	#print("w=%s, c=%s, f=%s" % [is_on_wall(), is_on_ceiling(), is_on_floor()])
 	move_and_slide()
 	
-	if can_fire and Input.is_action_pressed("fire"):
-		do_attack(delta)
-		if !firing: firing = true
-		
-	if Input.is_action_just_released("fire"):
-		firing = false
+	do_attack(delta)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -94,26 +109,48 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func do_attack(delta : float) -> void:
-	weapon._attack(delta, global_position, Vector2.RIGHT)
-	#weapon._attack(global_position, position.direction_to(get_global_mouse_position()))
+	if !can_fire:
+		t_fire += weapon.attack_rate * delta
+	
+	if !can_fire and t_fire >= 1:
+		t_fire = 0
+		can_fire = true
+	
+	if can_fire and Input.is_action_pressed("fire"):
+		if !firing: firing = true
+		weapon._attack(delta, global_position, Vector2.RIGHT)
+		
+		can_fire = false
+		
+	if Input.is_action_just_released("fire"):
+		firing = false
+		
 
 
-func invulnerable() -> void:
-	$Hurtbox/Collider.disabled = true
+func set_invulnerable(inv : bool) -> void:
+	$Hurtbox/Collider.disabled = inv
+	invulnerable = inv
+
+
+func revive() -> void:
+	current_health = max_health
+	set_invulnerable(false)
+	set_physics_process(true)
+	animator.play("RESET")
+	show()
 
 
 func _on_hit(bullet : Bullet) -> void:
-	# TODO: handle damaging player here; check if area is an enemy attack or a hazard
-	#print("'%s' hit the player..." % [bullet.name])
-	current_health = clampi(current_health - bullet.damage, 0, max_health)
+	current_health = clampi(current_health - max(bullet.damage - defense, 1), 0, max_health)
 	if current_health == 0:
 		print("DEAD")
-		sprite.self_modulate.a = 0.5
 		set_physics_process(false)
-		invulnerable()
+		set_invulnerable(true)
+		hide()
 		return
 	
-	# TODO: damage ani & iframes
+	set_invulnerable(true)
+	animator.play("invulnerable_flash")
 
 
 # TODO: implement collecting power-ups. when change stats, should updat all projectile stats too
