@@ -4,7 +4,4 @@
 
 [node name="Weapon" type="Node2D"]
 script = ExtResource("1_cjbb5")
-
-[node name="AttackTimer" type="Timer" parent="."]
-
-[node name="Pool" type="Node2D" parent="."]
+attack_rate = null

@@ -117,14 +117,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			_disable()
 		return
-		
 	
-
-	#if global_position.distance_squared_to(player.global_position) <= 32:
-		##print("CLOSE")
-		#player._on_hit(self)
-		#_disable()
-		
 	query.collision_mask = hitbox_layer
 	query.transform = global_transform
 	var hit : Array[Dictionary] = BulletUtil.intersect_shape(query, 1)
@@ -132,7 +125,6 @@ func _physics_process(delta: float) -> void:
 	if hit:
 		##expired.emit(self)
 		var coll : Node2D = hit[0]["collider"]
-		#print_debug("colliding with %s" % [coll])
 		
 		#print("rest_info=%s" % [BulletUtil.direct_space_state.get_rest_info(query)])
 		if coll.has_method("_on_hit"):

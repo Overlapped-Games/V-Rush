@@ -109,21 +109,22 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func do_attack(delta : float) -> void:
-	if !can_fire:
-		t_fire += weapon.attack_rate * delta
-	
-	if !can_fire and t_fire >= 1:
-		t_fire = 0
-		can_fire = true
-	
-	if can_fire and Input.is_action_pressed("fire"):
-		if !firing: firing = true
-		weapon._attack(delta, global_position, Vector2.RIGHT)
-		
-		can_fire = false
-		
-	if Input.is_action_just_released("fire"):
-		firing = false
+	firing = weapon._attack(delta, Input.is_action_pressed("fire"), global_position, Vector2.RIGHT)
+	#if !can_fire:
+		#t_fire += weapon.attack_rate * delta
+	#
+	#if !can_fire and t_fire >= 1:
+		#t_fire = 0
+		#can_fire = true
+	#
+	#if can_fire and Input.is_action_pressed("fire"):
+		#if !firing: firing = true
+		#weapon._attack(delta, global_position, Vector2.RIGHT)
+		#
+		#can_fire = false
+		#
+	#if Input.is_action_just_released("fire"):
+		#firing = false
 		
 
 

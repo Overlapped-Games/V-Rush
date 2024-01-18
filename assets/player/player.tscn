@@ -94,7 +94,5 @@ wait_time = 2.0
 one_shot = true
 
 [node name="Weapon" parent="." instance=ExtResource("3_lf66x")]
-max_projectiles = 200
-attack_rate = 10
 
 [node name="Abilities" type="Node" parent="."]
