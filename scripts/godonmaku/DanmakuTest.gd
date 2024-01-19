@@ -5,6 +5,8 @@ class_name DanmakuTest extends Node2D
 
 @onready var enemy_scn : PackedScene = preload("res://assets/enemies/base_enemy.tscn")
 
+var enemies : Node2D
+
 var d : Danmaku
 var e : Danmaku
 var c_gen : Danmaku
@@ -14,6 +16,7 @@ var e_e : Enemy
 
 var player : Player
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#var b : Danmaku.Builder = Danmaku.Builder.new(Danmaku.BulletType.CIRCLE)
@@ -21,6 +24,8 @@ func _ready() -> void:
 	#var d = b.from_origin(bullet_scn, b.repeat.bind(0.08, b.do_fire.bind(func(bullet : Bullet): print("firing - %s" % [bullet])))).build()
 	#d = Danmaku.new()
 	player = get_tree().get_first_node_in_group("player")
+	enemies = Node2D.new()
+	add_child(enemies)
 
 
 #func _physics_process(delta: float) -> void:
@@ -35,7 +40,7 @@ func _input(event: InputEvent) -> void:
 				c_gen = danmaku.instantiate()
 				add_child(c_gen)
 			if !c_gen.active:
-				c_gen.move_f = c_gen.circle_move.bind(50, 128)
+				c_gen.move_f = c_gen.circle_move.bind(50, 96)
 				c_gen.fixed(Vector2(-1, 0), BulletUtil.BulletType.NON_DIRECTIONAL, 
 					c_gen.delay.bind(1.4, 16,
 						c_gen.repeat.bind(20, 0,
@@ -47,11 +52,17 @@ func _input(event: InputEvent) -> void:
 					)
 				)
 				c_gen._start()
+		if Input.is_key_pressed(KEY_L) and just_pressed:
+			for i in 10:
+				var e = enemy_scn.instantiate()
+				enemies.add_child(e)
+				e.position = Vector2(randi_range(64, 200), randi_range(-80, 80))
+			pass
 		if Input.is_action_just_pressed("right_click"):
 			if !e:
 				e_e = enemy_scn.instantiate()
 				add_child(e_e)
-				e_e.expired.connect(func(enemy): e_e = null)
+				e_e.defeated.connect(func(enemy): e_e = null)
 				e = danmaku.instantiate() as Danmaku
 				e_e.add_child(e)
 			if !e.active:
@@ -81,7 +92,7 @@ func _input(event: InputEvent) -> void:
 			if !d:
 				d_e = enemy_scn.instantiate()
 				add_child(d_e)
-				d_e.expired.connect(func(enemy): d_e = null)
+				d_e.defeated.connect(func(enemy): d_e = null)
 				d = danmaku.instantiate()
 				d_e.add_child(d)
 				
@@ -145,7 +156,7 @@ func _input(event: InputEvent) -> void:
 			if !d:
 				d_e = enemy_scn.instantiate()
 				add_child(d_e)
-				d_e.expired.connect(func(enemy): d_e = null)
+				d_e.defeated.connect(func(enemy): d_e = null)
 				d = danmaku.instantiate()
 				d_e.add_child(d)
 				
@@ -182,7 +193,7 @@ func _input(event: InputEvent) -> void:
 			if !e:
 				e_e = enemy_scn.instantiate()
 				add_child(e_e)
-				e_e.expired.connect(func(enemy): e_e = null)
+				e_e.defeated.connect(func(enemy): e_e = null)
 				e = danmaku.instantiate() as Danmaku
 				e_e.add_child(e)
 				
@@ -203,3 +214,5 @@ func _input(event: InputEvent) -> void:
 				c_gen._kill()
 			player.revive()
 			BulletUtil.kill_bullets()
+			for en in enemies.get_children():
+				en.queue_free()

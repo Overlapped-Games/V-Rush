@@ -1,7 +1,9 @@
 class_name Enemy extends RigidBody2D
 
 
-signal expired(enemy : Enemy)
+signal expired(enemy : Enemy) # moved off screen
+signal hit
+signal defeated(enemy : Enemy) # ded
 
 
 @onready var hurtbox : Area2D = $Hurtbox
@@ -16,6 +18,8 @@ signal expired(enemy : Enemy)
 ## Defense
 @export var defense : int = 0
 
+@export var defeat_value : int = 1000
+
 
 var hit_cooldown : float = 10
 var invulnerable : bool = false
@@ -26,6 +30,8 @@ func _ready() -> void:
 	set_physics_process(true)
 	set_invulnerable(false)
 	t = 0
+	defeated.connect(GameManager._on_enemy_defeated)
+	hit.connect(GameManager._on_enemy_hit)
 
 
 func _physics_process(delta : float) -> void:
@@ -61,10 +67,11 @@ func _on_hit(bullet : Bullet) -> void:
 	if current_health == 0:
 		print("DEAD")
 		set_physics_process(false)
-		expired.emit(self)
+		defeated.emit(self)
 		queue_free()
 		return
-
+	
+	hit.emit(self)
 
 func _on_projectile_collide(projectile : ProjectileBase, damage : int) -> void:
 	#print("hit by player for %s damage" % [damage])

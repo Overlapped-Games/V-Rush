@@ -61,13 +61,15 @@ func _ready() -> void:
 	grazebox.grazed.connect(_on_grazed)
 	camera = get_tree().get_first_node_in_group("camera") as Cammaku
 	screen_extents = get_viewport_rect().size / (2 * camera.zoom)
-
+	
+	show()
+	animator.play("floating")
 	animator.animation_finished.connect(func(anim_name): 
 		if anim_name == &"invulnerable_flash":
 			print("finished '%s'" % [anim_name])
 			set_invulnerable(false)
-			animator.play("RESET")
-			show()
+			sprite.show()
+			animator.play("floating")
 	)
 
 func _physics_process(delta : float) -> void:
@@ -137,7 +139,8 @@ func revive() -> void:
 	current_health = max_health
 	set_invulnerable(false)
 	set_physics_process(true)
-	animator.play("RESET")
+	animator.play("floating")
+	sprite.show()
 	show()
 
 

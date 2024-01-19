@@ -58,4 +58,12 @@ func _on_player_grazed() -> void:
 # medium enemy = 1000
 # big enemy = 2000
 func _on_enemy_hit(enemy : Enemy) -> void:
+	score += 100
+
+
+func _on_enemy_defeated(enemy : Enemy) -> void:
 	score += 1000
+
+
+func _on_boss_defeated(enemy : Enemy) -> void:
+	score += enemy.defeat_value if enemy.get("defeat_value") else 10000
