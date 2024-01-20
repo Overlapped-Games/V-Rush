@@ -12,6 +12,7 @@ enum Type {
 
 enum MoveType {
 	LINE,
+	CURVE,
 	WAVE
 }
 
@@ -26,6 +27,10 @@ enum FiringState {
 
 @export var damage := 10
 @export var type := Type.ENEMY
+@export var move_type := MoveType.LINE
+@export var curve_angle := 0.0
+@export var frequency := 0.0
+@export var amplitude := 0.0
 @export var bullet_type := BulletUtil.BulletType.NON_DIRECTIONAL
 @export var base_velocity := 100
 @export var max_distance := 2400
@@ -37,16 +42,22 @@ enum FiringState {
 
 #var sub_pos : Vector2
 # used if want to move bullet to a given position before going towards target direction
+# movement properties
 var pre_position : Vector2
 
 var max_velocity := 1000
 var velocity := base_velocity
 var acceleration := 0
 var t := 0.0
+var c_t := 0.0
+var w_t := 0.0
 
+
+# misc
 var max_bounces := 0
 var current_bounces := 0
 
+var virtual_pos : Vector2
 var direction : Vector2
 var current_distance := 0.0
 
@@ -70,8 +81,8 @@ func _ready() -> void:
 	set_as_top_level(true)
 	active = false
 	
+	virtual_pos = global_position
 	velocity = base_velocity
-	#circle.set_radius(radius)
 	query.collide_with_areas = true
 	query.collision_mask = hitbox_layer
 	
@@ -87,43 +98,23 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	velocity = clamp(velocity + acceleration, 0, max_velocity)
-	var distance := velocity * delta
-	var motion := direction * distance
+	match move_type:
+		MoveType.LINE:
+			move_straight(delta)
+		MoveType.CURVE:
+			move_curve(delta)
+		MoveType.WAVE:
+			move_wave(delta)
 	
-	#sub_pos += motion
-	#position = (sub_pos).round()
-	global_position += motion
-	current_distance += distance
-	
-	#global_position += direction * velocity * delta
-	#current_distance += velocity * delta
-	
-	
-	# disable if reached max distance
 	if current_distance >= max_distance:
 		_disable()
-		return
-		
-	# handle off screen
-	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-		##expired.emit(self)
-		if max_bounces > 0 and current_bounces < max_bounces:
-			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
-				direction = Vector2(direction.x, -direction.y)
-			elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-				direction = Vector2(-direction.x, direction.y)
-			current_bounces += 1
-		else:
-			_disable()
 		return
 	
 	query.collision_mask = hitbox_layer
 	query.transform = global_transform
+	
 	var hit : Array[Dictionary] = BulletUtil.intersect_shape(query, 1)
-	# TODO: fix expire on reaching screen extents
 	if hit:
-		##expired.emit(self)
 		var coll : Node2D = hit[0]["collider"]
 		
 		#print("rest_info=%s" % [BulletUtil.direct_space_state.get_rest_info(query)])
@@ -140,16 +131,50 @@ func _physics_process(delta: float) -> void:
 				coll._on_grazed()
 
 
-func move_wave(delta : float, period := 1.0, amplitude := 1.0, frequency := 1.0) -> void:
-	velocity = clamp(velocity + acceleration, 0, max_velocity)
-	amplitude * sin(frequency * period * velocity * delta)
-	var distance := velocity * delta
-	var motion := direction * distance
+func move_wave(delta : float) -> void:
+	w_t += delta
+	var offset : Vector2 = direction.orthogonal() * sin(w_t * frequency) * amplitude
+	var distance : float = velocity * delta
+	var motion : Vector2 = direction * distance
 	
-	#sub_pos += motion
-	#position = (sub_pos).round()
+	virtual_pos += motion
+	global_position = virtual_pos + offset
+	current_distance += distance
+	
+	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+		##expired.emit(self)
+		if max_bounces > 0 and current_bounces < max_bounces:
+			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
+				direction = Vector2(direction.x, -direction.y)
+			elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+				direction = Vector2(-direction.x, direction.y)
+			current_bounces += 1
+		else:
+			_disable()
+		return
+
+
+func move_curve(delta : float) -> void:
+	velocity = clamp(velocity + acceleration, 0, max_velocity)
+	c_t += delta * curve_angle
+	var dir : Vector2 = direction.from_angle(direction.angle() + (c_t * PI / 180))
+	var distance : float = velocity * delta
+	var motion : Vector2 = dir * distance
+	
 	global_position += motion
 	current_distance += distance
+	
+	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+		##expired.emit(self)
+		if max_bounces > 0 and current_bounces < max_bounces:
+			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
+				direction = Vector2(dir.x, -dir.y)
+			elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+				direction = Vector2(-dir.x, dir.y)
+			current_bounces += 1
+		else:
+			_disable()
+		return
 
 
 func move_straight(delta : float) -> void:
@@ -158,10 +183,20 @@ func move_straight(delta : float) -> void:
 	var distance := velocity * delta
 	var motion := direction * distance
 	
-	#sub_pos += motion
-	#position = (sub_pos).round()
 	global_position += motion
 	current_distance += distance
+	
+	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+		##expired.emit(self)
+		if max_bounces > 0 and current_bounces < max_bounces:
+			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
+				direction = Vector2(direction.x, -direction.y)
+			elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+				direction = Vector2(-direction.x, direction.y)
+			current_bounces += 1
+		else:
+			_disable()
+		return
 
 
 # Useful for moving bullet to a position before actually firing
@@ -194,24 +229,6 @@ func _fire(origin : Vector2, target_direction : Vector2, bullet_shape : BulletUt
 
 func _move_and_fire(origin : Vector2, move_direction : Vector2,  target_position : Vector2, fire_direction : Vector2, bullet_shape : BulletUtil.BulletShape, shape_properties : Dictionary, move_vel := 100, fire_vel := 100) -> void:
 	pass
-
-
-#func _initialize(origin : Vector2, target_direction : Vector2, bullet_shape : BulletUtil.BulletShape, shape_properties : Dictionary, vel := 100, accel := 0, max_vel := 1000) -> void:
-	#global_position = origin
-	#direction = target_direction
-	#query.collision_mask = hitbox_layer
-	##var circle = CircleShape2D.new()
-	##circle.radius = 4
-	##query.set_shape(circle)
-	#query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties))
-	#current_distance = 0.0
-	#velocity = vel
-	#acceleration = accel
-	#max_velocity = max_vel
-
-
-#func _modify(f : Callable) -> void:
-	#f.call(self) # let callable do modifications to bullet
 
 
 func _disable():

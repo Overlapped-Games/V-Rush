@@ -58,6 +58,62 @@ func _input(event: InputEvent) -> void:
 				enemies.add_child(e)
 				e.position = Vector2(randi_range(64, 200), randi_range(-80, 80))
 			pass
+		if Input.is_key_pressed(KEY_E) and just_pressed:
+			if !e:
+				e_e = enemy_scn.instantiate()
+				add_child(e_e)
+				e_e.defeated.connect(func(enemy): e_e = null)
+				e = danmaku.instantiate() as Danmaku
+				e_e.add_child(e)
+			if !e.active:
+				e_e.global_position = Vector2.ZERO
+				#e.chase(GodonmakuUtil.BulletType.NON_DIRECTIONAL, 
+					#e.repeat.bind(1, 0,
+						#e.fire.bind(
+							#e.lines.bind(16, 4, 5, 32, 50, 0, 500,
+								#e.stack.bind(4, 0.3)
+							#)
+						#)
+					#)
+				#)
+				e.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
+					e.repeat.bind(32, 16,
+						e.fire.bind(
+							e.lines.bind(4, 0, 1, 0, 1, 40, 0, 500,
+								e.spin.bind(0.125,
+									e.bounce.bind(1,
+										e.per_bullet.bind(
+											e.wave.bind(8, 32)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+				e._start()
+				
+			if !d:
+				d_e = enemy_scn.instantiate()
+				add_child(d_e)
+				d_e.defeated.connect(func(enemy): d_e = null)
+				d = danmaku.instantiate()
+				d_e.add_child(d)
+				
+			if !d.active:
+				d_e.global_position = Vector2.ZERO
+				d.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
+					d.repeat.bind(32, 8,
+						d.fire.bind(
+							d.lines.bind(4, 0, 1, 0, 1, 150, 0, 500,
+								d.per_bullet.bind(
+									d.wave.bind(8, -32)
+								)
+							)
+						)
+					)
+				)
+				d._start()
 		if Input.is_action_just_pressed("right_click"):
 			if !e:
 				e_e = enemy_scn.instantiate()

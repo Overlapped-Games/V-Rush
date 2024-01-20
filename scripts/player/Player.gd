@@ -64,12 +64,14 @@ func _ready() -> void:
 	
 	show()
 	animator.play("floating")
-	animator.animation_finished.connect(func(anim_name): 
-		if anim_name == &"invulnerable_flash":
-			print("finished '%s'" % [anim_name])
-			set_invulnerable(false)
-			sprite.show()
-			animator.play("floating")
+	animator.animation_finished.connect(
+		func(anim_name): 
+			if anim_name == "invulnerable_flash":
+				print("finished '%s'" % [anim_name])
+				set_invulnerable(false)
+				animator.play("floating")
+				sprite.show()
+				show()
 	)
 
 func _physics_process(delta : float) -> void:
@@ -139,6 +141,7 @@ func revive() -> void:
 	current_health = max_health
 	set_invulnerable(false)
 	set_physics_process(true)
+	animator.stop()
 	animator.play("floating")
 	sprite.show()
 	show()

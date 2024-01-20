@@ -22,6 +22,7 @@ enum Angle {
 @export var bullet_shape := BulletUtil.BulletShape.CIRCLE
 @export var shape_properties := {}
 
+var per_bullet_f : Callable = func(bullet : Bullet): pass
 var move_f : Callable:
 	set(value):
 		move_f = value
@@ -48,6 +49,7 @@ var repeats_to_delay := 1
 var t := 0.0
 var spin_rate := 0.0
 var max_bounces := 0
+var move_type := Bullet.MoveType.LINE
 
 var active := false
 var repeating := false
@@ -58,14 +60,6 @@ var moving := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#if !pool:
-		#pool = Node2D.new()
-		#pool.name = "Pool"
-		#add_child(pool)
-	#if !timers:
-		#timers = Node.new()
-		#timers.name = "Timers"
-		#add_child(timers)
 	move_f = func(delta): pass
 	set_physics_process(false)
 
@@ -148,6 +142,8 @@ func _start():
 	spin_rate = 0
 	max_bounces = 0
 	fire_angle_modifier = 0
+	move_type = Bullet.MoveType.LINE
+	per_bullet_f = func(bullet : Bullet): pass
 	sequence.call()
 	set_physics_process(true)
 
@@ -169,6 +165,8 @@ func _stop() -> void:
 	spin_rate = 0
 	max_bounces = 0
 	fire_angle_modifier = 0
+	move_type = Bullet.MoveType.LINE
+	per_bullet_f = func(bullet : Bullet): pass
 	set_physics_process(false)
 
 
@@ -224,14 +222,6 @@ func laser(f : Callable = func(): pass) -> void:
 	pass
 
 
-func wave() -> void:
-	pass
-
-
-func curve() -> void:
-	pass
-
-
 func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, origin_offset := 1, velocity := 100, acceleration := 0, max_velocity := 500, f : Callable = func(bullet : Bullet = null): pass) -> void:
 	if spread < 1: spread = 1
 	var pattern_origin := global_position
@@ -258,6 +248,8 @@ func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, or
 			#print("i=%s, %s, %s, %s" % [i, 1 + (i * spread_rad), direction, dir])
 			for line in range(1, lines + 1):
 				bullet = BulletUtil.get_next_bullet(bullet_type)
+				per_bullet_f.call(bullet)
+				bullet.move_type = move_type
 				#print("firing[%s] - %s" % [line, dir.from_angle(dir.angle() + pattern_rot + (radians * line))])
 				angle = (direction.angle() + pattern_rot + radians) + (radians * line)
 				fire_origin = pattern_origin + (origin.from_angle(angle) * origin_offset)
@@ -277,9 +269,19 @@ func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, or
 				#bullet.expired.connect(func(bullet : Bullet): bullet_count -= 1)
 
 
-# convenience call for line + stack
-#func fan_out(lines := 1, spread := 1, spread_degrees := 0.0, origin_offset := 0.0, count := 1, v_mod := 0.0, velocity := 100, acceleration := 0, max_velocity := 500, f : Callable = func(bullet : Bullet = null): pass) -> void:
-	#lines(lines, spread, spread_degrees, origin_offset, velocity, acceleration, max_velocity, stack.bind(count, v_mod, f))
+func per_bullet(f : Callable = func(bullet : Bullet): pass) -> void:
+	per_bullet_f = f
+
+
+func wave(bullet : Bullet, frequency := 5.0, amplitude := 16.0, f : Callable = func(): pass) -> void:
+	move_type = Bullet.MoveType.WAVE
+	bullet.frequency = frequency
+	bullet.amplitude = amplitude
+
+
+func curve(bullet : Bullet, angle := 5.0, f : Callable = func(): pass) -> void:
+	move_type = Bullet.MoveType.CURVE
+	bullet.curve_angle = angle
 
 
 func spin(rate := 0.125, f : Callable = func(): pass) -> void:
