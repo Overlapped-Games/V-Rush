@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5wchcq4jknt6"]
+
+[ext_resource type="Texture2D" uid="uid://bxrxgvhay4bnc" path="res://assets/art/bullets/enemy_bullets.png" id="1_5awww"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/BlightBomb.gd" id="2_0n4cu"]
+[ext_resource type="Script" path="res://scripts/player/Hurtbox.gd" id="3_3hqw0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0cj8a"]
+radius = 8.0
+
+[node name="BlightBomb" type="Sprite2D"]
+self_modulate = Color(0.1, 100, 0.1, 1)
+texture = ExtResource("1_5awww")
+region_enabled = true
+region_rect = Rect2(8, 0, 16, 16)
+script = ExtResource("2_0n4cu")
+
+[node name="Hitbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 1024
+collision_mask = 2
+script = ExtResource("3_3hqw0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_0cj8a")

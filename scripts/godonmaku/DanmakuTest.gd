@@ -2,8 +2,8 @@ class_name DanmakuTest extends Node2D
 
 
 @onready var danmaku : PackedScene = preload("res://scripts/godonmaku/danmaku.tscn")
-
 @onready var enemy_scn : PackedScene = preload("res://assets/enemies/base_enemy.tscn")
+@onready var blight_bomb_scn : PackedScene = preload("res://assets/bullets/blight_bomb.tscn")
 
 var enemies : Node2D
 
@@ -52,12 +52,21 @@ func _input(event: InputEvent) -> void:
 					)
 				)
 				c_gen._start()
+		if Input.is_key_pressed(KEY_B) and just_pressed:
+			var b_1 : BlightBomb = blight_bomb_scn.instantiate()
+			var b_2 : BlightBomb = blight_bomb_scn.instantiate()
+			var b_3 : BlightBomb = blight_bomb_scn.instantiate()
+			add_child(b_1)
+			add_child(b_2)
+			add_child(b_3)
+			b_1.position = Vector2(64, 0)
+			b_2.position = Vector2(184, 0)
+			b_3.position = Vector2(96, -32)
 		if Input.is_key_pressed(KEY_L) and just_pressed:
 			for i in 10:
 				var e = enemy_scn.instantiate()
 				enemies.add_child(e)
 				e.position = Vector2(randi_range(64, 200), randi_range(-80, 80))
-			pass
 		if Input.is_key_pressed(KEY_E) and just_pressed:
 			if !e:
 				e_e = enemy_scn.instantiate()
@@ -103,11 +112,12 @@ func _input(event: InputEvent) -> void:
 			if !d.active:
 				d_e.global_position = Vector2.ZERO
 				d.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
-					d.repeat.bind(32, 8,
+					d.repeat.bind(16, 8,
 						d.fire.bind(
 							d.lines.bind(4, 0, 1, 0, 1, 150, 0, 500,
 								d.per_bullet.bind(
-									d.wave.bind(8, -32)
+									d.curve.bind(270)
+									#d.wave.bind(8, -32)
 								)
 							)
 						)

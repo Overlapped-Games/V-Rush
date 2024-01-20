@@ -39,14 +39,16 @@ var stacks := 1
 var velocity_modifier := 0.0
 var t_m := 0.0
 
-## If 0, repeats until told to stop
+# If 0, repeats until told to stop
+var t := 0.0
 var max_repeats := 0
 var repeats := 0
 var repeatable : Callable
+var processed_frames := 0.0
+var repeat_frames := 0.0
 var call_rate := 1.0
 var call_delay := 0.0
 var repeats_to_delay := 1
-var t := 0.0
 var spin_rate := 0.0
 var max_bounces := 0
 var move_type := Bullet.MoveType.LINE
@@ -109,6 +111,7 @@ func _pattern_process(delta : float) -> void:
 			t = 0
 		return
 	t += call_rate * delta
+	processed_frames += delta
 	#print("PP, ", t)
 	if t >= 1:
 		#print("sec")
@@ -123,6 +126,9 @@ func _pattern_process(delta : float) -> void:
 		if repeats == repeats_to_delay and call_delay > 0:
 			delaying_call = true
 			repeats = 0
+	
+	if repeat_frames > 0 and processed_frames >= repeat_frames:
+		_stop()
 
 
 func _start():
@@ -210,10 +216,17 @@ func repeat(rate := 1.0, max := 0, f : Callable = func(): pass) -> void:
 	t = 0
 
 
+func repeat_timed(rate := 1.0, frames := 60, f : Callable = func(): pass) -> void:
+	repeating = true
+	repeatable = f
+	repeats = 0
+	repeat_frames = frames
+	call_rate = rate
+	t = 0
+
+
 # actually fire particle
 func fire(f : Callable) -> void:
-	#while pool.get_child_count() < MAX_BULLETS:
-		#pool.add_child(bullet_scn.instantiate())
 	update_target()
 	f.call()
 
@@ -224,12 +237,12 @@ func laser(f : Callable = func(): pass) -> void:
 
 func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, origin_offset := 1, velocity := 100, acceleration := 0, max_velocity := 500, f : Callable = func(bullet : Bullet = null): pass) -> void:
 	if spread < 1: spread = 1
-	var pattern_origin := global_position
-	var origin := Vector2(pattern_origin.x + (origin_offset * cos(360.0/lines)), pattern_origin.y + (origin_offset * sin(360.0/lines)))
+	#var pattern_origin := global_position
+	var origin := Vector2(global_position.x + (origin_offset * cos(360.0/lines)), global_position.y + (origin_offset * sin(360.0/lines)))
 	#print("%s vs %s" % [pattern_origin, origin])
 	# get spread angle
 	var spread_rad : float = spread_degrees * PI / 180
-	var dir_to_target : Vector2 = pattern_origin.direction_to(target)
+	var dir_to_target : Vector2 = global_position.direction_to(target)
 	# odd aims at target, even aims at the sides
 	#var direction = dir_to_target.from_angle(dir_to_target.angle() + fire_angle) if spread % 2 != 0 else dir_to_target.from_angle(dir_to_target.angle() + fire_angle + (spread_rad / 2))
 	var direction = dir_to_target if spread % 2 != 0 else dir_to_target.from_angle(dir_to_target.angle() + fire_angle + (spread_rad / 2))
@@ -252,8 +265,8 @@ func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, or
 				bullet.move_type = move_type
 				#print("firing[%s] - %s" % [line, dir.from_angle(dir.angle() + pattern_rot + (radians * line))])
 				angle = (direction.angle() + pattern_rot + radians) + (radians * line)
-				fire_origin = pattern_origin + (origin.from_angle(angle) * origin_offset)
-				fire_direction = pattern_origin.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
+				fire_origin = global_position + (origin.from_angle(angle) * origin_offset)
+				fire_direction = global_position.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
 				if max_bounces > 0: bullet.max_bounces = max_bounces
 				bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)

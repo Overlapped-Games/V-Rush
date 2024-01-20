@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Physics2dUtil="res://scripts/godonmaku/logic/Physics2DUtil.gd"
 BulletUtil="*res://scripts/godonmaku/logic/BulletUtil.gd"
 GameManager="*res://assets/managers/game_manager.tscn"
 BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
@@ -121,6 +120,7 @@ escape_menu={
 2d_physics/layer_8="camera_area"
 2d_physics/layer_9="player_grazebox"
 2d_physics/layer_10="player_hurtbox"
+2d_physics/layer_11="blight_bomb"
 
 [rendering]
 

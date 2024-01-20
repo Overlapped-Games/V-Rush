@@ -10,5 +10,5 @@ region_rect = Rect2(0, 0, 16, 8)
 script = ExtResource("1_iuese")
 type = 0
 base_velocity = 400
-hitbox_layer = 36
+hitbox_layer = 1060
 grazebox_layer = 0
