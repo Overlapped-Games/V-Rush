@@ -12,6 +12,7 @@ config_version=5
 
 config/name="V Rush"
 config/version="0.1"
+run/main_scene="res://scripts/godonmaku/danmaku_tester.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 run/max_fps=60
 config/icon="res://icon.svg"

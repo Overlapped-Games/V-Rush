@@ -15,13 +15,12 @@ signal defeated(enemy : Enemy) # ded
 ## Health
 @export var max_health : int = 50
 @export var current_health : int = 50
+@export var invlunerability_time : float = 10
 ## Defense
 @export var defense : int = 0
-
 @export var defeat_value : int = 1000
 
 
-var hit_cooldown : float = 10
 var invulnerable : bool = false
 var t : float = 0.0
 
@@ -32,11 +31,12 @@ func _ready() -> void:
 	t = 0
 	defeated.connect(GameManager._on_enemy_defeated)
 	hit.connect(GameManager._on_enemy_hit)
+	current_health = max_health
 
 
 func _physics_process(delta : float) -> void:
 	if invulnerable:
-		t += hit_cooldown * delta
+		t += invlunerability_time * delta
 		
 		if t >= 1:
 			t = 0
@@ -59,10 +59,11 @@ func set_invulnerable(inv : bool) -> void:
 func _on_hit(bullet : Bullet) -> void:
 	print("%s hit for %s..." % [name, bullet.damage])
 	if invulnerable: return
-	set_invulnerable(true)
+	if invlunerability_time > 0:
+		set_invulnerable(true)
 	current_health = clampi(current_health - max(bullet.damage - defense, 1), 0, max_health)
 	var tween : Tween = create_tween()
-	tween.tween_property(self, "modulate:v", 1, hit_cooldown * ph_delta / 2).from(15)
+	tween.tween_property(self, "modulate:v", 1, 5 * ph_delta).from(15)
 	
 	if current_health == 0:
 		print("DEAD")

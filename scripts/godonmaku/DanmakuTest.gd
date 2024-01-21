@@ -4,6 +4,7 @@ class_name DanmakuTest extends Node2D
 @onready var danmaku : PackedScene = preload("res://scripts/godonmaku/danmaku.tscn")
 @onready var enemy_scn : PackedScene = preload("res://assets/enemies/base_enemy.tscn")
 @onready var blight_bomb_scn : PackedScene = preload("res://assets/bullets/blight_bomb.tscn")
+@onready var enemy_1 : PackedScene = preload("res://assets/enemies/basic_ai_enemy_1.tscn")
 
 var enemies : Node2D
 
@@ -92,6 +93,10 @@ func _input(event: InputEvent) -> void:
 				var e = enemy_scn.instantiate()
 				enemies.add_child(e)
 				e.position = Vector2(randi_range(64, 200), randi_range(-80, 80))
+		if Input.is_key_pressed(KEY_T) and just_pressed:
+			var enemy : Enemy = enemy_1.instantiate()
+			add_child(enemy)
+			enemy.position = Vector2(195, randi_range(-99, 99))
 		if Input.is_key_pressed(KEY_E) and just_pressed:
 			if !e:
 				e_e = enemy_scn.instantiate()
