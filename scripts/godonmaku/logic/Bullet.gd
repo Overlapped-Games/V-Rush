@@ -72,7 +72,7 @@ var moving := false
 var active := false
 var can_graze := true
 
-var player : Player
+#var player : Player
 
 func _ready() -> void:
 	add_to_group("bullets")
@@ -91,7 +91,7 @@ func _ready() -> void:
 	screen_extents = get_viewport_rect().size / (2 * camera.zoom)
 	#print("h=%s" % [screen_extents])
 	
-	player = get_tree().get_first_node_in_group("player")
+	#player = get_tree().get_first_node_in_group("player")
 	
 	#camera_area.area_exited.connect(_on_exited_screen)
 	#PhysicsServer2D.area_set_monitor_callback(camera.area.get_rid(), func(status, area_rid, instance_id, area_shape_idx, self_shape_idx): print("huh - %s" % [status]))

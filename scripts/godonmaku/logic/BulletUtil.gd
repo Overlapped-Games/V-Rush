@@ -5,7 +5,8 @@ enum BulletType {
 	NON_DIRECTIONAL,
 	NON_DIRECTIONAL_MEDIUM,
 	DIRECTIONAL,
-	VECTOR
+	VECTOR,
+	BLIGHT_BOMB
 }
 
 enum BulletShape {
@@ -17,7 +18,8 @@ enum BulletShape {
 # TODO: if making an actual plugin, make load bullets from a folder or something
 const BULLETS := {
 	BulletType.NON_DIRECTIONAL: preload("res://assets/bullets/bullet.tscn"),
-	BulletType.NON_DIRECTIONAL_MEDIUM: preload("res://assets/bullets/bullet_medium.tscn")
+	BulletType.NON_DIRECTIONAL_MEDIUM: preload("res://assets/bullets/bullet_medium.tscn"),
+	BulletType.BLIGHT_BOMB: preload("res://assets/bullets/blight_bomb.tscn")
 }
 
 const BULLET_SPRITES := {
@@ -83,8 +85,15 @@ func get_next_bullet(bullet_type : BulletUtil.BulletType) -> Bullet:
 		return bullet
 	else:
 		enemy_pool.add_child(get_bullet_scene(bullet_type).instantiate())
-		var b = enemy_pool.get_child(bullet_index)
 		bullet_index += 1
+		
+		while bullet_index >= enemy_pool.get_child_count():
+			enemy_pool.add_child(get_bullet_scene(bullet_type).instantiate())
+		print("[%s]c=%s, %s" % [bullet_index, enemy_pool.get_child_count(), BulletUtil.BulletType.keys()[bullet_type]])
+		var b = enemy_pool.get_child(bullet_index - 1)
+		print("enemy_pool.get_child(%s - 1)=%s" % [bullet_index, enemy_pool.get_child(bullet_index - 1)])
+		#var b = enemy_pool.get_child(bullet_index)
+		#bullet_index += 1
 		return b
 
 

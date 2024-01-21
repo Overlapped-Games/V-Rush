@@ -1,14 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://27mjt2ghlm71"]
+[gd_scene load_steps=7 format=3 uid="uid://27mjt2ghlm71"]
 
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_50h2q"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="2_p4fp6"]
+[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="3_0my3c"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="3_1vm38"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f6anh"]
 size = Vector2(16, 16)
 
-[node name="Enemy" type="RigidBody2D"]
-script = ExtResource("1_50h2q")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2qh48"]
+size = Vector2(16, 16)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Enemy" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource("1_50h2q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_f6anh")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_2qh48")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="BeehaveTree" type="Node" parent="."]
+script = ExtResource("2_p4fp6")
+
+[node name="MoveToPoint" type="Node" parent="BeehaveTree"]
+script = ExtResource("3_1vm38")
+
+[node name="point" type="Marker2D" parent="BeehaveTree/MoveToPoint"]
+top_level = true
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("3_0my3c")

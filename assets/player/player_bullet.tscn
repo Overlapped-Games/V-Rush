@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dgnd1lnuc5jw2" path="res://assets/art/bullets/player_bullets.png" id="1_v2qv8"]
 
 [node name="PlayerBullet" type="Sprite2D"]
+z_index = 2
 texture = ExtResource("1_v2qv8")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 8)

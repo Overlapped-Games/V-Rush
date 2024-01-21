@@ -18,46 +18,62 @@ enum Angle {
 
 #@onready var pool : Node2D = $Pool
 
+
+@export_group("Bullet settings")
 @export var bullet_type : BulletUtil.BulletType
+@export var move_type := Bullet.MoveType.LINE
+@export var velocity := 100
+@export var max_bounces := 0
 @export var bullet_shape := BulletUtil.BulletShape.CIRCLE
 @export var shape_properties := {}
 
+#var bullet_scn : PackedScene
 var per_bullet_f : Callable = func(bullet : Bullet): pass
 var move_f : Callable:
 	set(value):
 		move_f = value
 		moving = true
 var sequence : Callable
-var target : Vector2
-#var pattern_origin : Vector2
-#var bullet_scn : PackedScene
 
-var angle_type : Angle = Angle.FIXED
-var fire_angle_modifier := 0.0
-var pattern_rot := 0.0
-var stacks := 1
-var velocity_modifier := 0.0
-var t_m := 0.0
+@export var target : Vector2
+
+@export_group("Ring settings")
+@export var angle_type : Angle = Angle.FIXED
+@export var line_count := 1
+@export var fire_angle := 0.0
+@export var spread := 1
+@export var spread_degrees := 0.0
+@export var pattern_origin := Vector2.ZERO
+@export var origin_offset := 1
+@export var fire_angle_modifier := 0.0
+@export var pattern_rot := 0.0
+
+@export_group("Stack settings")
+@export var stacking := false
+@export var stacks := 1
+@export var velocity_modifier := 0.0
+
+@export_group("Spin settings")
+@export var spin_rate := 0.0
 
 # If 0, repeats until told to stop
-var t := 0.0
-var max_repeats := 0
-var repeats := 0
-var repeatable : Callable
-var processed_frames := 0.0
-var repeat_frames := 0.0
-var call_rate := 1.0
-var call_delay := 0.0
-var repeats_to_delay := 1
-var spin_rate := 0.0
-var max_bounces := 0
-var move_type := Bullet.MoveType.LINE
+@export_group("Repeat settings")
+@export var repeating := false
+@export var max_repeats := 0
+@export var repeats := 0
+@export var repeatable : Callable
+@export var processed_frames := 0.0
+@export var repeat_frames := 0.0
+@export var call_rate := 1.0
+@export var call_delay := 0.0
+@export var repeats_to_delay := 1
 
-var active := false
-var repeating := false
+@export var moving := false
+var t_m := 0.0
+
+var t := 0.0
 var delaying_call := false
-var stacking := false
-var moving := false
+var active := false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -150,8 +166,8 @@ func _start():
 	fire_angle_modifier = 0
 	move_type = Bullet.MoveType.LINE
 	per_bullet_f = func(bullet : Bullet): pass
-	sequence.call()
 	set_physics_process(true)
+	sequence.call()
 
 
 func _stop() -> void:
@@ -235,10 +251,15 @@ func laser(f : Callable = func(): pass) -> void:
 	pass
 
 
-func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, origin_offset := 1, velocity := 100, acceleration := 0, max_velocity := 500, f : Callable = func(bullet : Bullet = null): pass) -> void:
-	if spread < 1: spread = 1
+func ring(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, origin_offset := 1, vel := 100, acceleration := 0, max_velocity := 500, f : Callable = func(bullet : Bullet = null): pass) -> void:
+	line_count = lines
+	self.fire_angle = fire_angle
+	self.spread = spread if spread >= 1 else 1
+	self.spread_degrees = spread_degrees
+	self.origin_offset = origin_offset
+	velocity = vel
 	#var pattern_origin := global_position
-	var origin := Vector2(global_position.x + (origin_offset * cos(360.0/lines)), global_position.y + (origin_offset * sin(360.0/lines)))
+	pattern_origin = Vector2(global_position.x + (origin_offset * cos(360.0/line_count)), global_position.y + (origin_offset * sin(360.0/line_count)))
 	#print("%s vs %s" % [pattern_origin, origin])
 	# get spread angle
 	var spread_rad : float = spread_degrees * PI / 180
@@ -246,12 +267,12 @@ func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, or
 	# odd aims at target, even aims at the sides
 	#var direction = dir_to_target.from_angle(dir_to_target.angle() + fire_angle) if spread % 2 != 0 else dir_to_target.from_angle(dir_to_target.angle() + fire_angle + (spread_rad / 2))
 	var direction = dir_to_target if spread % 2 != 0 else dir_to_target.from_angle(dir_to_target.angle() + fire_angle + (spread_rad / 2))
-	var radians : float = 2 * PI / lines # convert to radians for function params
+	var radians : float = 2 * PI / line_count # convert to radians for function params
 	f.call()
 	# stacks
 	for stack in range(1, stacks + 1):
 		var v = velocity + (velocity * velocity_modifier * stack)
-		# fire additional lines if should spread from a given line
+		# fire additional ring if should spread from a given line
 		#print("%s - %s = %s" % [ceil(spread / 2.0), ceil(-spread / 2.0), ceil(spread / 2.0) - ceil(-spread / 2.0)])
 		for i in range(ceil(-spread / 2.0), ceil(spread / 2.0)):
 			var fire_direction : Vector2
@@ -259,13 +280,13 @@ func lines(lines := 1, fire_angle := 0.0, spread := 1, spread_degrees := 0.0, or
 			var fire_origin : Vector2
 			var bullet : Bullet
 			#print("i=%s, %s, %s, %s" % [i, 1 + (i * spread_rad), direction, dir])
-			for line in range(1, lines + 1):
+			for line in range(1, line_count + 1):
 				bullet = BulletUtil.get_next_bullet(bullet_type)
 				per_bullet_f.call(bullet)
 				bullet.move_type = move_type
 				#print("firing[%s] - %s" % [line, dir.from_angle(dir.angle() + pattern_rot + (radians * line))])
 				angle = (direction.angle() + pattern_rot + radians) + (radians * line)
-				fire_origin = global_position + (origin.from_angle(angle) * origin_offset)
+				fire_origin = global_position + (pattern_origin.from_angle(angle) * origin_offset)
 				fire_direction = global_position.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
 				if max_bounces > 0: bullet.max_bounces = max_bounces

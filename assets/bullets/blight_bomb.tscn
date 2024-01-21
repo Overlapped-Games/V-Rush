@@ -8,11 +8,15 @@
 radius = 8.0
 
 [node name="BlightBomb" type="Sprite2D"]
-self_modulate = Color(0.1, 100, 0.1, 1)
+modulate = Color(0.1, 100, 0.1, 1)
+z_index = 2
 texture = ExtResource("1_5awww")
 region_enabled = true
 region_rect = Rect2(8, 0, 16, 16)
 script = ExtResource("2_0n4cu")
+properties = {
+"radius": 8
+}
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false

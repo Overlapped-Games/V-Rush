@@ -19,10 +19,11 @@ func _ready() -> void:
 		detonation_pattern.name = "dp"
 		detonation_pattern.fixed(Vector2.LEFT, BulletUtil.BulletType.NON_DIRECTIONAL,
 			detonation_pattern.fire.bind(
-				detonation_pattern.lines.bind(6, 0, 1, 0, 16, 120, 0, 500,
-					detonation_pattern.per_bullet.bind(
-						func(bullet : Bullet): bullet.hitbox_layer = bullet.hitbox_layer | 0b0100_0000_0000
-					)
+				detonation_pattern.ring.bind(6, 0, 1, 0, 16, 120, 0, 500,
+					detonation_pattern.per_bullet.bind(func(bullet : Bullet): 
+						bullet.hitbox_layer = bullet.hitbox_layer | 0b0100_0000_0000 # TODO: freezes up when detonating bombs
+						bullet.modulate = Color8(26, 255, 26)
+						)
 				)
 			)
 		)

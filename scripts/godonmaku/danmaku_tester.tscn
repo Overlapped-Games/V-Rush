@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbegfoka0n8io"]
+[gd_scene load_steps=19 format=3 uid="uid://cbegfoka0n8io"]
 
 [ext_resource type="Script" path="res://scripts/godonmaku/DanmakuTest.gd" id="1_xiarx"]
 [ext_resource type="PackedScene" uid="uid://cmt1ixwslwsfj" path="res://scripts/godonmaku/cammaku.tscn" id="2_ebxon"]
@@ -7,6 +7,21 @@
 [ext_resource type="Texture2D" uid="uid://cvh61b7ocx2gb" path="res://assets/art/background/wire_frame_bg.png" id="3_nyuf3"]
 [ext_resource type="PackedScene" uid="uid://cwf7w3h8xlg15" path="res://assets/player/player.tscn" id="4_jjr3t"]
 [ext_resource type="Texture2D" uid="uid://crnxufl30ggts" path="res://assets/art/background/white_background.png" id="5_o7gbd"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="8_kj0dc"]
+[ext_resource type="Texture2D" uid="uid://bxrxgvhay4bnc" path="res://assets/art/bullets/enemy_bullets.png" id="9_6okma"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="9_vopcw"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="10_um57h"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="10_vakci"]
+[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="11_0ljhi"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="11_pricw"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveTowards.gd" id="13_klhtg"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="14_kj17q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6anh"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdvip"]
+size = Vector2(16, 16)
 
 [node name="Node2D" type="Node2D" groups=["world"]]
 script = ExtResource("1_xiarx")
@@ -35,3 +50,61 @@ z_index = -10
 z_as_relative = false
 position = Vector2(0, 2)
 texture = ExtResource("3_nyuf3")
+
+[node name="Enemy" type="RigidBody2D" parent="."]
+position = Vector2(194.917, -98.8982)
+gravity_scale = 0.0
+script = ExtResource("8_kj0dc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("RectangleShape2D_f6anh")
+
+[node name="Hurtbox" type="Area2D" parent="Enemy"]
+position = Vector2(-194.917, 98.8982)
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Enemy/Hurtbox"]
+shape = SubResource("RectangleShape2D_wdvip")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy"]
+z_index = 1
+rotation = -1.5708
+texture = ExtResource("9_6okma")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="Patterns" type="Node2D" parent="Enemy"]
+
+[node name="Pattern1" type="Node2D" parent="Enemy/Patterns"]
+script = ExtResource("10_vakci")
+
+[node name="BasicEnemyAI" type="Node" parent="Enemy" node_paths=PackedStringArray("actor")]
+script = ExtResource("9_vopcw")
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="Enemy/BasicEnemyAI"]
+script = ExtResource("11_pricw")
+
+[node name="MoveToPoint" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("10_um57h")
+speed = 150
+
+[node name="point" type="Marker2D" parent="Enemy/BasicEnemyAI/SequenceComposite/MoveToPoint"]
+top_level = true
+position = Vector2(98.9167, -50.8982)
+
+[node name="FirePattern" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("14_kj17q")
+
+[node name="MoveTowards" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("13_klhtg")
+speed = 150
+
+[node name="point" type="Marker2D" parent="Enemy/BasicEnemyAI/SequenceComposite/MoveTowards"]
+top_level = true
+position = Vector2(-192, 0)
+
+[node name="Blackboard" type="Node" parent="Enemy"]
+script = ExtResource("11_0ljhi")

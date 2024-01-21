@@ -121,6 +121,7 @@ escape_menu={
 2d_physics/layer_9="player_grazebox"
 2d_physics/layer_10="player_hurtbox"
 2d_physics/layer_11="blight_bomb"
+2d_physics/layer_12="enemy_hurtbox"
 
 [rendering]
 

@@ -58,6 +58,7 @@ var bugs := []
 
 func _ready() -> void:
 	hurtbox.hit.connect(_on_hit)
+	hurtbox.body_entered.connect(_on_hit_body)
 	grazebox.grazed.connect(_on_grazed)
 	camera = get_tree().get_first_node_in_group("camera") as Cammaku
 	screen_extents = get_viewport_rect().size / (2 * camera.zoom)
@@ -147,8 +148,8 @@ func revive() -> void:
 	show()
 
 
-func _on_hit(bullet : Bullet) -> void:
-	current_health = clampi(current_health - max(bullet.damage - defense, 1), 0, max_health)
+func damage(damage : int) -> void:
+	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
 	if current_health == 0:
 		print("DEAD")
 		set_physics_process(false)
@@ -158,6 +159,14 @@ func _on_hit(bullet : Bullet) -> void:
 	
 	set_invulnerable(true)
 	animator.play("invulnerable_flash")
+
+
+func _on_hit_body(body : Node) -> void:
+	damage(10)
+
+
+func _on_hit(bullet : Bullet) -> void:
+	damage(bullet.damage)
 
 
 # TODO: implement collecting power-ups. when change stats, should updat all projectile stats too

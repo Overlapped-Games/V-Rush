@@ -45,13 +45,38 @@ func _input(event: InputEvent) -> void:
 					c_gen.delay.bind(1.4, 16,
 						c_gen.repeat.bind(20, 0,
 							c_gen.fire.bind(
-								c_gen.lines.bind(6, 0, 1, 0, 1, 50, 0, 500
+								c_gen.ring.bind(6, 0, 1, 0, 1, 50, 0, 500
 								)
 							)
 						)
 					)
 				)
 				c_gen._start()
+		if Input.is_key_pressed(KEY_R) and just_pressed:
+			if !e:
+				e_e = enemy_scn.instantiate()
+				add_child(e_e)
+				e_e.defeated.connect(func(enemy): e_e = null)
+				e = danmaku.instantiate() as Danmaku
+				e_e.add_child(e)
+			if !e.active:
+				e_e.global_position = Vector2.ZERO
+				#e.chase(GodonmakuUtil.BulletType.NON_DIRECTIONAL, 
+					#e.repeat.bind(1, 0,
+						#e.fire.bind(
+							#e.ring.bind(16, 4, 5, 32, 50, 0, 500,
+								#e.stack.bind(4, 0.3)
+							#)
+						#)
+					#)
+				#)
+				e.chase(BulletUtil.BulletType.BLIGHT_BOMB, 
+					e.fire.bind(
+						e.ring.bind(1, 0, 3, 20, 1, 60, 0, 500
+						)
+					)
+				)
+				e._start()
 		if Input.is_key_pressed(KEY_B) and just_pressed:
 			var b_1 : BlightBomb = blight_bomb_scn.instantiate()
 			var b_2 : BlightBomb = blight_bomb_scn.instantiate()
@@ -79,7 +104,7 @@ func _input(event: InputEvent) -> void:
 				#e.chase(GodonmakuUtil.BulletType.NON_DIRECTIONAL, 
 					#e.repeat.bind(1, 0,
 						#e.fire.bind(
-							#e.lines.bind(16, 4, 5, 32, 50, 0, 500,
+							#e.ring.bind(16, 4, 5, 32, 50, 0, 500,
 								#e.stack.bind(4, 0.3)
 							#)
 						#)
@@ -88,7 +113,7 @@ func _input(event: InputEvent) -> void:
 				e.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
 					e.repeat.bind(32, 16,
 						e.fire.bind(
-							e.lines.bind(4, 0, 1, 0, 1, 40, 0, 500,
+							e.ring.bind(4, 0, 1, 0, 1, 40, 0, 500,
 								e.spin.bind(0.125,
 									e.bounce.bind(1,
 										e.per_bullet.bind(
@@ -101,7 +126,6 @@ func _input(event: InputEvent) -> void:
 					)
 				)
 				e._start()
-				
 			if !d:
 				d_e = enemy_scn.instantiate()
 				add_child(d_e)
@@ -114,7 +138,7 @@ func _input(event: InputEvent) -> void:
 				d.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
 					d.repeat.bind(16, 8,
 						d.fire.bind(
-							d.lines.bind(4, 0, 1, 0, 1, 150, 0, 500,
+							d.ring.bind(4, 0, 1, 0, 1, 150, 0, 500,
 								d.per_bullet.bind(
 									d.curve.bind(270)
 									#d.wave.bind(8, -32)
@@ -136,7 +160,7 @@ func _input(event: InputEvent) -> void:
 				#e.chase(GodonmakuUtil.BulletType.NON_DIRECTIONAL, 
 					#e.repeat.bind(1, 0,
 						#e.fire.bind(
-							#e.lines.bind(16, 4, 5, 32, 50, 0, 500,
+							#e.ring.bind(16, 4, 5, 32, 50, 0, 500,
 								#e.stack.bind(4, 0.3)
 							#)
 						#)
@@ -145,7 +169,7 @@ func _input(event: InputEvent) -> void:
 				e.fixed(Vector2(-1, 0), BulletUtil.BulletType.NON_DIRECTIONAL, 
 					e.repeat.bind(32, 128,
 						e.fire.bind(
-							e.lines.bind(2, 0, 2, 30, 1, 30, 0, 500,
+							e.ring.bind(2, 0, 2, 30, 1, 30, 0, 500,
 								e.spin.bind(-0.125,
 									e.stack.bind(3, 0.3)
 								)
@@ -174,7 +198,7 @@ func _input(event: InputEvent) -> void:
 				#d.from_origin(bullet_scn, 
 					#d.repeat.bind(8, 20,
 						#d.fire.bind(
-							#d.lines.bind(15, 1, 20, 48, get_global_mouse_position(), 80, 0, 500,
+							#d.ring.bind(15, 1, 20, 48, get_global_mouse_position(), 80, 0, 500,
 								#d.spin.bind(false, 0.25
 									##d.stack.bind(4, 0.3)
 								#)
@@ -185,7 +209,7 @@ func _input(event: InputEvent) -> void:
 				#d.fixed(Vector2(-1, 0), BulletUtil.BulletType.NON_DIRECTIONAL, 
 					#d.repeat.bind(8, 6,
 						#d.fire.bind(
-							#d.lines.bind(16, 180, 2, 5, 48, 100, 0, 500
+							#d.ring.bind(16, 180, 2, 5, 48, 100, 0, 500
 							#)
 						#)
 					#)
@@ -193,7 +217,7 @@ func _input(event: InputEvent) -> void:
 				d.fixed(Vector2(-1, 0), BulletUtil.BulletType.NON_DIRECTIONAL, 
 					d.repeat.bind(16, 64,
 						d.fire.bind(
-							d.lines.bind(16, 0, 1, 5, 48, 100, 0, 500,
+							d.ring.bind(16, 0, 1, 5, 48, 100, 0, 500,
 								d.random_angle.bind(-5, 20,
 									d.spin.bind(0.125,
 										d.bounce.bind(1)
@@ -209,7 +233,7 @@ func _input(event: InputEvent) -> void:
 				#d.fixed(Vector2(-1, 0), GodonmakuUtil.BulletType.NON_DIRECTIONAL, 
 					#d.repeat.bind(8, 6,
 						#d.fire.bind(
-							#d.lines.bind(16, 1, 0, 32, 150, 0, 500,
+							#d.ring.bind(16, 1, 0, 32, 150, 0, 500,
 								#d.spin.bind(-0.25
 										###d.stack.bind(4, 0.3)
 								#)
@@ -236,7 +260,7 @@ func _input(event: InputEvent) -> void:
 				#d.from_origin(bullet_scn, 
 					#d.repeat.bind(8, 20,
 						#d.fire.bind(
-							#d.lines.bind(15, 1, 20, 48, get_global_mouse_position(), 80, 0, 500,
+							#d.ring.bind(15, 1, 20, 48, get_global_mouse_position(), 80, 0, 500,
 								#d.spin.bind(false, 0.25
 									##d.stack.bind(4, 0.3)
 								#)
@@ -246,7 +270,7 @@ func _input(event: InputEvent) -> void:
 				#)
 			d.chase(BulletUtil.BulletType.NON_DIRECTIONAL, 
 				d.fire.bind(
-					d.lines.bind(1, 0, 7, 5, 0, 70, 0, 500,
+					d.ring.bind(1, 0, 7, 5, 0, 70, 0, 500,
 						d.stack.bind(4, 0.3,
 							d.bounce.bind(2)
 						)
@@ -265,7 +289,7 @@ func _input(event: InputEvent) -> void:
 				
 			e.chase(BulletUtil.BulletType.NON_DIRECTIONAL_MEDIUM, 
 				e.fire.bind(
-					e.lines.bind(1, 0, 4, 10, 0, 80, 0, 500,
+					e.ring.bind(1, 0, 4, 10, 0, 80, 0, 500,
 						e.stack.bind(4, 0.3)
 					)
 				)
