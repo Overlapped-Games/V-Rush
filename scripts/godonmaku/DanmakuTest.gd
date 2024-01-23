@@ -63,7 +63,7 @@ func _input(event: InputEvent) -> void:
 				e_e.add_child(e)
 			if !e.active:
 				e_e.global_position = Vector2.ZERO
-				#e.chase(GodonmakuUtil.BulletType.NON_DIRECTIONAL, 
+				#e.chase(GodonmakuUtil.BulletType.NON_DIRECTIONAL,  
 					#e.repeat.bind(1, 0,
 						#e.fire.bind(
 							#e.ring.bind(16, 4, 5, 32, 50, 0, 500,

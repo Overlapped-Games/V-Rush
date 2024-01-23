@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgibltnqj3gjs"]
+
+[ext_resource type="Script" path="res://scripts/events/EventTrigger.gd" id="1_jt2g4"]
+[ext_resource type="Script" path="res://assets/events/enemy_spawn_events/EnemySpawnEvent.gd" id="2_mwyhx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k57w"]
+
+[node name="EventTrigger" type="Area2D"]
+script = ExtResource("1_jt2g4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7k57w")
+
+[node name="Event" type="Node" parent="."]
+script = ExtResource("2_mwyhx")

@@ -9,6 +9,7 @@ signal defeated(enemy : Enemy) # ded
 @onready var hurtbox : Area2D = $Hurtbox
 @onready var animator : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite
+@onready var health_bar : TextureProgressBar = $HealthBar
 
 @onready var ph_delta : float = get_physics_process_delta_time()
 
@@ -28,6 +29,7 @@ var t : float = 0.0
 func _ready() -> void:
 	set_physics_process(true)
 	set_invulnerable(false)
+	health_bar.hide()
 	t = 0
 	defeated.connect(GameManager._on_enemy_defeated)
 	hit.connect(GameManager._on_enemy_hit)
@@ -63,7 +65,10 @@ func _on_hit(bullet : Bullet) -> void:
 		set_invulnerable(true)
 	current_health = clampi(current_health - max(bullet.damage - defense, 1), 0, max_health)
 	var tween : Tween = create_tween()
-	tween.tween_property(self, "modulate:v", 1, 5 * ph_delta).from(15)
+	tween.tween_property(sprite, "modulate:v", 1, 5 * ph_delta).from(15)
+	if current_health > 0:
+		health_bar.show()
+		health_bar.value = 100.0 * current_health / max_health 
 	
 	if current_health == 0:
 		print("DEAD")

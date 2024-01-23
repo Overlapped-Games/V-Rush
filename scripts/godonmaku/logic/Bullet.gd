@@ -80,7 +80,7 @@ func _ready() -> void:
 	set_physics_process(false)
 	set_as_top_level(true)
 	active = false
-	print("HI")
+	#print("HI")
 	
 	virtual_pos = global_position
 	velocity = base_velocity

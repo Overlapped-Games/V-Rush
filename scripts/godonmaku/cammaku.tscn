@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmt1ixwslwsfj"]
+[gd_scene load_steps=3 format=3 uid="uid://cmt1ixwslwsfj"]
 
 [ext_resource type="Script" path="res://scripts/godonmaku/Cammaku.gd" id="1_pyyx0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljwk1"]
+size = Vector2(426, 240)
 
 [node name="Cammaku" type="Camera2D" groups=["camera"]]
 script = ExtResource("1_pyyx0")
@@ -9,4 +12,11 @@ script = ExtResource("1_pyyx0")
 collision_layer = 32
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(214, -124, 214, 120, -214, 120, -214, -120, 214, -120, 214, -124, -217, -124, -217, 124, 217, 124, 217, -124)
+polygon = PackedVector2Array(213, -124, 213, 120, -213, 120, -213, -120, 213, -120, 213, -124, -217, -124, -217, 124, 217, 124, 217, -124)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4096
+collision_mask = 8192
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ljwk1")

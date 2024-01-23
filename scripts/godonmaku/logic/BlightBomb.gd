@@ -13,6 +13,9 @@ signal detonated(value : int)
 @export var score_value := 2000
 
 
+var a_t := 0.0
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
@@ -20,9 +23,9 @@ func _ready() -> void:
 	hitbox.hit.connect(_on_hit)
 	hitbox.area_entered.connect(_on_hit_by_blight)
 	collider.set_disabled(true)
-	if detonation_pattern:
-		detonation_pattern.per_bullet_f = func(bullet : Bullet): bullet.modulate = Color8(26, 255, 26)
-	
+	#if detonation_pattern:
+		#detonation_pattern.per_bullet_f = func(bullet : Bullet): bullet.modulate = Color8(26, 255, 26)
+	frame = 14
 	#if !detonation_pattern:
 		#detonation_pattern = Danmaku.new()
 		#add_child(detonation_pattern)
@@ -37,6 +40,17 @@ func _ready() -> void:
 				#)
 			#)
 		#)
+
+
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+	
+	a_t += delta * 7.5
+	
+	if a_t >= 1:
+		a_t = 0
+		frame = (frame - 14 + 1 + 2) % 2 + 14
+
 
 func _fire(origin : Vector2, target_direction : Vector2, bullet_shape : BulletUtil.BulletShape, vel := 100, accel := 0, max_vel := 1000, shape_properties := {}) -> void:
 	super._fire(origin, target_direction, bullet_shape, vel, accel, max_vel, shape_properties)

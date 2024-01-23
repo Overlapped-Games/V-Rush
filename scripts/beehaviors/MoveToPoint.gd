@@ -6,6 +6,7 @@ class_name MoveToPoint extends ActionLeaf
 
 @export var speed : int = 60
 
+var target : Vector2
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings : PackedStringArray = []
@@ -31,13 +32,13 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func before_run(actor: Node, blackboard: Blackboard) -> void:
 	point.set_as_top_level(true)
-
+	target = actor.global_position + point.position 
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
-	if actor.global_position.distance_to(point.global_position) < 1:
-		actor.global_position = point.global_position
+	if actor.global_position.distance_to(target) < 1:
+		actor.global_position = target
 		return SUCCESS
 		
-	actor.global_position += ((point.global_position - actor.global_position).normalized() * get_physics_process_delta_time() * speed)
+	actor.global_position += ((target - actor.global_position).normalized() * get_physics_process_delta_time() * speed)
 	return RUNNING
 
