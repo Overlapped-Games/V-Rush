@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://vcfgelhxwuca"]
+[gd_scene load_steps=8 format=3 uid="uid://vcfgelhxwuca"]
 
 [ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="1_5earo"]
 [ext_resource type="Script" path="res://scripts/menu/main_menu.gd" id="1_hgues"]
+[ext_resource type="Script" path="res://scripts/menu/CanvasLayer.gd" id="3_mfxta"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4asp4"]
 
@@ -40,6 +41,7 @@ theme = ExtResource("1_5earo")
 theme_override_colors/font_pressed_color = Color(0.584314, 1, 0.552941, 1)
 theme_override_colors/font_hover_color = Color(0.764706, 0, 0.992157, 1)
 theme_override_colors/font_focus_color = Color(0.764706, 0, 0.992157, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.764706, 0, 0.992157, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4asp4")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0c8vq")
@@ -69,6 +71,9 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0c8vq")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jeo4x")
 text = "Quit"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("3_mfxta")
 
 [connection signal="pressed" from="Control/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]

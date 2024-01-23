@@ -43,6 +43,14 @@ func _ready() -> void:
 
 #func _physics_process(delta: float) -> void:
 	#print("FPS:", Engine.get_frames_per_second())
+func next_level():
+	GameManager.current_level += 1
+	if GameManager.current_level >= len(level_colors) - 1:
+		GameManager.current_level = 0
+	bg.set_target_color(level_colors[GameManager.current_level - 1])
+	
+	#increase enemy health in here.
+	
 
 
 func _input(event: InputEvent) -> void:
@@ -92,17 +100,10 @@ func _input(event: InputEvent) -> void:
 				e._start()
 				
 
-
-
-# -------------------------------- Test Background -----------------------------
+# ------------------- Test Background as input for now--------------------------
 		if Input.is_key_pressed(KEY_N) and just_pressed:
-			GameManager.current_level += 1
-			if GameManager.current_level >= len(level_colors) - 1:
-				GameManager.current_level = 0
-			
-			bg.set_target_color(level_colors[GameManager.current_level - 1])
+			next_level()
 # ------------------------------------------------------------------------------
-
 
 		if Input.is_key_pressed(KEY_B) and just_pressed:
 			var b_1 : BlightBomb = blight_bomb_scn.instantiate()

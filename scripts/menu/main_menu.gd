@@ -25,7 +25,6 @@ func _on_play_pressed():
 	fade = true
 
 func play_menu_transition() -> void:
-	#GameManager.visible_canvas()
 	get_tree().change_scene_to_file("res://assets/menus/scenes/transition.tscn")
 
 func _on_settings_pressed() -> void:
