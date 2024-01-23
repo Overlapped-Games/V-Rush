@@ -13,6 +13,7 @@ var skew_count := 0
 func _ready() -> void:
 	background = get_child(0).duplicate(0b0111)
 	original_position = background.global_position
+	#set_physics_process(false)
 
 
 func _physics_process(delta : float) -> void:

@@ -32,14 +32,11 @@ z_as_relative = false
 texture = ExtResource("5_o7gbd")
 
 [node name="SkewllaxBackground" type="Node2D" parent="Stage/WhiteBackground"]
-position = Vector2(0, 1)
 script = ExtResource("2_r8mg6")
 scroll_rate = 1.0
-max_skews = null
 
 [node name="WireFrameBg" type="Sprite2D" parent="Stage/WhiteBackground/SkewllaxBackground"]
 z_index = -10
 z_as_relative = false
-position = Vector2(0, 2)
 texture = ExtResource("3_nyuf3")
 script = ExtResource("8_dlciu")
