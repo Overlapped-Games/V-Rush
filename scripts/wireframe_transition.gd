@@ -3,7 +3,6 @@ extends Sprite2D
 var transition_speed : float = 0.01
 var target_color : Color
 
-
 func print_current() -> void:
 	print(str('Color(%s, %s, %s)' % [str(target_color.r), str(target_color.g), str(target_color.b)]))
 
@@ -26,3 +25,4 @@ func approach(current: float, target: float, speed: float) -> float:
 		return max(current - speed, target)
 	else:
 		return current
+	

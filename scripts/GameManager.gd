@@ -22,10 +22,10 @@ func _ready() -> void:
 	var window : Window = get_tree().root
 	window.size = Vector2(1280, 720)
 	
-	player = get_tree().get_first_node_in_group("player")
-	player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
-	health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
-	score_label.text = "%012d" % score # sets digits to 12 digits, fills unused with 0s
+	#player = get_tree().get_first_node_in_group("player")
+	#player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
+	#health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
+	#score_label.text = "%012d" % score # sets digits to 12 digits, fills unused with 0s
 
 
 func _input(event: InputEvent) -> void:
