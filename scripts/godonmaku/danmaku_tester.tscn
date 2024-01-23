@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbegfoka0n8io"]
+[gd_scene load_steps=10 format=3 uid="uid://cbegfoka0n8io"]
 
 [ext_resource type="Script" path="res://scripts/godonmaku/DanmakuTest.gd" id="1_xiarx"]
 [ext_resource type="Script" path="res://scripts/util/Stage.gd" id="2_e4uhn"]

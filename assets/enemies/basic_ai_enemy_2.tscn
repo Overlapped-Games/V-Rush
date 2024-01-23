@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://da4pbjro7bjro"]
 
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_cur6t"]
-[ext_resource type="Texture2D" uid="uid://dx0w4sflkksnj" path="res://assets/art/enemies/enemies.png" id="2_3wgr0"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_3wgr0"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_iui6r"]
 [ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_ob7yg"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_sjgqf"]

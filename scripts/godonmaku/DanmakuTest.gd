@@ -7,6 +7,8 @@ class_name DanmakuTest extends Node2D
 @onready var enemy_1 : PackedScene = preload("res://assets/enemies/basic_ai_enemy_1.tscn")
 @onready var enemy_2 : PackedScene = preload("res://assets/enemies/basic_ai_enemy_2.tscn")
 
+@onready var bg : Sprite2D = $Stage/WhiteBackground/SkewllaxBackground/WireFrameBg
+
 var enemies : Node2D
 
 var d : Danmaku
@@ -37,7 +39,7 @@ func _ready() -> void:
 	enemies = Node2D.new()
 	add_child(enemies)
 	GameManager.init_stat()
-	$WhiteBackground/SkewllaxBackground/WireFrameBg.set_target_color(level_colors[GameManager.current_level - 1])
+	bg.set_target_color(level_colors[GameManager.current_level - 1])
 
 #func _physics_process(delta: float) -> void:
 	#print("FPS:", Engine.get_frames_per_second())
@@ -98,7 +100,7 @@ func _input(event: InputEvent) -> void:
 			if GameManager.current_level >= len(level_colors) - 1:
 				GameManager.current_level = 0
 			
-			$WhiteBackground/SkewllaxBackground/WireFrameBg.set_target_color(level_colors[GameManager.current_level - 1])
+			bg.set_target_color(level_colors[GameManager.current_level - 1])
 # ------------------------------------------------------------------------------
 
 

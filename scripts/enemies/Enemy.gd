@@ -1,3 +1,4 @@
+@tool
 class_name Enemy extends RigidBody2D
 
 
@@ -29,6 +30,9 @@ var t : float = 0.0
 func _ready() -> void:
 	set_physics_process(true)
 	set_invulnerable(false)
+	if !health_bar:
+		health_bar = load("res://assets/enemies/enemy_health_bar.tscn").instantiate()
+		health_bar.name = "HealthBar"
 	health_bar.hide()
 	t = 0
 	defeated.connect(GameManager._on_enemy_defeated)
@@ -79,7 +83,19 @@ func _on_hit(bullet : Bullet) -> void:
 	
 	hit.emit(self)
 
+
 func _on_projectile_collide(projectile : ProjectileBase, damage : int) -> void:
 	#print("hit by player for %s damage" % [damage])
 	pass
 
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings : PackedStringArray = []
+	
+	var children: Array[Node] = get_children()
+
+	if !children.any(func(x): return x is TextureProgressBar and x.name == "HealthBar"):
+		warnings.append("Enemy is missing a healthbar.")
+	
+
+	return warnings
