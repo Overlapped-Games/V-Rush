@@ -38,8 +38,12 @@ func _input(event: InputEvent) -> void:
 		# TODO: implement navigating menu
 
 
+func can_equip_skill() -> bool:
+	return false
+
+
 # TODO: 
-func open_ability_menu() -> void:
+func open_skill_menu() -> void:
 	if !v_rush_menu_open and gauge_ready:
 		v_rush_menu_open = true
 		print("open gauge")
@@ -53,6 +57,11 @@ func _on_player_grazed() -> void:
 		if gauge.value >= 100:
 			print("gauge ready")
 			gauge_ready = true
+
+
+func _on_scorable_hit(value : int) -> void:
+	score += value
+
 
 # small enemy = 500
 # medium enemy = 1000

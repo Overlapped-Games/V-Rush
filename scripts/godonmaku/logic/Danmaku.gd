@@ -26,10 +26,12 @@ enum Angle {
 @export_group("Bullet settings")
 @export var bullet_type : BulletUtil.BulletType
 @export var move_type : Bullet.MoveType = Bullet.MoveType.LINE
+@export_flags_2d_physics var hitbox_layer := 0b0010_0000_0000
 @export var velocity : int = 100
 @export var max_velocity : int = 1000
 @export var acceleration : float = 0.0
 @export var max_bounces : int = 0
+@export var curve_angle : float = 0.0
 @export var bullet_shape : BulletUtil.BulletShape = BulletUtil.BulletShape.CIRCLE
 @export var shape_properties : Dictionary = {}
 
@@ -298,8 +300,10 @@ func fire_ring() -> void:
 			var fire_origin : Vector2
 			var bullet : Bullet
 			#print("i=%s, %s, %s, %s" % [i, 1 + (i * spread_rad), direction, dir])
+			print("line_count=", line_count)
 			for line in range(1, line_count + 1):
 				bullet = BulletUtil.get_next_bullet(bullet_type)
+				bullet.hitbox_layer = hitbox_layer
 				per_bullet_f.call(bullet)
 				bullet.move_type = move_type
 				#print("firing[%s] - %s" % [line, dir.from_angle(dir.angle() + pattern_rot + (radians * line))])
@@ -352,6 +356,7 @@ func ring(lines := 1, fire_ang := 0.0, spread_count := 1, spread_ang := 0.0, o_o
 			for line in range(1, line_count + 1):
 				bullet = BulletUtil.get_next_bullet(bullet_type)
 				per_bullet_f.call(bullet)
+				bullet.curve_angle = curve_angle if bullet_type == Bullet.MoveType.CURVE else 0
 				bullet.move_type = move_type
 				#print("firing[%s] - %s" % [line, dir.from_angle(dir.angle() + pattern_rot + (radians * line))])
 				angle = (direction.angle() + pattern_rot + radians) + (radians * line)
