@@ -2,7 +2,7 @@ extends Node
 
 
 const MAX_SCORE : int = 999_999_999_999
-
+var current_level : int = 1
 
 @onready var health : RichTextLabel = %HealthCounter
 @onready var gauge : TextureProgressBar = $CanvasLayer/Gauge
@@ -21,12 +21,22 @@ var score := 0:
 func _ready() -> void:
 	var window : Window = get_tree().root
 	window.size = Vector2(1280, 720)
-	
-	#player = get_tree().get_first_node_in_group("player")
-	#player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
-	#health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
-	#score_label.text = "%012d" % score # sets digits to 12 digits, fills unused with 0s
+	visible_canvas(false)
 
+
+func init_stat() -> void:
+	visible_menu(false)
+	player = get_tree().get_first_node_in_group("player")
+	player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
+	health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
+	score_label.text = "%012d" % score # sets digits to 12 digits, fills unused with 0s
+
+
+func visible_canvas(arg: bool) -> void:
+	$CanvasLayer.visible = arg
+
+func visible_menu(arg: bool) -> void:
+	$Main_Menu.visible = arg
 
 func _input(event: InputEvent) -> void:
 	if !v_rush_menu_open or (not event is InputEventKey and not event is InputEventAction): return
