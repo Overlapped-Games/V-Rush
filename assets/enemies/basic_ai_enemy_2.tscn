@@ -98,7 +98,7 @@ script = ExtResource("6_r4lj6")
 speed = 120
 
 [node name="point" type="Marker2D" parent="BasicEnemyAI/SequenceComposite/MoveToPoint"]
-position = Vector2(128, 0)
+position = Vector2(-64, 0)
 
 [node name="FirePattern" type="Node" parent="BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_l5fwp")

@@ -18,6 +18,5 @@ texture = ExtResource("2_cyles")
 
 [node name="WireFrameBg" type="Sprite2D" parent="WhiteBackground"]
 modulate = Color(0, 0.75, 1, 1)
-position = Vector2(0, 2)
 texture = ExtResource("3_0etfu")
 script = ExtResource("4_d3tpf")
