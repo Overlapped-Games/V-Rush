@@ -74,6 +74,7 @@ func _ready() -> void:
 				sprite.show()
 				show()
 	)
+	animator.play("invulnerable_flash")
 
 func _physics_process(delta : float) -> void:
 	if Input.is_action_pressed("focus"):

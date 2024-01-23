@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvpaospjlmejf"]
+[gd_scene load_steps=4 format=3 uid="uid://bvpaospjlmejf"]
 
 [ext_resource type="Script" path="res://scripts/util/GameManager.gd" id="1_aqmqm"]
 [ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="2_eiqmw"]
+[ext_resource type="PackedScene" uid="uid://vcfgelhxwuca" path="res://assets/menus/scenes/main_menu.tscn" id="3_wfyga"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_aqmqm")
@@ -72,3 +73,5 @@ offset_bottom = 40.0
 [node name="AbilityMenu" type="GridContainer" parent="CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Main_Menu" parent="." instance=ExtResource("3_wfyga")]

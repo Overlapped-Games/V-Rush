@@ -1,9 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://cbegfoka0n8io"]
 
 [ext_resource type="Script" path="res://scripts/godonmaku/DanmakuTest.gd" id="1_xiarx"]
-[ext_resource type="Script" path="res://scripts/util/Stage.gd" id="2_e4uhn"]
 [ext_resource type="PackedScene" uid="uid://cmt1ixwslwsfj" path="res://scripts/godonmaku/cammaku.tscn" id="2_ebxon"]
-[ext_resource type="Script" path="res://scripts/util/SkewllaxBackground.gd" id="2_r8mg6"]
+[ext_resource type="Script" path="res://scripts/skewllax_background.gd" id="2_r8mg6"]
 [ext_resource type="Texture2D" uid="uid://boulhs6lt0o52" path="res://icon.svg" id="3_dq541"]
 [ext_resource type="Texture2D" uid="uid://cvh61b7ocx2gb" path="res://assets/art/background/wire_frame_bg.png" id="3_nyuf3"]
 [ext_resource type="PackedScene" uid="uid://cwf7w3h8xlg15" path="res://assets/player/player.tscn" id="4_jjr3t"]
@@ -13,33 +12,30 @@
 [node name="Node2D" type="Node2D" groups=["world"]]
 script = ExtResource("1_xiarx")
 
-[node name="Stage" type="Node2D" parent="."]
-script = ExtResource("2_e4uhn")
+[node name="Cammaku" parent="." instance=ExtResource("2_ebxon")]
 
-[node name="Cammaku" parent="Stage" instance=ExtResource("2_ebxon")]
-
-[node name="Sprite2D" type="Sprite2D" parent="Stage"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2(0.125, 0.125)
 texture = ExtResource("3_dq541")
 
-[node name="Player" parent="Stage" instance=ExtResource("4_jjr3t")]
+[node name="Player" parent="." instance=ExtResource("4_jjr3t")]
 
-[node name="WhiteBackground" type="Sprite2D" parent="Stage"]
+[node name="WhiteBackground" type="Sprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)
 z_index = -100
 z_as_relative = false
 texture = ExtResource("5_o7gbd")
 
-[node name="SkewllaxBackground" type="Node2D" parent="Stage/WhiteBackground"]
-position = Vector2(0, 1)
+[node name="SkewllaxBackground" type="Node2D" parent="WhiteBackground"]
 script = ExtResource("2_r8mg6")
 scroll_rate = 1.0
-max_skews = null
 
-[node name="WireFrameBg" type="Sprite2D" parent="Stage/WhiteBackground/SkewllaxBackground"]
+[node name="WireFrameBg" type="Sprite2D" parent="WhiteBackground/SkewllaxBackground"]
 z_index = -10
 z_as_relative = false
 position = Vector2(0, 2)
 texture = ExtResource("3_nyuf3")
 script = ExtResource("8_dlciu")
+
+[node name="Timer" type="Timer" parent="WhiteBackground/SkewllaxBackground/WireFrameBg"]

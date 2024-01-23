@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhhpiqh5shcjx"
-path="res://.godot/imported/enemies.png-7af36326c7b70a5b031c0755176d4b51.ctex"
+uid="uid://fxiqibhdms72"
+path="res://.godot/imported/shift.png-d818d3320f8de3e296be861fcc820fd2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/enemies/enemies.png"
-dest_files=["res://.godot/imported/enemies.png-7af36326c7b70a5b031c0755176d4b51.ctex"]
+source_file="res://assets/menus/assets/keyboard/shift.png"
+dest_files=["res://.godot/imported/shift.png-d818d3320f8de3e296be861fcc820fd2.ctex"]
 
 [params]
 
