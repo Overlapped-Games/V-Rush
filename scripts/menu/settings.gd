@@ -2,7 +2,7 @@ extends Node2D
 
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") or Input.is_action_just_pressed('ui_accept'):
 		load_scene("res://assets/menus/scenes/main_menu.tscn")
 
 

@@ -28,6 +28,7 @@ func play_menu_transition() -> void:
 	get_tree().change_scene_to_file("res://assets/menus/scenes/transition.tscn")
 
 func _on_settings_pressed() -> void:
+	print('settings')
 	get_tree().change_scene_to_file("res://assets/menus/scenes/settings.tscn")
 
 
