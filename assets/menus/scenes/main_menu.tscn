@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://vcfgelhxwuca"]
+
+[ext_resource type="Script" path="res://scripts/godonmaku/Cammaku.gd" id="1_5brta"]
+[ext_resource type="Texture2D" uid="uid://crnxufl30ggts" path="res://assets/art/background/white_background.png" id="2_i3pr4"]
+[ext_resource type="Script" path="res://scripts/skewllax_background.gd" id="3_fhotr"]
+[ext_resource type="Texture2D" uid="uid://cvh61b7ocx2gb" path="res://assets/art/background/wire_frame_bg.png" id="4_ikm4s"]
+
+[node name="Main_Menu" type="Node2D"]
+
+[node name="Cammaku" type="Camera2D" parent="."]
+script = ExtResource("1_5brta")
+
+[node name="white_background" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+texture = ExtResource("2_i3pr4")
+
+[node name="script" type="Node2D" parent="white_background"]
+script = ExtResource("3_fhotr")
+
+[node name="wire" type="Sprite2D" parent="white_background/script"]
+texture_filter = 1
+texture = ExtResource("4_ikm4s")

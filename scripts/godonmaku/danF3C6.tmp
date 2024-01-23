@@ -37,3 +37,5 @@ z_as_relative = false
 position = Vector2(0, 2)
 texture = ExtResource("3_nyuf3")
 script = ExtResource("8_dlciu")
+
+[node name="Timer" type="Timer" parent="WhiteBackground/SkewllaxBackground/WireFrameBg"]

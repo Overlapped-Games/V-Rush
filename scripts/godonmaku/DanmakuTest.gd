@@ -17,6 +17,18 @@ var e_e : Enemy
 
 var player : Player
 
+var level_colors : Array = [
+	Color(0.00, 0.75, 1.00),
+	Color(1.00, 0.20, 0.50),
+	Color(1.00, 0.40, 0.20),
+	Color(1.00, 0.80, 0.00),
+	Color(0.00, 1.00, 0.50),
+	Color(1.00, 0.10, 0.00),
+	Color(1.00, 1.00, 0.00),
+]
+
+var current_level : int = 1
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,7 +39,8 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	enemies = Node2D.new()
 	add_child(enemies)
-
+	$WhiteBackground/SkewllaxBackground/WireFrameBg.set_target_color(level_colors[current_level - 1])
+	
 
 #func _physics_process(delta: float) -> void:
 	#print("FPS:", Engine.get_frames_per_second())
@@ -78,6 +91,14 @@ func _input(event: InputEvent) -> void:
 					)
 				)
 				e._start()
+		if Input.is_key_pressed(KEY_N) and just_pressed:
+			print(current_level)
+			if current_level >= len(level_colors) - 1:
+				current_level = 0
+			current_level += 1
+			$WhiteBackground/SkewllaxBackground/WireFrameBg.set_target_color(level_colors[current_level - 1])
+			$WhiteBackground/SkewllaxBackground/WireFrameBg.print_current()
+
 		if Input.is_key_pressed(KEY_B) and just_pressed:
 			var b_1 : BlightBomb = blight_bomb_scn.instantiate()
 			var b_2 : BlightBomb = blight_bomb_scn.instantiate()
