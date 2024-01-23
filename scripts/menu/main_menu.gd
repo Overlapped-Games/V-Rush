@@ -28,5 +28,9 @@ func play_menu_transition() -> void:
 	#GameManager.visible_canvas()
 	get_tree().change_scene_to_file("res://assets/menus/scenes/transition.tscn")
 
+func _on_settings_pressed() -> void:
+	get_tree().change_scene_to_file("res://assets/menus/scenes/settings.tscn")
+
+
 func _on_quit_pressed():
 	get_tree().quit()

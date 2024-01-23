@@ -1,0 +1,159 @@
+[gd_scene load_steps=19 format=3 uid="uid://82bog2vii2ou"]
+
+[ext_resource type="Script" path="res://scripts/menu/settings.gd" id="1_kb7th"]
+[ext_resource type="Texture2D" uid="uid://nqialc07jrlj" path="res://assets/menus/assets/controller/b_d.png" id="1_pl6uk"]
+[ext_resource type="Texture2D" uid="uid://tj5equ38mjnw" path="res://assets/menus/assets/controller/b_l.png" id="2_qrehv"]
+[ext_resource type="Texture2D" uid="uid://swippsp21uyu" path="res://assets/menus/assets/controller/b_r.png" id="3_35hgj"]
+[ext_resource type="Texture2D" uid="uid://d1crml5tkuk80" path="res://assets/menus/assets/controller/trigger.png" id="4_6ie75"]
+[ext_resource type="Texture2D" uid="uid://cvivjwtnn0o8t" path="res://assets/menus/assets/controller/d.png" id="5_imt0x"]
+[ext_resource type="Texture2D" uid="uid://qv2frqs1gd2x" path="res://assets/menus/assets/controller/l.png" id="6_jxkcc"]
+[ext_resource type="Texture2D" uid="uid://dp5gbclfk30sc" path="res://assets/menus/assets/controller/r.png" id="7_epp1l"]
+[ext_resource type="Texture2D" uid="uid://cp3bxhl8kl2dn" path="res://assets/menus/assets/controller/u.png" id="8_n00mg"]
+[ext_resource type="Texture2D" uid="uid://cxurv30od4nu3" path="res://assets/menus/assets/keyboard/k_z.png" id="9_e7sc6"]
+[ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="10_dllab"]
+[ext_resource type="Texture2D" uid="uid://fxiqibhdms72" path="res://assets/menus/assets/keyboard/shift.png" id="10_wq5ik"]
+[ext_resource type="Texture2D" uid="uid://ct6s4284nlboy" path="res://assets/menus/assets/keyboard/space.png" id="11_yruvf"]
+[ext_resource type="Texture2D" uid="uid://dgcl6t516uj2w" path="res://assets/menus/assets/keyboard/k_down.png" id="12_cw0vx"]
+[ext_resource type="Texture2D" uid="uid://ch6blr00atwrr" path="res://assets/menus/assets/keyboard/k_esc.png" id="12_osvik"]
+[ext_resource type="Texture2D" uid="uid://bf01wof1i0tfx" path="res://assets/menus/assets/keyboard/k_left.png" id="13_dovpk"]
+[ext_resource type="Texture2D" uid="uid://ca28oot8qyhvf" path="res://assets/menus/assets/keyboard/k_right.png" id="14_r4h0i"]
+[ext_resource type="Texture2D" uid="uid://byvjm26ffxd1l" path="res://assets/menus/assets/keyboard/k_up.png" id="15_upsrw"]
+
+[node name="Settings" type="Node2D"]
+script = ExtResource("1_kb7th")
+metadata/_edit_horizontal_guides_ = [46.0, 194.0, 62.0, 64.0, 80.0, 83.0, 99.0, 102.0, 118.0, 121.0, 137.0, 140.0, 156.0, 159.0, 175.0, 178.0]
+metadata/_edit_vertical_guides_ = [142.0, 284.0, 316.0]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -19.0
+offset_right = 446.0
+offset_bottom = 246.0
+color = Color(0, 0, 0, 1)
+
+[node name="b_down" type="Sprite2D" parent="."]
+position = Vector2(300, 148)
+texture = ExtResource("1_pl6uk")
+
+[node name="b_left" type="Sprite2D" parent="."]
+position = Vector2(300, 167)
+texture = ExtResource("2_qrehv")
+
+[node name="b_right" type="Sprite2D" parent="."]
+position = Vector2(133, 227)
+texture = ExtResource("3_35hgj")
+
+[node name="b_up" type="Sprite2D" parent="."]
+position = Vector2(300, 129)
+texture = ExtResource("4_6ie75")
+
+[node name="down" type="Sprite2D" parent="."]
+position = Vector2(300, 72)
+texture = ExtResource("5_imt0x")
+
+[node name="left" type="Sprite2D" parent="."]
+position = Vector2(300, 91)
+texture = ExtResource("6_jxkcc")
+
+[node name="right" type="Sprite2D" parent="."]
+position = Vector2(300, 110)
+texture = ExtResource("7_epp1l")
+
+[node name="up" type="Sprite2D" parent="."]
+position = Vector2(300, 54)
+texture = ExtResource("8_n00mg")
+
+[node name="b_down2" type="Sprite2D" parent="."]
+position = Vector2(250, 148)
+texture = ExtResource("9_e7sc6")
+
+[node name="b_left2" type="Sprite2D" parent="."]
+position = Vector2(250, 167)
+texture = ExtResource("10_wq5ik")
+
+[node name="b_right2" type="Sprite2D" parent="."]
+position = Vector2(92, 227)
+texture = ExtResource("12_osvik")
+
+[node name="b_up2" type="Sprite2D" parent="."]
+position = Vector2(250, 129)
+texture = ExtResource("11_yruvf")
+
+[node name="down2" type="Sprite2D" parent="."]
+position = Vector2(250, 72)
+texture = ExtResource("12_cw0vx")
+
+[node name="left2" type="Sprite2D" parent="."]
+position = Vector2(250, 91)
+texture = ExtResource("13_dovpk")
+
+[node name="right2" type="Sprite2D" parent="."]
+position = Vector2(250, 110)
+texture = ExtResource("14_r4h0i")
+
+[node name="up2" type="Sprite2D" parent="."]
+position = Vector2(250, 54)
+texture = ExtResource("15_upsrw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 92.0
+offset_top = 46.0
+offset_right = 197.0
+offset_bottom = 66.0
+theme = ExtResource("10_dllab")
+text = "up"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 92.0
+offset_top = 64.0
+offset_right = 197.0
+offset_bottom = 84.0
+theme = ExtResource("10_dllab")
+text = "down"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+offset_left = 92.0
+offset_top = 159.0
+offset_right = 197.0
+offset_bottom = 179.0
+theme = ExtResource("10_dllab")
+text = "focus"
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="."]
+offset_left = 92.0
+offset_top = 121.0
+offset_right = 197.0
+offset_bottom = 141.0
+theme = ExtResource("10_dllab")
+text = "fire"
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="."]
+offset_top = 219.0
+offset_right = 105.0
+offset_bottom = 239.0
+theme = ExtResource("10_dllab")
+text = "Back"
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="."]
+offset_left = 92.0
+offset_top = 140.0
+offset_right = 206.0
+offset_bottom = 160.0
+theme = ExtResource("10_dllab")
+text = "ability"
+
+[node name="RichTextLabel7" type="RichTextLabel" parent="."]
+offset_left = 92.0
+offset_top = 102.0
+offset_right = 197.0
+offset_bottom = 122.0
+theme = ExtResource("10_dllab")
+text = "right"
+
+[node name="RichTextLabel8" type="RichTextLabel" parent="."]
+offset_left = 92.0
+offset_top = 83.0
+offset_right = 197.0
+offset_bottom = 103.0
+theme = ExtResource("10_dllab")
+text = "left"
