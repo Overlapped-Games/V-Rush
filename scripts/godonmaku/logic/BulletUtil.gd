@@ -84,16 +84,17 @@ func get_next_bullet(bullet_type : BulletUtil.BulletType) -> Bullet:
 		bullet._swap(bullet_type)
 		return bullet
 	else:
-		enemy_pool.add_child(get_bullet_scene(bullet_type).instantiate())
-		bullet_index += 1
+		#enemy_pool.add_child(get_bullet_scene(bullet_type).instantiate())
+		#bullet_index += 1
 		
 		while bullet_index >= enemy_pool.get_child_count():
+			print("[%s] >= %s" % [bullet_index, enemy_pool.get_child_count()])
 			enemy_pool.add_child(get_bullet_scene(bullet_type).instantiate())
 		print("[%s]c=%s, %s" % [bullet_index, enemy_pool.get_child_count(), BulletUtil.BulletType.keys()[bullet_type]])
-		var b = enemy_pool.get_child(bullet_index - 1)
-		print("enemy_pool.get_child(%s - 1)=%s" % [bullet_index, enemy_pool.get_child(bullet_index - 1)])
+		var b = enemy_pool.get_child(bullet_index)
+		#print("enemy_pool.get_child(%s - 1)=%s" % [bullet_index, enemy_pool.get_child(bullet_index - 1)])
 		#var b = enemy_pool.get_child(bullet_index)
-		#bullet_index += 1
+		bullet_index += 1
 		return b
 
 

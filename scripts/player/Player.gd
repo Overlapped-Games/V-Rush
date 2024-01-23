@@ -35,7 +35,7 @@ const BASE_SPEED := 150.0
 @export var speed_modifier : int = 0
 ## Focus speed multiplier
 @export var focus_speed_multiplier : float = 0.375
-## Ability gauge fill rate
+## Skill gauge fill rate
 @export var gauge_fill_rate : float = 1.0
 
 # gain 1 additional memory every 1024 pieces collected
@@ -52,7 +52,7 @@ var speed_multiplier : float = 1.0
 var camera : Cammaku
 var screen_extents : Vector2
 
-var ability_queue := []
+var skill_queue := []
 var bugs := []
 
 
@@ -103,12 +103,12 @@ func _physics_process(delta : float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventKey and not event is InputEventAction: return
 	
-	if Input.is_action_just_pressed("ability_menu"):
-		GameManager.open_ability_menu()
-	elif Input.is_action_just_pressed("ability"):
-		if ability_queue.is_empty(): return
-		var a = ability_queue.pop_front()
-		print("ability=", a.name)
+	if Input.is_action_just_pressed("skill_menu"):
+		GameManager.open_skill_menu()
+	elif Input.is_action_just_pressed("skill"):
+		if skill_queue.is_empty(): return
+		var a = skill_queue.pop_front()
+		print("skill=", a.name)
 	elif Input.is_action_just_pressed("escape_menu"):
 		print("escape menu")
 

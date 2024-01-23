@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5wchcq4jknt6"]
+[gd_scene load_steps=6 format=3 uid="uid://b5wchcq4jknt6"]
 
 [ext_resource type="Texture2D" uid="uid://bxrxgvhay4bnc" path="res://assets/art/bullets/enemy_bullets.png" id="1_5awww"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/BlightBomb.gd" id="2_0n4cu"]
 [ext_resource type="Script" path="res://scripts/player/Hurtbox.gd" id="3_3hqw0"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="4_8s06t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0cj8a"]
 radius = 8.0
@@ -26,3 +27,13 @@ script = ExtResource("3_3hqw0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_0cj8a")
+
+[node name="dp" type="Node2D" parent="."]
+script = ExtResource("4_8s06t")
+fire_direction = Vector2(-1, 0)
+hitbox_layer = 1536
+velocity = 200
+shape_properties = {
+"radius": 4
+}
+line_count = 6
