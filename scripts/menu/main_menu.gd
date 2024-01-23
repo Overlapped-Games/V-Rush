@@ -5,7 +5,7 @@ var fade_duration : float = 1
 var fade = false
 
 func _ready():
-	$Control/VBoxContainer/Play.grab_focus()
+	#$Control/VBoxContainer/Play.grab_focus()
 	# Create and connect the Timer
 	fade_timer = Timer.new()
 	add_child(fade_timer)
