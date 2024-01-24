@@ -8,5 +8,6 @@ func _ready() -> void:
 	get_tree().create_timer(2.5).timeout.connect(_on_timer_timeout)
 
 func _on_timer_timeout() -> void:
-	GameManager.visible_canvas(true)
-	get_tree().change_scene_to_file("res://assets/levels/stage_1.tscn")
+	GameManager.start_level(1)
+	#get_tree().change_scene_to_file(GameManager.STAGES[1])
+	#get_tree().change_scene_to_file("res://scripts/godonmaku/danmaku_tester.tscn")

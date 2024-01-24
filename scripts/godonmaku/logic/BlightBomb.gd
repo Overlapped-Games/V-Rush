@@ -49,7 +49,8 @@ func _physics_process(delta: float) -> void:
 	
 	if a_t >= 1:
 		a_t = 0
-		frame = (frame - 14 + 1 + 2) % 2 + 14
+		frame = wrapi(frame + 1, 14, 16)
+		#frame = (frame - 14 + 1 + 2) % 2 + 14
 
 
 func _fire(origin : Vector2, target_direction : Vector2, bullet_shape : BulletUtil.BulletShape, vel := 100, accel := 0, max_vel := 1000, shape_properties := {}) -> void:

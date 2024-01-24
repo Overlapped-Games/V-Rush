@@ -1,10 +1,4 @@
-@tool
-class_name GraphEditor extends VBoxContainer
-
-
-@onready var bullet_node : PackedScene = preload("res://scripts/godonmaku/graph/bullet_node_edit.tscn")
-
-@onready var main_graph : MainGraph = $MainGraph
+class_name Level extends Node2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -14,8 +8,4 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
-
-func on_plugin_start() -> void:
 	pass

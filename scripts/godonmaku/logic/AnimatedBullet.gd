@@ -22,4 +22,5 @@ func _physics_process(delta : float) -> void:
 	
 	if a_t >= 1:
 		a_t = 0
-		frame = (frame - frame_start + 1 + (frame_end - frame_start)) % (frame_end - frame_start) + frame_start
+		frame = wrapi(frame + 1, frame_start, frame_end)
+		#frame = (frame - frame_start + 1 + (frame_end - frame_start)) % (frame_end - frame_start) + frame_start
