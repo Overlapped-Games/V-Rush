@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://vcfgelhxwuca"]
+[gd_scene load_steps=14 format=3 uid="uid://vcfgelhxwuca"]
 
 [ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="1_5earo"]
 [ext_resource type="Script" path="res://scripts/menu/main_menu.gd" id="1_hgues"]
-[ext_resource type="Script" path="res://scripts/menu/CanvasLayer.gd" id="3_mfxta"]
+[ext_resource type="Script" path="res://scripts/menu/shader_select.gd" id="2_gsm03"]
+[ext_resource type="Shader" path="res://assets/menus/assets/glitch/glitch_effect.gdshader" id="3_xjehv"]
+[ext_resource type="AudioStream" uid="uid://b7xdtnbrsfl5q" path="res://assets/menus/assets/audio/Menu - Up-down.wav" id="5_rwym6"]
+[ext_resource type="AudioStream" uid="uid://bchbhltf12hr" path="res://assets/menus/assets/audio/Menu - Back-decline.wav" id="6_pi0km"]
+[ext_resource type="AudioStream" uid="uid://bpwwpkl8o8504" path="res://assets/menus/assets/audio/Menu - OK-Select.wav" id="7_u0v0q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpacv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4asp4"]
 
@@ -11,6 +17,14 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0c8vq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jeo4x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jj1jp"]
+shader = ExtResource("3_xjehv")
+shader_parameter/shake_power = 0.03
+shader_parameter/shake_rate = 0.2
+shader_parameter/shake_speed = 5.0
+shader_parameter/shake_block_size = 30.5
+shader_parameter/shake_color_rate = 0.01
 
 [node name="Main_Menu" type="Node2D"]
 script = ExtResource("1_hgues")
@@ -27,6 +41,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("2_gsm03")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 0
@@ -36,12 +51,14 @@ offset_right = 277.0
 offset_bottom = 167.0
 
 [node name="Play" type="Button" parent="Control/VBoxContainer"]
+material = SubResource("ShaderMaterial_dpacv")
 layout_mode = 2
 theme = ExtResource("1_5earo")
-theme_override_colors/font_pressed_color = Color(0.584314, 1, 0.552941, 1)
-theme_override_colors/font_hover_color = Color(0.764706, 0, 0.992157, 1)
-theme_override_colors/font_focus_color = Color(0.764706, 0, 0.992157, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.764706, 0, 0.992157, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 0.498039, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4asp4")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0c8vq")
@@ -51,9 +68,10 @@ text = "Play"
 [node name="Settings" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_5earo")
-theme_override_colors/font_pressed_color = Color(0.584314, 1, 0.552941, 1)
-theme_override_colors/font_hover_color = Color(0.764706, 0, 0.992157, 1)
-theme_override_colors/font_focus_color = Color(0.764706, 0, 0.992157, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.498039, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4asp4")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0c8vq")
@@ -63,19 +81,60 @@ text = "Settings"
 [node name="Quit" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_5earo")
-theme_override_colors/font_pressed_color = Color(0.584314, 1, 0.552941, 1)
-theme_override_colors/font_hover_color = Color(0.764706, 0, 0.992157, 1)
-theme_override_colors/font_focus_color = Color(0.764706, 0, 0.992157, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.498039, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4asp4")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0c8vq")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jeo4x")
 text = "Quit"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="PlayShader" type="ColorRect" parent="Control"]
 visible = false
-script = ExtResource("3_mfxta")
+material = SubResource("ShaderMaterial_jj1jp")
+layout_mode = 2
+offset_left = 136.0
+offset_top = 63.0
+offset_right = 293.0
+offset_bottom = 92.0
+
+[node name="SettingsShader" type="ColorRect" parent="Control"]
+visible = false
+material = SubResource("ShaderMaterial_jj1jp")
+layout_mode = 2
+offset_left = 136.0
+offset_top = 90.0
+offset_right = 293.0
+offset_bottom = 119.0
+
+[node name="QuitShader" type="ColorRect" parent="Control"]
+visible = false
+material = SubResource("ShaderMaterial_jj1jp")
+layout_mode = 2
+offset_left = 136.0
+offset_top = 115.0
+offset_right = 293.0
+offset_bottom = 144.0
+
+[node name="Menu_up-down" type="AudioStreamPlayer2D" parent="Control"]
+stream = ExtResource("5_rwym6")
+
+[node name="Menu_back" type="AudioStreamPlayer2D" parent="Control"]
+stream = ExtResource("6_pi0km")
+
+[node name="Menu_select" type="AudioStreamPlayer2D" parent="Control"]
+stream = ExtResource("7_u0v0q")
+
+[node name="Timer" type="Timer" parent="."]
 
 [connection signal="pressed" from="Control/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="Control/PlayShader" to="." method="_on_play_shader_mouse_entered"]
+[connection signal="mouse_exited" from="Control/PlayShader" to="." method="_on_play_shader_mouse_exited"]
+[connection signal="mouse_entered" from="Control/SettingsShader" to="." method="_on_settings_shader_mouse_entered"]
+[connection signal="mouse_exited" from="Control/SettingsShader" to="." method="_on_settings_shader_mouse_exited"]
+[connection signal="mouse_entered" from="Control/QuitShader" to="." method="_on_quit_shader_mouse_entered"]
+[connection signal="mouse_exited" from="Control/QuitShader" to="." method="_on_quit_shader_mouse_exited"]

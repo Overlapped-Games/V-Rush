@@ -29,6 +29,7 @@ var level_colors : Array = [
 	Color(1.00, 0.10, 0.00),
 	Color(1.00, 1.00, 0.00),
 ]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#var b : Danmaku.Builder = Danmaku.Builder.new(Danmaku.BulletType.CIRCLE)
@@ -49,9 +50,8 @@ func next_level():
 		GameManager.current_level = 0
 	bg.set_target_color(level_colors[GameManager.current_level - 1])
 	
-	#increase enemy health in here.
-	
-
+	# increase enemy health in here.
+	# Enemy Health = 50 + (current_level - 1) * 0.2 or something.
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventAction or event is InputEventKey or event is InputEventMouseButton:
