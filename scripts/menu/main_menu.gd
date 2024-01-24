@@ -28,9 +28,11 @@ func play_menu_transition() -> void:
 	get_tree().change_scene_to_file("res://assets/menus/scenes/transition.tscn")
 	set_process(false)
 
+
 func _on_settings_pressed() -> void:
-	get_tree().change_scene_to_file("res://assets/menus/scenes/settings.tscn")
-	
+	$Settings.visible = true
+
+
 func _on_quit_pressed() -> void:
 	get_tree().quit()
 

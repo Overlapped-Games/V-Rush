@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://vcfgelhxwuca"]
+[gd_scene load_steps=15 format=3 uid="uid://vcfgelhxwuca"]
 
 [ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="1_5earo"]
 [ext_resource type="Script" path="res://scripts/menu/main_menu.gd" id="1_hgues"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://b7xdtnbrsfl5q" path="res://assets/menus/assets/audio/Menu - Up-down.wav" id="5_rwym6"]
 [ext_resource type="AudioStream" uid="uid://bchbhltf12hr" path="res://assets/menus/assets/audio/Menu - Back-decline.wav" id="6_pi0km"]
 [ext_resource type="AudioStream" uid="uid://bpwwpkl8o8504" path="res://assets/menus/assets/audio/Menu - OK-Select.wav" id="7_u0v0q"]
+[ext_resource type="PackedScene" uid="uid://82bog2vii2ou" path="res://assets/menus/scenes/settings.tscn" id="8_ngr5a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpacv"]
 
@@ -95,28 +96,28 @@ text = "Quit"
 visible = false
 material = SubResource("ShaderMaterial_jj1jp")
 layout_mode = 2
-offset_left = 136.0
-offset_top = 63.0
-offset_right = 293.0
-offset_bottom = 92.0
+offset_left = 179.0
+offset_top = 62.0
+offset_right = 247.0
+offset_bottom = 82.0
 
 [node name="SettingsShader" type="ColorRect" parent="Control"]
 visible = false
 material = SubResource("ShaderMaterial_jj1jp")
 layout_mode = 2
-offset_left = 136.0
-offset_top = 90.0
-offset_right = 293.0
-offset_bottom = 119.0
+offset_left = 165.0
+offset_top = 82.0
+offset_right = 263.0
+offset_bottom = 97.0
 
 [node name="QuitShader" type="ColorRect" parent="Control"]
 visible = false
 material = SubResource("ShaderMaterial_jj1jp")
 layout_mode = 2
-offset_left = 136.0
-offset_top = 115.0
-offset_right = 293.0
-offset_bottom = 144.0
+offset_left = 176.0
+offset_top = 97.0
+offset_right = 248.0
+offset_bottom = 111.0
 
 [node name="Menu_up-down" type="AudioStreamPlayer2D" parent="Control"]
 stream = ExtResource("5_rwym6")
@@ -128,6 +129,9 @@ stream = ExtResource("6_pi0km")
 stream = ExtResource("7_u0v0q")
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Settings" parent="." instance=ExtResource("8_ngr5a")]
+visible = false
 
 [connection signal="pressed" from="Control/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]

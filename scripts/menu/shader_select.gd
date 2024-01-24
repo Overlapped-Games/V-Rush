@@ -42,6 +42,7 @@ func _input(event: InputEvent) -> void:
 			menu_select_sound.play()
 		if Input.is_action_just_pressed("ui_cancel"):
 			menu_back_sound.play()
+			$"../Settings".visible = false
 
 func move_focus(direction: int):
 	focusedIndex += direction

@@ -7,7 +7,7 @@ func _input(event):
 func toggle_pause_menu():
 	if get_tree().paused:
 		get_tree().paused = false
-		$PauseMenu.hide()
+		#$PauseMenu.hide()
 	else:
 		get_tree().paused = true
-		$PauseMenu.show()
+		#$PauseMenu.show()
