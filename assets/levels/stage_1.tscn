@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dmreaj7b0lh0e"]
+[gd_scene load_steps=25 format=3 uid="uid://dmreaj7b0lh0e"]
 
 [ext_resource type="Script" path="res://scripts/util/Stage.gd" id="1_1jxbv"]
 [ext_resource type="PackedScene" uid="uid://cmt1ixwslwsfj" path="res://scripts/godonmaku/cammaku.tscn" id="2_roc05"]
@@ -8,6 +8,16 @@
 [ext_resource type="Texture2D" uid="uid://cvh61b7ocx2gb" path="res://assets/art/background/wire_frame_bg.png" id="7_3i433"]
 [ext_resource type="Texture2D" uid="uid://b4xijqfs4hmoq" path="res://assets/tileset.png" id="8_v5lhg"]
 [ext_resource type="Script" path="res://scripts/wireframe_transition.gd" id="8_xh71c"]
+[ext_resource type="PackedScene" uid="uid://c0dhsh04r64fw" path="res://assets/triggers/move_trigger.tscn" id="9_18ohq"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="10_d7hnu"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="11_uc76c"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="12_dte63"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="13_haxnl"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="14_sv71m"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="15_uth0m"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="16_glwo0"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveTowards.gd" id="17_o1yho"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="18_drt53"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i5b14"]
 texture = ExtResource("8_v5lhg")
@@ -271,6 +281,34 @@ texture = ExtResource("8_v5lhg")
 [sub_resource type="TileSet" id="TileSet_8twjt"]
 sources/0 = SubResource("TileSetAtlasSource_i5b14")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6anh"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdvip"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_bu03r"]
+resource_name = "spin"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbn4u"]
+_data = {
+"spin": SubResource("Animation_bu03r")
+}
+
 [node name="world" type="Node2D" groups=["world"]]
 
 [node name="Stage" type="Node2D" parent="." groups=["stage"]]
@@ -325,7 +363,8 @@ texture = ExtResource("5_qcv7k")
 script = ExtResource("6_uxg18")
 scroll_rate = 1.0
 
-[node name="WireFrameBg" type="Sprite2D" parent="Stage/SkewllaxBackground"]
+[node name="LevelBackground" type="Sprite2D" parent="Stage/SkewllaxBackground"]
+unique_name_in_owner = true
 z_index = -10
 z_as_relative = false
 texture = ExtResource("7_3i433")
@@ -335,3 +374,171 @@ script = ExtResource("8_xh71c")
 tile_set = SubResource("TileSet_8twjt")
 format = 2
 layer_0/tile_data = PackedInt32Array(-524286, 589824, 1, -458750, 589824, 1, -393214, 589824, 1, -524279, 589824, 1, -458743, 589824, 1, -393207, 589824, 1, -524274, 589824, 1, -458738, 589824, 1, -393201, 589824, 1, -327665, 589824, 1, -524266, 589824, 1, -458730, 589824, 1, -393194, 589824, 1, -327658, 589824, 1, -262122, 589824, 1, 458777, 589824, 1, 393241, 589824, 1, 327705, 589824, 1, 262169, 589824, 1, 196633, 589824, 1, -458722, 589824, 1, -393186, 589824, 1, -327650, 589824, 1, -262114, 589824, 1, 393249, 589824, 1, 327713, 589824, 1, 262178, 589824, 1, 196642, 589824, 1, -458757, 589824, 1, -393221, 589824, 1, -327685, 589824, 1, 393209, 589824, 1, 458745, 589824, 1, 393213, 589824, 1, 458749, 589824, 1, 524285, 589824, 1, 589821, 589824, 1, 327683, 589824, 1, 393219, 589824, 1, 458756, 589824, 1, 524292, 589824, 1, 393223, 589824, 1, 458760, 589824, 1, 524296, 589824, 1, 589833, 589824, 1, 327691, 589824, 1, 393227, 589824, 1, 458764, 589824, 1)
+
+[node name="Node2D" parent="." instance=ExtResource("9_18ohq")]
+position = Vector2(312, 0)
+
+[node name="Enemy" type="RigidBody2D" parent="Node2D"]
+position = Vector2(32, -96)
+collision_layer = 4
+collision_mask = 514
+gravity_scale = 0.0
+script = ExtResource("10_d7hnu")
+max_health = 20
+current_health = 20
+invlunerability_time = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Enemy"]
+shape = SubResource("RectangleShape2D_f6anh")
+
+[node name="Hurtbox" type="Area2D" parent="Node2D/Enemy"]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Node2D/Enemy/Hurtbox"]
+shape = SubResource("RectangleShape2D_wdvip")
+
+[node name="Sprite" type="Sprite2D" parent="Node2D/Enemy"]
+z_index = 1
+rotation = -1.5708
+texture = ExtResource("11_uc76c")
+hframes = 7
+vframes = 7
+frame = 4
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="Patterns" type="Node2D" parent="Node2D/Enemy"]
+
+[node name="Pattern1" type="Node2D" parent="Node2D/Enemy/Patterns"]
+script = ExtResource("12_dte63")
+angle_type = 1
+fire_direction = Vector2(-1, 0)
+velocity = 80
+shape_properties = {
+"radius": 4.0
+}
+
+[node name="Beehavior" type="Node" parent="Node2D/Enemy" node_paths=PackedStringArray("actor")]
+script = ExtResource("13_haxnl")
+enabled = false
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="Node2D/Enemy/Beehavior"]
+script = ExtResource("14_sv71m")
+
+[node name="MoveToPoint" type="Node" parent="Node2D/Enemy/Beehavior/SequenceComposite"]
+script = ExtResource("15_uth0m")
+speed = 120
+
+[node name="point" type="Marker2D" parent="Node2D/Enemy/Beehavior/SequenceComposite/MoveToPoint"]
+top_level = true
+position = Vector2(248, -98)
+
+[node name="FirePattern" type="Node" parent="Node2D/Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("16_glwo0")
+pattern = NodePath("../../../Patterns/Pattern1")
+
+[node name="MoveTowards" type="Node" parent="Node2D/Enemy/Beehavior/SequenceComposite"]
+script = ExtResource("17_o1yho")
+speed = 100
+
+[node name="point" type="Marker2D" parent="Node2D/Enemy/Beehavior/SequenceComposite/MoveTowards"]
+top_level = true
+position = Vector2(160, -98)
+
+[node name="HealthBar" parent="Node2D/Enemy" instance=ExtResource("18_drt53")]
+visible = false
+custom_minimum_size = Vector2(24, 8)
+offset_left = -12.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 18.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/Enemy"]
+libraries = {
+"": SubResource("AnimationLibrary_fbn4u")
+}
+autoplay = "spin"
+
+[node name="Enemy2" type="RigidBody2D" parent="Node2D"]
+position = Vector2(64, 48)
+collision_layer = 4
+collision_mask = 514
+gravity_scale = 0.0
+script = ExtResource("10_d7hnu")
+max_health = 20
+current_health = 20
+invlunerability_time = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Enemy2"]
+shape = SubResource("RectangleShape2D_f6anh")
+
+[node name="Hurtbox" type="Area2D" parent="Node2D/Enemy2"]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Node2D/Enemy2/Hurtbox"]
+shape = SubResource("RectangleShape2D_wdvip")
+
+[node name="Sprite" type="Sprite2D" parent="Node2D/Enemy2"]
+z_index = 1
+rotation = -1.5708
+texture = ExtResource("11_uc76c")
+hframes = 7
+vframes = 7
+frame = 4
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="Patterns" type="Node2D" parent="Node2D/Enemy2"]
+
+[node name="Pattern1" type="Node2D" parent="Node2D/Enemy2/Patterns"]
+script = ExtResource("12_dte63")
+angle_type = 1
+fire_direction = Vector2(-1, 0)
+shape_properties = {
+"radius": 4.0
+}
+
+[node name="Beehavior" type="Node" parent="Node2D/Enemy2" node_paths=PackedStringArray("actor")]
+script = ExtResource("13_haxnl")
+enabled = false
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="Node2D/Enemy2/Beehavior"]
+script = ExtResource("14_sv71m")
+
+[node name="MoveToPoint" type="Node" parent="Node2D/Enemy2/Beehavior/SequenceComposite"]
+script = ExtResource("15_uth0m")
+speed = 120
+
+[node name="point" type="Marker2D" parent="Node2D/Enemy2/Beehavior/SequenceComposite/MoveToPoint"]
+top_level = true
+position = Vector2(288, 48)
+
+[node name="FirePattern" type="Node" parent="Node2D/Enemy2/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("16_glwo0")
+pattern = NodePath("../../../Patterns/Pattern1")
+
+[node name="MoveTowards" type="Node" parent="Node2D/Enemy2/Beehavior/SequenceComposite"]
+script = ExtResource("17_o1yho")
+speed = 100
+
+[node name="point" type="Marker2D" parent="Node2D/Enemy2/Beehavior/SequenceComposite/MoveTowards"]
+top_level = true
+position = Vector2(248, 48)
+
+[node name="HealthBar" parent="Node2D/Enemy2" instance=ExtResource("18_drt53")]
+visible = false
+custom_minimum_size = Vector2(24, 8)
+offset_left = -12.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 18.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/Enemy2"]
+libraries = {
+"": SubResource("AnimationLibrary_fbn4u")
+}
+autoplay = "spin"

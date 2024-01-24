@@ -106,7 +106,7 @@ func circle_move(delta : float, speed := 4, radius := 1.0, rotations := 1) -> vo
 	t_m += delta
 	var angle = speed * t_m / (2 * PI)
 	var rotation = Vector2(cos(angle), sin(angle))
-	position = (rotation * radius).round()
+	global_position = (rotation * radius).round()
 
 
 # TODO: implement
@@ -173,9 +173,9 @@ func fire_pattern() -> void:
 
 func update_target() -> void:
 	if angle_type == Angle.CHASE:
-		target = get_tree().get_first_node_in_group("player").position
+		target = get_tree().get_first_node_in_group("player").global_position
 	else:
-		target = position + fire_direction
+		target = global_position + fire_direction
 
 
 func _start() -> void:
@@ -232,7 +232,7 @@ func _kill() -> void:
 
 func fixed(target_pos : Vector2, bullet_t : BulletUtil.BulletType,  f : Callable) -> void:
 	angle_type = Angle.FIXED
-	target = position + target_pos
+	target = global_position + target_pos
 	bullet_type = bullet_t
 	sequence = f
 
@@ -279,7 +279,7 @@ func laser(f : Callable = func(): pass) -> void:
 
 
 func fire_ring() -> void:
-	var pos = position
+	var pos = global_position
 	pattern_origin = Vector2(pos.x + (origin_offset * cos(360.0/line_count)), pos.y + (origin_offset * sin(360.0/line_count)))
 	#print("%s vs %s" % [pattern_origin, origin])
 	# get spread angle
@@ -331,11 +331,11 @@ func ring(lines := 1, fire_ang := 0.0, spread_count := 1, spread_ang := 0.0, o_o
 	spread_degrees = spread_ang
 	origin_offset = o_offset
 	velocity = vel
-	pattern_origin = Vector2(position.x + (origin_offset * cos(360.0/line_count)), position.y + (origin_offset * sin(360.0/line_count)))
+	pattern_origin = Vector2(global_position.x + (origin_offset * cos(360.0/line_count)), global_position.y + (origin_offset * sin(360.0/line_count)))
 	#print("%s vs %s" % [pattern_origin, origin])
 	# get spread angle
 	var spread_rad : float = spread_degrees * PI / 180
-	var dir_to_target : Vector2 = position.direction_to(target)
+	var dir_to_target : Vector2 = global_position.direction_to(target)
 	# odd aims at target, even aims at the sides
 	#var direction = dir_to_target.from_angle(dir_to_target.angle() + fire_angle) if spread % 2 != 0 else dir_to_target.from_angle(dir_to_target.angle() + fire_angle + (spread_rad / 2))
 	var direction = dir_to_target if spread % 2 != 0 else dir_to_target.from_angle(dir_to_target.angle() + fire_angle + (spread_rad / 2))
@@ -359,8 +359,8 @@ func ring(lines := 1, fire_ang := 0.0, spread_count := 1, spread_ang := 0.0, o_o
 				bullet.move_type = move_type
 				#print("firing[%s] - %s" % [line, dir.from_angle(dir.angle() + pattern_rot + (radians * line))])
 				angle = (direction.angle() + pattern_rot + radians) + (radians * line)
-				fire_origin = position + (pattern_origin.from_angle(angle) * origin_offset)
-				fire_direction = position.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
+				fire_origin = global_position + (pattern_origin.from_angle(angle) * origin_offset)
+				fire_direction = global_position.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
 				if max_bounces > 0: bullet.max_bounces = max_bounces
 				bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)

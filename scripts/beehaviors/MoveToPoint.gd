@@ -32,13 +32,15 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func before_run(actor: Node, blackboard: Blackboard) -> void:
 	point.set_as_top_level(true)
-	target = actor.position + point.position 
+	print("%s, %s" % [actor.global_position, point.global_position])
+	#target = actor.global_position + point.global_position 
+
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
-	if actor.position.distance_to(target) < 1:
-		actor.position = target
+	if actor.global_position.distance_to(point.global_position) < 1:
+		actor.global_position = point.global_position
 		return SUCCESS
 		
-	actor.position += ((target - actor.position).normalized() * get_physics_process_delta_time() * speed)
+	actor.global_position += ((point.global_position - actor.global_position).normalized() * get_physics_process_delta_time() * speed)
 	return RUNNING
 

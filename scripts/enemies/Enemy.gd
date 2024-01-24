@@ -11,6 +11,7 @@ signal defeated(enemy : Enemy) # ded
 @onready var animator : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite
 @onready var health_bar : TextureProgressBar = $HealthBar
+@onready var beehavior : BeehaveTree = $Beehavior
 
 @onready var ph_delta : float = get_physics_process_delta_time()
 
@@ -39,6 +40,7 @@ func _ready() -> void:
 	defeated.connect(GameManager._on_enemy_defeated)
 	hit.connect(GameManager._on_enemy_hit)
 	current_health = max_health
+	beehavior.enabled = false
 
 
 func _physics_process(delta : float) -> void:
@@ -61,10 +63,11 @@ func _start() -> void:
 	set_physics_process(true)
 	set_invulnerable(false)
 	collider.set_disabled(false)
+	beehavior.enabled = true
 
 
 func set_invulnerable(inv : bool) -> void:
-	$Hurtbox/Collider.disabled = inv
+	collider.disabled = inv
 	invulnerable = inv
 	print_debug("invuln=", inv)
 

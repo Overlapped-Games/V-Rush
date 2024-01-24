@@ -9,7 +9,7 @@ class_name MoveTowards extends ActionLeaf
 
 var camera : Camera2D
 var direction : Vector2
-var target : Vector2
+#var target : Vector2
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings : PackedStringArray = []
@@ -36,18 +36,18 @@ func _get_configuration_warnings() -> PackedStringArray:
 func before_run(actor: Node, blackboard: Blackboard) -> void:
 	point.set_as_top_level(true)
 	camera = get_tree().get_first_node_in_group("camera")
-	target = actor.position + point.position 
-	direction = (target - actor.position).normalized()
+	#target = actor.position + point.position 
+	direction = (point.global_position - actor.global_position).normalized()
 	print("dir=%s" % [direction])
 
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
 	# Enemy went out of view left
-	if actor.position.x < camera.position.x - 32 - camera.get_viewport_rect().size.x / 2:
+	if actor.global_position.x < camera.global_position.x - 32 - camera.get_viewport_rect().size.x / 2:
 		actor.queue_free()
 		return SUCCESS
 		
-	actor.position += (direction * get_physics_process_delta_time() * speed)
+	actor.global_position += (direction * get_physics_process_delta_time() * speed)
 	return RUNNING
 
 

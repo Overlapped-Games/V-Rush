@@ -1,14 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://mu14bua6fi4l"]
+[gd_scene load_steps=14 format=3 uid="uid://d07gumtv6aups"]
 
-[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_mhpsv"]
-[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_hlbk4"]
-[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_ybth0"]
-[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_h65lk"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_y3c1v"]
-[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_hk7u2"]
-[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_f85k7"]
-[ext_resource type="Script" path="res://scripts/beehaviors/MoveTowards.gd" id="8_4yhjh"]
-[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_yh3k4"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_bhjot"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_etrni"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_53g6n"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_ccuvx"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_iilu6"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_1unum"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_rt2gd"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveTowards.gd" id="8_qf66q"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_h7v77"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f6anh"]
 size = Vector2(16, 16)
@@ -42,7 +42,7 @@ _data = {
 collision_layer = 4
 collision_mask = 514
 gravity_scale = 0.0
-script = ExtResource("1_mhpsv")
+script = ExtResource("1_bhjot")
 max_health = 20
 current_health = 20
 invlunerability_time = 0.0
@@ -60,7 +60,7 @@ shape = SubResource("RectangleShape2D_wdvip")
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = 1
 rotation = -1.5708
-texture = ExtResource("2_hlbk4")
+texture = ExtResource("2_etrni")
 hframes = 7
 vframes = 7
 frame = 3
@@ -68,7 +68,7 @@ region_rect = Rect2(16, 16, 16, 16)
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 z_index = 1
-texture = ExtResource("2_hlbk4")
+texture = ExtResource("2_etrni")
 hframes = 7
 vframes = 7
 frame = 7
@@ -76,7 +76,7 @@ frame = 7
 [node name="Patterns" type="Node2D" parent="."]
 
 [node name="Pattern1" type="Node2D" parent="Patterns"]
-script = ExtResource("3_ybth0")
+script = ExtResource("3_53g6n")
 angle_type = 1
 fire_direction = Vector2(-1, 0)
 shape_properties = {
@@ -89,15 +89,15 @@ stacks = 2
 velocity_modifier = 0.2
 
 [node name="BasicEnemyAI" type="Node" parent="." node_paths=PackedStringArray("actor")]
-script = ExtResource("4_h65lk")
+script = ExtResource("4_ccuvx")
 actor_node_path = NodePath("..")
 actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="BasicEnemyAI"]
-script = ExtResource("5_y3c1v")
+script = ExtResource("5_iilu6")
 
 [node name="MoveToPoint" type="Node" parent="BasicEnemyAI/SequenceComposite"]
-script = ExtResource("6_hk7u2")
+script = ExtResource("6_1unum")
 speed = 120
 
 [node name="point" type="Marker2D" parent="BasicEnemyAI/SequenceComposite/MoveToPoint"]
@@ -105,18 +105,18 @@ top_level = true
 position = Vector2(-72, 16)
 
 [node name="FirePattern" type="Node" parent="BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
-script = ExtResource("7_f85k7")
+script = ExtResource("7_rt2gd")
 pattern = NodePath("../../../Patterns/Pattern1")
 
 [node name="MoveTowards" type="Node" parent="BasicEnemyAI/SequenceComposite"]
-script = ExtResource("8_4yhjh")
+script = ExtResource("8_qf66q")
 speed = 100
 
 [node name="point" type="Marker2D" parent="BasicEnemyAI/SequenceComposite/MoveTowards"]
 top_level = true
 position = Vector2(-192, 16)
 
-[node name="HealthBar" parent="." instance=ExtResource("9_yh3k4")]
+[node name="HealthBar" parent="." instance=ExtResource("9_h7v77")]
 visible = false
 custom_minimum_size = Vector2(24, 8)
 offset_left = -12.0

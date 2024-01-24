@@ -69,7 +69,7 @@ texture = ExtResource("5_o7gbd")
 script = ExtResource("2_r8mg6")
 scroll_rate = 1.0
 
-[node name="WireFrameBg" type="Sprite2D" parent="Stage/SkewllaxBackground"]
+[node name="LevelBackground" type="Sprite2D" parent="Stage/SkewllaxBackground"]
 z_index = -10
 z_as_relative = false
 texture = ExtResource("3_nyuf3")

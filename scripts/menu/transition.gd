@@ -1,17 +1,11 @@
 extends Node2D
 
 var level_one_color : Color = Color(0.00, 0.75, 1.00, 1)
-var timer : Timer
 
 func _ready() -> void:
-	$WhiteBackground/WireFrameBg.modulate = Color(0, 0, 0, 0)
-	$WhiteBackground/WireFrameBg.set_target_color(Color(0.00, 0.75, 1.00, 1))
-	timer = Timer.new()
-	add_child(timer)
-	timer.one_shot = true
-	timer.wait_time = 2.5
-	timer.connect("timeout", _on_timer_timeout)
-	timer.start()
+	%LevelBackground.modulate = Color(0, 0, 0, 0)
+	%LevelBackground.set_target_color(Color(0.00, 0.75, 1.00, 1))
+	get_tree().create_timer(2.5).timeout.connect(_on_timer_timeout)
 
 func _on_timer_timeout() -> void:
 	GameManager.visible_canvas(true)
