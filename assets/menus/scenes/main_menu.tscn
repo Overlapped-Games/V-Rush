@@ -1,9 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://vcfgelhxwuca"]
+[gd_scene load_steps=14 format=3 uid="uid://vcfgelhxwuca"]
 
 [ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="1_5earo"]
 [ext_resource type="Script" path="res://scripts/menu/main_menu.gd" id="1_hgues"]
 [ext_resource type="Script" path="res://scripts/menu/shader_select.gd" id="2_gsm03"]
 [ext_resource type="Shader" path="res://assets/menus/assets/glitch/glitch_effect.gdshader" id="3_xjehv"]
+[ext_resource type="AudioStream" uid="uid://b7xdtnbrsfl5q" path="res://assets/menus/assets/audio/Menu - Up-down.wav" id="5_rwym6"]
+[ext_resource type="AudioStream" uid="uid://bchbhltf12hr" path="res://assets/menus/assets/audio/Menu - Back-decline.wav" id="6_pi0km"]
+[ext_resource type="AudioStream" uid="uid://bpwwpkl8o8504" path="res://assets/menus/assets/audio/Menu - OK-Select.wav" id="7_u0v0q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpacv"]
 
@@ -89,6 +92,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_jeo4x")
 text = "Quit"
 
 [node name="PlayShader" type="ColorRect" parent="Control"]
+visible = false
 material = SubResource("ShaderMaterial_jj1jp")
 layout_mode = 2
 offset_left = 136.0
@@ -97,6 +101,7 @@ offset_right = 293.0
 offset_bottom = 92.0
 
 [node name="SettingsShader" type="ColorRect" parent="Control"]
+visible = false
 material = SubResource("ShaderMaterial_jj1jp")
 layout_mode = 2
 offset_left = 136.0
@@ -105,12 +110,24 @@ offset_right = 293.0
 offset_bottom = 119.0
 
 [node name="QuitShader" type="ColorRect" parent="Control"]
+visible = false
 material = SubResource("ShaderMaterial_jj1jp")
 layout_mode = 2
 offset_left = 136.0
 offset_top = 115.0
 offset_right = 293.0
 offset_bottom = 144.0
+
+[node name="Menu_up-down" type="AudioStreamPlayer2D" parent="Control"]
+stream = ExtResource("5_rwym6")
+
+[node name="Menu_back" type="AudioStreamPlayer2D" parent="Control"]
+stream = ExtResource("6_pi0km")
+
+[node name="Menu_select" type="AudioStreamPlayer2D" parent="Control"]
+stream = ExtResource("7_u0v0q")
+
+[node name="Timer" type="Timer" parent="."]
 
 [connection signal="pressed" from="Control/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
