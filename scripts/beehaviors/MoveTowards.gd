@@ -36,19 +36,18 @@ func _get_configuration_warnings() -> PackedStringArray:
 func before_run(actor: Node, blackboard: Blackboard) -> void:
 	point.set_as_top_level(true)
 	camera = get_tree().get_first_node_in_group("camera")
-	target = actor.global_position + point.position 
-	direction = (target - actor.global_position).normalized()
+	target = actor.position + point.position 
+	direction = (target - actor.position).normalized()
 	print("dir=%s" % [direction])
 
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
 	# Enemy went out of view left
-	if actor.global_position.x < camera.position.x - 32 - camera.get_viewport_rect().size.x / 2:
+	if actor.position.x < camera.position.x - 32 - camera.get_viewport_rect().size.x / 2:
 		actor.queue_free()
 		return SUCCESS
 		
-	actor.global_position += ((target - actor.global_position).normalized() * get_physics_process_delta_time() * speed)
-	#actor.global_position += (direction * get_physics_process_delta_time() * speed)
+	actor.position += (direction * get_physics_process_delta_time() * speed)
 	return RUNNING
 
 

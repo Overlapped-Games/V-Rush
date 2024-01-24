@@ -82,7 +82,7 @@ func _ready() -> void:
 	active = false
 	#print("HI")
 	
-	virtual_pos = global_position
+	virtual_pos = position
 	velocity = base_velocity
 	query.collide_with_areas = true
 	query.collision_mask = hitbox_layer

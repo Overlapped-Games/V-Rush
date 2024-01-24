@@ -12,7 +12,7 @@ var skew_count := 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	background = get_child(0).duplicate(0b0111)
-	original_position = background.global_position
+	original_position = background.position
 	#set_physics_process(false)
 
 
@@ -28,7 +28,7 @@ func _physics_process(delta : float) -> void:
 		if skew_count == max_skews:
 			skew_count = 0
 			#var last = get_child(get_child_count() - 1)
-			bg.global_position = original_position
+			bg.position = original_position
 			bg.transform.y.x = max_skews * PI / 180
 			
 			#var next = background.duplicate(0b0111)

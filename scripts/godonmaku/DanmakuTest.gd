@@ -124,10 +124,12 @@ func _input(event: InputEvent) -> void:
 			var enemy : Enemy = enemy_1.instantiate()
 			add_child(enemy)
 			enemy.position = Vector2(195, randi_range(-99, 99))
+			enemy._start()
 		if Input.is_key_pressed(KEY_Y) and just_pressed:
 			var enemy : Enemy = enemy_2.instantiate()
 			add_child(enemy)
 			enemy.position = Vector2(256, 0)
+			enemy._start()
 		if Input.is_key_pressed(KEY_E) and just_pressed:
 			if !e:
 				e_e = enemy_scn.instantiate()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://mu14bua6fi4l"]
+[gd_scene load_steps=14 format=3 uid="uid://mu14bua6fi4l"]
 
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_mhpsv"]
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_hlbk4"]
@@ -37,8 +37,6 @@ tracks/0/keys = {
 _data = {
 "spin": SubResource("Animation_bu03r")
 }
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_byjl4"]
 
 [node name="Enemy" type="RigidBody2D"]
 collision_layer = 4
@@ -131,8 +129,3 @@ libraries = {
 "": SubResource("AnimationLibrary_fbn4u")
 }
 autoplay = "spin"
-
-[node name="MoveTrigger" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveTrigger"]
-shape = SubResource("RectangleShape2D_byjl4")

@@ -38,7 +38,7 @@ func _attack(delta : float, action_pressed : bool, origin : Vector2, direction :
 	if can_fire and action_pressed:
 		can_fire = false
 		var next : Bullet = BulletUtil.get_player_bullet()
-		next._fire(Vector2(global_position.x + 16, global_position.y), direction, BulletUtil.BulletShape.BOX, 800, 0, 1600, {"x": 14, "y": 6})
+		next._fire(Vector2(origin.x + 16, origin.y), direction, BulletUtil.BulletShape.BOX, 800, 0, 1600, {"x": 14, "y": 6})
 		return true
 	return false
 	

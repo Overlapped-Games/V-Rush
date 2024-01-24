@@ -15,4 +15,5 @@ func _ready() -> void:
 
 func _on_timer_timeout() -> void:
 	GameManager.visible_canvas(true)
-	get_tree().change_scene_to_file("res://scripts/godonmaku/danmaku_tester.tscn")
+	get_tree().change_scene_to_file("res://assets/levels/stage_1.tscn")
+	#get_tree().change_scene_to_file("res://scripts/godonmaku/danmaku_tester.tscn")
