@@ -5,7 +5,7 @@ const MAX_SCORE : int = 999_999_999_999
 var current_level : int = 1
 
 @onready var health : RichTextLabel = %HealthCounter
-@onready var gauge : TextureProgressBar = $CanvasLayer/Gauge
+@onready var gauge : TextureProgressBar = $CanvasLayer/VRushGauge
 @onready var score_label : RichTextLabel = %Score
 
 var player : Player
@@ -26,6 +26,7 @@ func _ready() -> void:
 func init_stat() -> void:
 	visible_menu(false)
 	player = get_tree().get_first_node_in_group("player")
+	player.grazed.connect(_on_player_grazed)
 	player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
 	health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
 	score_label.text = "%012d" % score # sets digits to 12 digits, fills unused with 0s
@@ -53,6 +54,8 @@ func open_skill_menu() -> void:
 	if !v_rush_menu_open and gauge_ready:
 		v_rush_menu_open = true
 		print("open gauge")
+		gauge.value = 0
+		gauge_ready = false
 		# TODO: freeze game physics processing, except for the menu
 
 func _on_player_grazed() -> void:

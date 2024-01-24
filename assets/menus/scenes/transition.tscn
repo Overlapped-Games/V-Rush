@@ -14,9 +14,44 @@ script = ExtResource("1_giq2a")
 
 [node name="WhiteBackground" type="Sprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)
+z_index = -100
+z_as_relative = false
 texture = ExtResource("2_cyles")
 
 [node name="WireFrameBg" type="Sprite2D" parent="WhiteBackground"]
-modulate = Color(0, 0.75, 1, 1)
+z_index = -10
+z_as_relative = false
 texture = ExtResource("3_0etfu")
 script = ExtResource("4_d3tpf")
+
+[node name="WhiteBackground2" type="Sprite2D" parent="."]
+self_modulate = Color(0.14902, 0, 0.172549, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 87)
+scale = Vector2(1, 0.275)
+texture = ExtResource("2_cyles")
+
+[node name="WhiteBackground3" type="Sprite2D" parent="."]
+self_modulate = Color(0.113725, 0.00392157, 0.14902, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 39)
+scale = Vector2(1, 0.125)
+texture = ExtResource("2_cyles")
+
+[node name="WhiteBackground4" type="Sprite2D" parent="."]
+self_modulate = Color(0.0666667, 0, 0.0980392, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 14)
+scale = Vector2(1, 0.0833333)
+texture = ExtResource("2_cyles")
+
+[node name="WhiteBackground5" type="Sprite2D" parent="."]
+self_modulate = Color(0.0470588, 0, 0.0627451, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 2)
+scale = Vector2(1, 0.0166667)
+texture = ExtResource("2_cyles")

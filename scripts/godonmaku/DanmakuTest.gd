@@ -7,7 +7,7 @@ class_name DanmakuTest extends Node2D
 @onready var enemy_1 : PackedScene = preload("res://assets/enemies/basic_ai_enemy_1.tscn")
 @onready var enemy_2 : PackedScene = preload("res://assets/enemies/basic_ai_enemy_2.tscn")
 
-@onready var bg : Sprite2D = $Stage/WhiteBackground/SkewllaxBackground/WireFrameBg
+@onready var bg : Sprite2D = $Stage/SkewllaxBackground/WireFrameBg
 
 var enemies : Node2D
 

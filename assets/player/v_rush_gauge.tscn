@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://birg0nkb48fv4"]
+
+[ext_resource type="Texture2D" uid="uid://sutv6o1d848x" path="res://assets/art/ui/v_rush_gauge_fill.png" id="1_hrx5y"]
+[ext_resource type="Texture2D" uid="uid://dvquagdijn8tt" path="res://assets/art/ui/v_rush_gauge_back.png" id="1_kli5x"]
+[ext_resource type="Texture2D" uid="uid://c40lh614ngq26" path="res://assets/art/ui/v_rush_gauge_front.png" id="1_psurs"]
+[ext_resource type="Script" path="res://scripts/player/VRushGauge.gd" id="3_q15ja"]
+
+[node name="VRushGauge" type="TextureProgressBar"]
+offset_right = 64.0
+offset_bottom = 16.0
+scale = Vector2(2, 2)
+texture_under = ExtResource("1_kli5x")
+texture_progress = ExtResource("1_hrx5y")
+script = ExtResource("3_q15ja")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -13.0
+offset_top = -7.0
+offset_right = 51.0
+offset_bottom = 9.0
+texture = ExtResource("1_psurs")

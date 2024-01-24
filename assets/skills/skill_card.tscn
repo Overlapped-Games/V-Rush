@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpy4ym4j0q5b8"]
+
+[ext_resource type="Texture2D" uid="uid://c64df8t5w8c4i" path="res://assets/art/ui/skill_card.png" id="1_hlid3"]
+[ext_resource type="Script" path="res://scripts/skills/SkillCard.gd" id="2_6yxxw"]
+[ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="3_nyc14"]
+
+[node name="SkillCard" type="Sprite2D"]
+texture = ExtResource("1_hlid3")
+script = ExtResource("2_6yxxw")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -48.0
+offset_top = -56.0
+offset_right = 48.0
+offset_bottom = -42.0
+theme = ExtResource("3_nyc14")
+text = "Gauge UP"
+horizontal_alignment = 1

@@ -98,7 +98,7 @@ script = ExtResource("6_r4lj6")
 speed = 120
 
 [node name="point" type="Marker2D" parent="BasicEnemyAI/SequenceComposite/MoveToPoint"]
-position = Vector2(-64, 0)
+position = Vector2(-88, 0)
 
 [node name="FirePattern" type="Node" parent="BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_l5fwp")
@@ -115,6 +115,7 @@ speed = 100
 position = Vector2(-192, 0)
 
 [node name="HealthBar" parent="." instance=ExtResource("10_8jjft")]
+visible = false
 custom_minimum_size = Vector2(24, 8)
 offset_left = -12.0
 offset_top = 10.0

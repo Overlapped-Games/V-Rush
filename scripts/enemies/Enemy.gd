@@ -1,4 +1,3 @@
-@tool
 class_name Enemy extends RigidBody2D
 
 
@@ -8,6 +7,7 @@ signal defeated(enemy : Enemy) # ded
 
 
 @onready var hurtbox : Area2D = $Hurtbox
+@onready var collider : CollisionShape2D = $Hurtbox/Collider
 @onready var animator : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite
 @onready var health_bar : TextureProgressBar = $HealthBar
@@ -28,8 +28,9 @@ var t : float = 0.0
 
 
 func _ready() -> void:
-	set_physics_process(true)
-	set_invulnerable(false)
+	set_physics_process(false)
+	set_invulnerable(true)
+	collider.set_disabled(true)
 	if !health_bar:
 		health_bar = load("res://assets/enemies/enemy_health_bar.tscn").instantiate()
 		health_bar.name = "HealthBar"
@@ -54,6 +55,12 @@ func _physics_process(delta : float) -> void:
 
 func _move(delta : float) -> void:
 	pass
+
+
+func _start() -> void:
+	set_physics_process(true)
+	set_invulnerable(false)
+	collider.set_disabled(false)
 
 
 func set_invulnerable(inv : bool) -> void:

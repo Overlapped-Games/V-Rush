@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk8rxtjo3sku6"]
+
+[ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="1_pivi4"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w1esa"]
+
+[node name="TextureRect" type="TextureRect"]
+self_modulate = Color(0.023, 0.18515, 0.23, 1)
+z_index = -1
+custom_minimum_size = Vector2(192, 300)
+offset_right = 190.0
+offset_bottom = 159.0
+texture = SubResource("PlaceholderTexture2D_w1esa")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(192, 300)
+offset_left = -2.0
+offset_top = 1.0
+offset_right = 190.0
+offset_bottom = 301.0
+theme = ExtResource("1_pivi4")
+bbcode_enabled = true
+text = "[center]VOID
+
+moving void that hits bullets and enemies 
+ [/center]"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="RichTextLabel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

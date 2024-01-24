@@ -26,16 +26,50 @@ texture = ExtResource("3_dq541")
 [node name="Player" parent="Stage" instance=ExtResource("4_jjr3t")]
 
 [node name="WhiteBackground" type="Sprite2D" parent="Stage"]
+self_modulate = Color(0.14902, 0, 0.172549, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 87)
+scale = Vector2(1, 0.275)
+texture = ExtResource("5_o7gbd")
+
+[node name="WhiteBackground3" type="Sprite2D" parent="Stage"]
+self_modulate = Color(0.113725, 0.00392157, 0.14902, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 39)
+scale = Vector2(1, 0.125)
+texture = ExtResource("5_o7gbd")
+
+[node name="WhiteBackground4" type="Sprite2D" parent="Stage"]
+self_modulate = Color(0.0666667, 0, 0.0980392, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 14)
+scale = Vector2(1, 0.0833333)
+texture = ExtResource("5_o7gbd")
+
+[node name="WhiteBackground5" type="Sprite2D" parent="Stage"]
+self_modulate = Color(0.0470588, 0, 0.0627451, 1)
+z_index = -100
+z_as_relative = false
+position = Vector2(0, 2)
+scale = Vector2(1, 0.0166667)
+texture = ExtResource("5_o7gbd")
+
+[node name="WhiteBackground2" type="Sprite2D" parent="Stage"]
 self_modulate = Color(0, 0, 0, 1)
 z_index = -100
 z_as_relative = false
+position = Vector2(0, -60)
+scale = Vector2(1, 0.5)
 texture = ExtResource("5_o7gbd")
 
-[node name="SkewllaxBackground" type="Node2D" parent="Stage/WhiteBackground"]
+[node name="SkewllaxBackground" type="Node2D" parent="Stage"]
 script = ExtResource("2_r8mg6")
 scroll_rate = 1.0
 
-[node name="WireFrameBg" type="Sprite2D" parent="Stage/WhiteBackground/SkewllaxBackground"]
+[node name="WireFrameBg" type="Sprite2D" parent="Stage/SkewllaxBackground"]
 z_index = -10
 z_as_relative = false
 texture = ExtResource("3_nyuf3")

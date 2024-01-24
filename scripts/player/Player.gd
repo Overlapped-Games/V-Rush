@@ -1,6 +1,6 @@
 class_name Player extends CharacterBody2D
 
-
+signal grazed()
 signal stats_changed()
 signal health_updated(new_health : int)
 
@@ -175,5 +175,4 @@ func _on_hit(bullet : Bullet) -> void:
 # TODO: implement collecting power-ups. when change stats, should updat all projectile stats too
 
 func _on_grazed() -> void:
-	#print("grazed")
-	pass
+	grazed.emit()
