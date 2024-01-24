@@ -7,7 +7,6 @@ var current_level : int = 1
 @onready var health : RichTextLabel = %HealthCounter
 @onready var gauge : TextureProgressBar = $CanvasLayer/VRushGauge
 @onready var score_label : RichTextLabel = %Score
-
 var player : Player
 
 var gauge_ready := false
@@ -16,6 +15,7 @@ var score := 0:
 	set(value):
 		score = clamp(value, 0, MAX_SCORE)
 		score_label.text = "%012d" % score
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,6 +45,8 @@ func _input(event: InputEvent) -> void:
 	if direction and not event.is_echo():
 		print("moving=", direction)
 		# TODO: implement navigating menu
+		
+
 
 func can_equip_skill() -> bool:
 	return false
@@ -82,3 +84,11 @@ func _on_enemy_defeated(enemy : Enemy) -> void:
 
 func _on_boss_defeated(enemy : Enemy) -> void:
 	score += enemy.defeat_value if enemy.get("defeat_value") else 10000
+
+func get_level() -> int:
+	return current_level
+
+func set_level(arg: int) -> void:
+	current_level = arg
+
+

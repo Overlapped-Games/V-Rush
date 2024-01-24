@@ -23,7 +23,6 @@ func _on_play_pressed() -> void:
 	fade = true
 
 func play_menu_transition() -> void:
-	#GameManager.visible_canvas()
 	GameManager.visible_menu(false)
 	get_tree().change_scene_to_file("res://assets/menus/scenes/transition.tscn")
 	set_process(false)
@@ -31,7 +30,6 @@ func play_menu_transition() -> void:
 
 func _on_settings_pressed() -> void:
 	$Settings.visible = true
-
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cwf7w3h8xlg15"]
+[gd_scene load_steps=16 format=3 uid="uid://cwf7w3h8xlg15"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_ibtlh"]
 [ext_resource type="PackedScene" uid="uid://cqy6olr675ced" path="res://assets/player/projectile_weapon.tscn" id="3_lf66x"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scripts/player/Hurtbox.gd" id="4_8r57l"]
 [ext_resource type="Texture2D" uid="uid://h3aiy1yh2o0w" path="res://assets/art/player/kiyo.png" id="4_kahib"]
 [ext_resource type="Texture2D" uid="uid://15fq2ex7djxd" path="res://assets/art/hitbox_marker.png" id="5_m1ylv"]
+[ext_resource type="AudioStream" uid="uid://bo12hubufjewv" path="res://assets/player/assets/Laser - 1.wav" id="7_wjph0"]
+[ext_resource type="AudioStream" uid="uid://bt5ehyev6bah" path="res://assets/player/assets/Laser - Big and Bad.wav" id="8_img4o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_36umy"]
 size = Vector2(16, 16)
@@ -129,3 +131,9 @@ one_shot = true
 attack_rate = 10
 
 [node name="Abilities" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wjph0")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_img4o")

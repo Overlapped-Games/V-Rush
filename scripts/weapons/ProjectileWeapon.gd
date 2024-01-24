@@ -36,6 +36,7 @@ func _attack(delta : float, action_pressed : bool, origin : Vector2, direction :
 		can_fire = true
 	
 	if can_fire and action_pressed:
+		$"../AudioStreamPlayer".play()
 		can_fire = false
 		var next : Bullet = BulletUtil.get_player_bullet()
 		next._fire(Vector2(origin.x + 16, origin.y), direction, BulletUtil.BulletShape.BOX, 800, 0, 1600, {"x": 14, "y": 6})

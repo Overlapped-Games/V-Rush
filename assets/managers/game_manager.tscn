@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://birg0nkb48fv4" path="res://assets/player/v_rush_gauge.tscn" id="3_fk6op"]
 [ext_resource type="PackedScene" uid="uid://vcfgelhxwuca" path="res://assets/menus/scenes/main_menu.tscn" id="3_wfyga"]
 
-[node name="Node" type="Node"]
+[node name="GAME" type="Node"]
 script = ExtResource("1_aqmqm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

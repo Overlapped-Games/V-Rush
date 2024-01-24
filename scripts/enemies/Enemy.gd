@@ -12,7 +12,7 @@ signal defeated(enemy : Enemy) # ded
 @onready var sprite : Sprite2D = $Sprite
 @onready var health_bar : TextureProgressBar = $HealthBar
 @onready var beehavior : BeehaveTree = $Beehavior
-
+@onready var hit_sound = $hit_sound
 @onready var ph_delta : float = get_physics_process_delta_time()
 
 ## Health
@@ -82,7 +82,7 @@ func _on_hit(bullet : Bullet) -> void:
 	tween.tween_property(sprite, "modulate:v", 1, 5 * ph_delta).from(15)
 	if current_health > 0:
 		health_bar.show()
-		health_bar.value = 100.0 * current_health / max_health 
+		health_bar.value = 100.0 * current_health / max_health
 	
 	if current_health == 0:
 		print("DEAD")

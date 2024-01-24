@@ -3,8 +3,8 @@ extends Sprite2D
 var transition_speed : float = 0.01
 var target_color : Color
 
-func _ready():
-	self.modulate = Color(0.00, 0.75, 1.00, 1)
+#func _ready():
+	#self.modulate = Color(0.00, 0.75, 1.00, 1)
 
 func _process(delta: float) -> void:
 	change_color(transition_speed)
