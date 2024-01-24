@@ -31,6 +31,22 @@ func _on_settings_pressed() -> void:
 	print('settings')
 	get_tree().change_scene_to_file("res://assets/menus/scenes/settings.tscn")
 
-
 func _on_quit_pressed():
 	get_tree().quit()
+
+
+
+# --------- mouse hover event ------------
+func _on_play_shader_mouse_entered():
+	$Control/PlayShader.visible = false
+func _on_play_shader_mouse_exited():
+	$Control/PlayShader.visible = true
+func _on_settings_shader_mouse_entered():
+	$Control/SettingsShader.visible = false
+func _on_settings_shader_mouse_exited():
+	$Control/SettingsShader.visible = true
+func _on_quit_shader_mouse_entered():
+	$Control/QuitShader.visible = false
+func _on_quit_shader_mouse_exited():
+	$Control/QuitShader.visible = true
+# ----------------------------------------

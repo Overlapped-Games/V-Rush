@@ -54,7 +54,7 @@ theme = ExtResource("1_5earo")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 0.498039, 1, 1)
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4asp4")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
@@ -67,7 +67,7 @@ layout_mode = 2
 theme = ExtResource("1_5earo")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.498039, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4asp4")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
@@ -80,7 +80,7 @@ layout_mode = 2
 theme = ExtResource("1_5earo")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.498039, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4asp4")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
@@ -115,3 +115,9 @@ offset_bottom = 144.0
 [connection signal="pressed" from="Control/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="Control/PlayShader" to="." method="_on_play_shader_mouse_entered"]
+[connection signal="mouse_exited" from="Control/PlayShader" to="." method="_on_play_shader_mouse_exited"]
+[connection signal="mouse_entered" from="Control/SettingsShader" to="." method="_on_settings_shader_mouse_entered"]
+[connection signal="mouse_exited" from="Control/SettingsShader" to="." method="_on_settings_shader_mouse_exited"]
+[connection signal="mouse_entered" from="Control/QuitShader" to="." method="_on_quit_shader_mouse_entered"]
+[connection signal="mouse_exited" from="Control/QuitShader" to="." method="_on_quit_shader_mouse_exited"]

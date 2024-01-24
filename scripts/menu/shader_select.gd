@@ -63,5 +63,4 @@ func _input(event: InputEvent) -> void:
 func move_focus(direction: int):
 	focusedIndex += direction
 	focusedIndex = wrapf(focusedIndex, 0, buttons.size())
-	#buttons[focusedIndex].grab_focus()
 	change()
