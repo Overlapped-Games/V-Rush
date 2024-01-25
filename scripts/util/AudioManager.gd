@@ -7,21 +7,52 @@ const SFX := {
 }
 
 
-var enemy_death_player : AudioStreamPlayer
+const BGM := {
+	"main_menu": preload("res://assets/audio/songs/main_menu_120_bpm.wav"),
+	"stage_1": preload("res://assets/audio/songs/stage_1_135_bpm.wav")
+}
 
+
+@onready var enemy_death_player : AudioStreamPlayer = $enemy_death_player
+@onready var bgm_player : AudioStreamPlayer = $bgm_player
+
+
+var bgm_volume : float = -10.0
+
+var t : float = 0.0
 
 func _ready() -> void:
-	enemy_death_player = AudioStreamPlayer.new()
-	add_child(enemy_death_player)
 	var stream : AudioStreamWAV = SFX["enemy_death"]
 	enemy_death_player.max_polyphony = 10
 	enemy_death_player.set_stream(stream)
-	#enemy_death_player.play()
-	print(SFX["enemy_death"])
+	set_physics_process(false)
 
 
-func play(name : String) -> void:
-	SFX.get(name, "").play()
+func _physics_process(delta: float) -> void:
+	if bgm_player.volume_db <= -80:
+		t = 0
+		set_physics_process(false)
+		return
+	t += delta * 30
+	if t >= 1:
+		t = 0
+		bgm_player.volume_db -= 0.5
+		
+	
+
+
+func play_bgm(name : String) -> void:
+	set_physics_process(false)
+	if !BGM.has(name): 
+		push_warning("Song '%s' not found." % [name])
+		return
+	bgm_player.set_stream(BGM[name])
+	bgm_player.set_volume_db(bgm_volume)
+	bgm_player.play()
+
+
+func fade_bgm() -> void:
+	set_physics_process(true)
 
 
 func enemy_death() -> void:

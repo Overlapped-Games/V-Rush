@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu2n03ofaees8"]
+
+[ext_resource type="Script" path="res://scripts/util/AudioManager.gd" id="1_5aynq"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_5aynq")
+
+[node name="enemy_death_player" type="AudioStreamPlayer" parent="."]
+
+[node name="bgm_player" type="AudioStreamPlayer" parent="."]
+autoplay = true

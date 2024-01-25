@@ -1,0 +1,126 @@
+[gd_scene load_steps=14 format=3 uid="uid://glfl6cu6l1m8"]
+
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_7eydf"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_fii7e"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_4s0fp"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_ke4hg"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_xcnot"]
+[ext_resource type="Script" path="res://scripts/beehaviors/NearPlayer.gd" id="6_hr5ar"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_g32mh"]
+[ext_resource type="Script" path="res://assets/levels/MoveLeft.gd" id="8_83mkx"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_tkyl0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8pi4"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvjlm"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_sh77w"]
+resource_name = "spin"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q0wyb"]
+_data = {
+"spin": SubResource("Animation_sh77w")
+}
+
+[node name="MoveLeftFireNearPlayer" type="RigidBody2D"]
+position = Vector2(270, -16)
+collision_layer = 4
+collision_mask = 514
+gravity_scale = 0.0
+script = ExtResource("1_7eydf")
+max_health = 20
+current_health = 20
+invlunerability_time = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_k8pi4")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_dvjlm")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+z_index = 1
+rotation = -1.5708
+texture = ExtResource("2_fii7e")
+hframes = 7
+vframes = 7
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_fii7e")
+hframes = 7
+vframes = 7
+frame = 8
+
+[node name="Patterns" type="Node2D" parent="."]
+
+[node name="Pattern" type="Node2D" parent="Patterns"]
+script = ExtResource("3_4s0fp")
+angle_type = 1
+fire_direction = Vector2(-1, 0)
+shape_properties = {
+"radius": 4.0
+}
+spread = 7
+spread_degrees = 10.0
+
+[node name="AttackTree" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("4_ke4hg")
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="AttackTree"]
+script = ExtResource("5_xcnot")
+
+[node name="NearPlayer" type="Node" parent="AttackTree/SequenceComposite"]
+script = ExtResource("6_hr5ar")
+
+[node name="FirePattern" type="Node" parent="AttackTree/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_g32mh")
+pattern = NodePath("../../../Patterns/Pattern")
+
+[node name="BasicEnemyAI" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("4_ke4hg")
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="BasicEnemyAI"]
+script = ExtResource("5_xcnot")
+
+[node name="MoveTowards" type="Node" parent="BasicEnemyAI/SequenceComposite"]
+script = ExtResource("8_83mkx")
+
+[node name="HealthBar" parent="." instance=ExtResource("9_tkyl0")]
+visible = false
+custom_minimum_size = Vector2(24, 8)
+offset_left = -12.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 18.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q0wyb")
+}
+autoplay = "spin"

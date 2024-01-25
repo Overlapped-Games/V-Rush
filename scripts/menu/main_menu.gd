@@ -10,6 +10,7 @@ func _ready() -> void:
 	add_child(fade_timer)
 	connect("fade_timeout", play_menu_transition)
 	%Selector.option_selected.connect(_on_option_selected)
+	AudioManager.call_deferred("play_bgm", "main_menu")
 
 
 func _process(delta: float) -> void:
@@ -35,6 +36,7 @@ func _on_option_selected(index : int) -> void:
 		0:
 			fade = true
 			%Selector.set_process_input(false) # stop selector from handling inputs
+			AudioManager.fade_bgm()
 		1:
 			%SettingsMenu.show()
 			%Options.hide()

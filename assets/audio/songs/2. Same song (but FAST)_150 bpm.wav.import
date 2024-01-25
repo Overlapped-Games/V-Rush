@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bxhx4n8td01ux"
+path="res://.godot/imported/2. Same song (but FAST)_150 bpm.wav-a6dc5a7b551ed1a7843d9807db5b6885.sample"
+
+[deps]
+
+source_file="res://assets/audio/songs/2. Same song (but FAST)_150 bpm.wav"
+dest_files=["res://.godot/imported/2. Same song (but FAST)_150 bpm.wav-a6dc5a7b551ed1a7843d9807db5b6885.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

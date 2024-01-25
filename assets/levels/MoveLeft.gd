@@ -16,5 +16,5 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 		actor.queue_free()
 		return SUCCESS
 		
-	actor.global_position += (Vector2.LEFT * get_physics_process_delta_time() * speed)
+	actor.global_position.x += (Vector2.LEFT.x * get_physics_process_delta_time() * speed)
 	return RUNNING

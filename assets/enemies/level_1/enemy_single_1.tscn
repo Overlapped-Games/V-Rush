@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=3 uid="uid://mjb62wfkw0al"]
+
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_cghjc"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_20umn"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_dt4f5"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_cm2y6"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_1pi4a"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_pxx3j"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_npm04"]
+[ext_resource type="Script" path="res://assets/levels/MoveLeft.gd" id="8_lhh70"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_0jalw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yq0j7"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bh2u5"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_kcgcy"]
+resource_name = "spin"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wwqph"]
+_data = {
+"spin": SubResource("Animation_kcgcy")
+}
+
+[node name="Enemy" type="RigidBody2D"]
+position = Vector2(40, -64)
+collision_layer = 4
+collision_mask = 514
+gravity_scale = 0.0
+script = ExtResource("1_cghjc")
+max_health = 20
+current_health = 20
+invlunerability_time = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yq0j7")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_bh2u5")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_20umn")
+hframes = 7
+vframes = 7
+frame = 4
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="point" type="Marker2D" parent="."]
+position = Vector2(-40, 0)
+
+[node name="Patterns" type="Node2D" parent="."]
+
+[node name="Pattern" type="Node2D" parent="Patterns"]
+script = ExtResource("3_dt4f5")
+angle_type = 1
+fire_direction = Vector2(-1, 0)
+velocity = 80
+shape_properties = {
+"radius": 4.0
+}
+
+[node name="Beehavior" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("4_cm2y6")
+enabled = false
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="Beehavior"]
+script = ExtResource("5_1pi4a")
+
+[node name="MoveToPoint" type="Node" parent="Beehavior/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_pxx3j")
+speed = 80
+target = NodePath("../../../point")
+
+[node name="FirePattern" type="Node" parent="Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_npm04")
+pattern = NodePath("../../../Patterns/Pattern")
+
+[node name="MoveLeft" type="Node" parent="Beehavior/SequenceComposite"]
+script = ExtResource("8_lhh70")
+speed = 80
+
+[node name="HealthBar" parent="." instance=ExtResource("9_0jalw")]
+visible = false
+custom_minimum_size = Vector2(24, 8)
+offset_left = -12.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 18.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wwqph")
+}
+autoplay = "spin"

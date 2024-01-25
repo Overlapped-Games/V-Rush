@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveTowards.gd" id="8_0x1hl"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="9_arsyu"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_e1dop"]
-[ext_resource type="Script" path="res://assets/enemies/NearPlayer.gd" id="10_ukgg2"]
+[ext_resource type="Script" path="res://scripts/beehaviors/NearPlayer.gd" id="10_ukgg2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f6anh"]
 size = Vector2(16, 16)

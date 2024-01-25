@@ -35,6 +35,7 @@ func _ready() -> void:
 		set_invulnerable(true)
 		collider.set_disabled(true)
 		
+		
 	for child in get_children().filter(func(child): return child is BeehaveTree):
 		child.enabled = enabled
 		

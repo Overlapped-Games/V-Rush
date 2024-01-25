@@ -47,6 +47,7 @@ func start_level(level : int) -> void:
 	var bg = get_tree().get_first_node_in_group("level_background")
 	bg.set_target_color(get_background_color(current_level))
 	init_stat()
+	AudioManager.play_bgm("stage_1")
 
 
 func init_stat() -> void:
