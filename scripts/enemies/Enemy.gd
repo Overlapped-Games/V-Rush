@@ -16,6 +16,7 @@ signal defeated(enemy : Enemy) # ded
 @onready var ph_delta : float = get_physics_process_delta_time()
 
 @export var enabled : bool = false
+@export var speed : int = 120
 ## Health
 @export var max_health : int = 50
 @export var current_health : int = 50

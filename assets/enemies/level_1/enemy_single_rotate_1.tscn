@@ -1,0 +1,172 @@
+[gd_scene load_steps=16 format=3 uid="uid://du8eq4525s1aw"]
+
+[ext_resource type="Script" path="res://scripts/enemies/EnemyContainer.gd" id="1_3pbde"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_wp0sv"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_mls0d"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_xcqbd"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_t516s"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_qjjbk"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_1ke5f"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_mvhyy"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="8_rmt47"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_p0g66"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveDirection.gd" id="9_wti4e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yq0j7"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bh2u5"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_kcgcy"]
+resource_name = "spin"
+length = 0.55
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wwqph"]
+_data = {
+"spin": SubResource("Animation_kcgcy")
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_3pbde")
+
+[node name="BasicEnemyAI" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("4_t516s")
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="points" type="Node2D" parent="."]
+
+[node name="point" type="Marker2D" parent="points"]
+position = Vector2(-120, 0)
+
+[node name="point2" type="Marker2D" parent="points"]
+position = Vector2(-120, 64)
+
+[node name="point3" type="Marker2D" parent="points"]
+position = Vector2(-56, 64)
+
+[node name="Enemy" type="RigidBody2D" parent="."]
+collision_layer = 4
+collision_mask = 514
+gravity_scale = 0.0
+script = ExtResource("1_wp0sv")
+invlunerability_time = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("RectangleShape2D_yq0j7")
+
+[node name="Hurtbox" type="Area2D" parent="Enemy"]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionShape2D" parent="Enemy/Hurtbox"]
+shape = SubResource("RectangleShape2D_bh2u5")
+
+[node name="Sprite" type="Sprite2D" parent="Enemy"]
+z_index = 1
+texture = ExtResource("2_mls0d")
+hframes = 7
+vframes = 7
+frame = 9
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="Patterns" type="Node2D" parent="Enemy"]
+
+[node name="Pattern" type="Node2D" parent="Enemy/Patterns"]
+script = ExtResource("3_xcqbd")
+fire_direction = Vector2(-1, 0)
+velocity = 100
+shape_properties = {
+"radius": 4.0
+}
+stacking = true
+stacks = 3
+velocity_modifier = 0.35
+spin_rate = 0.5
+repeating = true
+max_repeats = 12
+call_rate = 8.0
+
+[node name="Beehavior" type="Node" parent="Enemy" node_paths=PackedStringArray("actor")]
+script = ExtResource("4_t516s")
+enabled = false
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="Enemy/Beehavior"]
+script = ExtResource("5_qjjbk")
+
+[node name="MoveToPoint" type="Node" parent="Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_1ke5f")
+speed = 150
+target = NodePath("../../../../points/point")
+reparent = false
+
+[node name="FirePattern" type="Node" parent="Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_mvhyy")
+pattern = NodePath("../../../Patterns/Pattern")
+
+[node name="DelayDecorator" type="Node" parent="Enemy/Beehavior/SequenceComposite"]
+script = ExtResource("8_rmt47")
+wait_time = 1.5
+
+[node name="MoveToPoint2" type="Node" parent="Enemy/Beehavior/SequenceComposite/DelayDecorator" node_paths=PackedStringArray("target")]
+script = ExtResource("6_1ke5f")
+speed = 150
+target = NodePath("../../../../../points/point2")
+reparent = false
+
+[node name="FirePattern2" type="Node" parent="Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_mvhyy")
+pattern = NodePath("../../../Patterns/Pattern")
+
+[node name="DelayDecorator2" type="Node" parent="Enemy/Beehavior/SequenceComposite"]
+script = ExtResource("8_rmt47")
+wait_time = 1.5
+
+[node name="MoveToPoint2" type="Node" parent="Enemy/Beehavior/SequenceComposite/DelayDecorator2" node_paths=PackedStringArray("target")]
+script = ExtResource("6_1ke5f")
+speed = 150
+target = NodePath("../../../../../points/point3")
+reparent = false
+
+[node name="FirePattern3" type="Node" parent="Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_mvhyy")
+pattern = NodePath("../../../Patterns/Pattern")
+
+[node name="DelayDecorator3" type="Node" parent="Enemy/Beehavior/SequenceComposite"]
+script = ExtResource("8_rmt47")
+wait_time = 1.5
+
+[node name="MoveDirection" type="Node" parent="Enemy/Beehavior/SequenceComposite/DelayDecorator3"]
+script = ExtResource("9_wti4e")
+speed = 100
+direction = 0
+
+[node name="HealthBar" parent="Enemy" instance=ExtResource("9_p0g66")]
+visible = false
+custom_minimum_size = Vector2(24, 8)
+offset_left = -12.0
+offset_top = 10.0
+offset_right = 12.0
+offset_bottom = 18.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy"]
+libraries = {
+"": SubResource("AnimationLibrary_wwqph")
+}
+autoplay = "spin"

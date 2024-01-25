@@ -1,7 +1,7 @@
 class_name MoveLeft extends ActionLeaf
 
 
-@export var speed : int = 60
+@export var speed : int = 0
 
 var camera : Camera2D
 
@@ -16,5 +16,5 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 		actor.queue_free()
 		return SUCCESS
 		
-	actor.global_position.x += (Vector2.LEFT.x * get_physics_process_delta_time() * speed)
+	actor.global_position.x += (Vector2.LEFT.x * get_physics_process_delta_time() * (speed if speed > 0 else actor.speed))
 	return RUNNING

@@ -1,8 +1,8 @@
-## Move towards a direction
-class_name MoveTowards extends ActionLeaf
+class_name MoveDirection extends ActionLeaf
+
 
 @export var speed : int = 0
-@export var direction : Vector2
+@export_enum("Up", "Down", "Left", "Right") var direction : int = 2
 
 var camera : Camera2D
 
@@ -10,7 +10,8 @@ var dir : Vector2
 
 func before_run(actor: Node, blackboard: Blackboard) -> void:
 	camera = get_tree().get_first_node_in_group("camera")
-	dir = (actor.global_position).direction_to(actor.global_position + direction)
+	var d : Vector2 = Vector2.UP if direction == 0 else Vector2.DOWN if direction == 1 else Vector2.LEFT if direction == 2 else Vector2.RIGHT
+	dir = (actor.global_position).direction_to(actor.global_position + d)
  
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
@@ -21,5 +22,6 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 	
 	actor.global_position += (dir * get_physics_process_delta_time() * (speed if speed > 0 else actor.speed))
 	return RUNNING
+
 
 
