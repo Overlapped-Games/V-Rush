@@ -9,9 +9,16 @@ var direction : Vector2
 
 
 func _ready() -> void:
-	var old_transform = target.global_transform
+	#var old_transform = target.global_transform
+	#target.set_as_top_level(true)
+	#target.transform = old_transform
+	print("b,", target.global_position)
+	var target_pos : Vector2 = target.global_position
+	#var old_transform = target.global_transform
 	target.set_as_top_level(true)
-	target.transform = old_transform
+	print("i,", target.global_position)
+	target.global_position = target_pos
+	print("a,", target.global_position)
 
 
 func before_run(actor: Node, blackboard: Blackboard) -> void:

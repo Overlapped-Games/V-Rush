@@ -7,9 +7,10 @@ class_name MoveToPoint extends ActionLeaf
 
 
 func _ready() -> void:
-	var old_transform = target.global_transform
+	var target_pos : Vector2 = target.global_position
+	#var old_transform = target.global_transform
 	target.set_as_top_level(true)
-	target.transform = old_transform
+	target.global_position = target_pos
 
 
 func before_run(actor: Node, blackboard: Blackboard) -> void:

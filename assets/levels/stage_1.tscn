@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dmreaj7b0lh0e"]
+[gd_scene load_steps=36 format=3 uid="uid://dmreaj7b0lh0e"]
 
 [ext_resource type="Script" path="res://scripts/util/Stage.gd" id="1_1jxbv"]
 [ext_resource type="Script" path="res://scripts/world/Level.gd" id="1_m8snf"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="10_d7hnu"]
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="11_uc76c"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="12_dte63"]
+[ext_resource type="PackedScene" uid="uid://d31tb0djt36m8" path="res://assets/enemies/level_1/enemy_single_2.tscn" id="12_jj3oh"]
 [ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="13_haxnl"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="14_sv71m"]
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="15_uth0m"]
@@ -158,8 +159,164 @@ format = 2
 layer_0/tile_data = PackedInt32Array(-524302, 2, 0, -524301, 2, 0, -524300, 2, 0, -524299, 2, 0, -524298, 2, 0, -524297, 2, 0, -524296, 2, 0, -524295, 2, 0, -524294, 2, 0, -524293, 2, 0, -524292, 2, 0, -524291, 2, 0, -524290, 2, 0, -524289, 2, 0, -589824, 2, 0, -589823, 2, 0, -589822, 2, 0, -589821, 2, 0, -589820, 2, 0, -589819, 2, 0, -589818, 2, 0, -589817, 2, 0, -589816, 2, 0, -589815, 2, 0, -589814, 2, 0, -589813, 2, 0, -589812, 2, 0, -589811, 2, 0, -589810, 2, 0, -589809, 2, 0, -589808, 2, 0, -589807, 2, 0, -589806, 2, 0, -589805, 2, 0, -589804, 2, 0, -589803, 2, 0, -589802, 2, 0, -589801, 2, 0, -589800, 2, 0, -589799, 2, 0, -589798, 2, 0, -589797, 2, 0, -589796, 2, 0, -589795, 2, 0, -589794, 2, 0, -589793, 2, 0, -589792, 2, 0, -589791, 2, 0, -589790, 2, 0, -589789, 2, 0, -589788, 2, 0, -589787, 2, 0, -589786, 2, 0, -589785, 2, 0, -589784, 2, 0, -589783, 2, 0, -589782, 2, 0, -589781, 2, 0, -589780, 2, 0, -589779, 2, 0, -589778, 2, 0, -589777, 2, 0, -589776, 2, 0, -589775, 2, 0, -589774, 2, 0, -589773, 2, 0, -589772, 2, 0, -589771, 2, 0, -589770, 2, 0, -589769, 2, 0, -589768, 2, 0, -589767, 2, 0, -589766, 2, 0, -589765, 2, 0, -589764, 2, 0, -589763, 2, 0, -589762, 2, 0, -589761, 2, 0, -589760, 2, 0, -589759, 2, 0, -589758, 2, 0, -589757, 2, 0, -589756, 2, 0, -589755, 2, 0, -589754, 2, 0, -589753, 2, 0, -589752, 2, 0, -589751, 2, 0, -589750, 2, 0, -589749, 2, 0, -589748, 2, 0, -589747, 2, 0, -589746, 2, 0, -589745, 2, 0, -589744, 2, 0, -589743, 2, 0, -589742, 2, 0, -589741, 2, 0, -589740, 2, 0, -589739, 2, 0, -589738, 2, 0, -589737, 2, 0, 589810, 2, 0, 589811, 2, 0, 589812, 2, 0, 589813, 2, 0, 589814, 2, 0, 589815, 2, 0, 589816, 2, 0, 589817, 2, 0, 589818, 2, 0, 589819, 2, 0, 589820, 2, 0, 589821, 2, 0, 589822, 2, 0, 589823, 2, 0, 524288, 2, 0, 524289, 2, 0, 524290, 2, 0, 524291, 2, 0, 524292, 2, 0, 524293, 2, 0, 524294, 2, 0, 524295, 2, 0, 524296, 2, 0, 524297, 2, 0, 524298, 2, 0, 524299, 2, 0, 524300, 2, 0, 524301, 2, 0, 524302, 2, 0, 524303, 2, 0, 524304, 2, 0, 524305, 2, 0, 524306, 2, 0, 524307, 2, 0, 524308, 2, 0, 524309, 2, 0, 524310, 2, 0, 524311, 2, 0, 524312, 2, 0, 524313, 2, 0, 524314, 2, 0, 524315, 2, 0, 524316, 2, 0, 524317, 2, 0, 524318, 2, 0, 524319, 2, 0, 524320, 2, 0, 524321, 2, 0, 524322, 2, 0, 524323, 2, 0, 524324, 2, 0, 524325, 2, 0, 524326, 2, 0, 524327, 2, 0, 524328, 2, 0, 524329, 2, 0, 524330, 2, 0, 524331, 2, 0, 524332, 2, 0, 524333, 2, 0, 524334, 2, 0, 524335, 2, 0, 524336, 2, 0, 524337, 2, 0, 524338, 2, 0, 524339, 2, 0, 524340, 2, 0, 524341, 2, 0, 524342, 2, 0, 524343, 2, 0, 524344, 2, 0, 524345, 2, 0, 524346, 2, 0, 524347, 2, 0, 524348, 2, 0, 524349, 2, 0, 524350, 2, 0, 524351, 2, 0, 524352, 2, 0, 524353, 2, 0, 524354, 2, 0, 524355, 2, 0, 524356, 2, 0, 524357, 2, 0, 524358, 2, 0, 524359, 2, 0, 524360, 2, 0, 524361, 2, 0, 524362, 2, 0, 524363, 2, 0, 524364, 2, 0, 524365, 2, 0, 524366, 2, 0, 524367, 2, 0, 524368, 2, 0, 524369, 2, 0, 524370, 2, 0, 524371, 2, 0, 524372, 2, 0, 524373, 2, 0, 524374, 2, 0, 524375, 2, 0, 589808, 2, 0, 589809, 2, 0, -524304, 2, 0, -524303, 2, 0, -524305, 2, 0, -458769, 2, 0, -393233, 2, 0, -327697, 2, 0, -262161, 2, 0, -196625, 2, 0, -131089, 2, 0, -65553, 2, 0, -17, 2, 0, 65519, 2, 0, 131055, 2, 0, 196591, 2, 0, 262127, 2, 0, 327663, 2, 0, 393199, 2, 0, 458735, 2, 0, 524271, 2, 0, 589807, 2, 0, -589736, 2, 0, -589735, 2, 0, -589734, 2, 0, -589733, 2, 0, -589732, 2, 0, -589731, 2, 0, -589730, 2, 0, -589729, 2, 0, -589728, 2, 0, -589727, 2, 0, -589726, 2, 0, -589725, 2, 0, -589724, 2, 0, -589723, 2, 0, -589722, 2, 0, -589721, 2, 0, -589720, 2, 0, -589719, 2, 0, -589718, 2, 0, -589717, 2, 0, -589716, 2, 0, -589715, 2, 0, -589714, 2, 0, -589713, 2, 0, -589712, 2, 0, -589711, 2, 0, -589710, 2, 0, -589709, 2, 0, -589708, 2, 0, -589707, 2, 0, -589706, 2, 0, -589705, 2, 0, -589704, 2, 0, -589703, 2, 0, -589702, 2, 0, -589701, 2, 0, -589700, 2, 0, -589699, 2, 0, -589698, 2, 0, -589697, 2, 0, -589696, 2, 0, -589695, 2, 0, -589694, 2, 0, -589693, 2, 0, -589692, 2, 0, -589691, 2, 0, -589690, 2, 0, -589689, 2, 0, -589688, 2, 0, -589687, 2, 0, -589686, 2, 0, -589685, 2, 0, -589684, 2, 0, -589683, 2, 0, -589682, 2, 0, -589681, 2, 0, -589680, 2, 0, -589679, 2, 0, -589678, 2, 0, -589677, 2, 0, -589676, 2, 0, -589675, 2, 0, -589674, 2, 0, -589673, 2, 0, -589672, 2, 0, -589671, 2, 0, -589670, 2, 0, -589669, 2, 0, -589668, 2, 0, -589667, 2, 0, -589666, 2, 0, -589665, 2, 0, -589664, 2, 0, -589663, 2, 0, -589662, 2, 0, -589661, 2, 0, -589660, 2, 0, -589659, 2, 0, -589658, 2, 0, -589657, 2, 0, -589656, 2, 0, -589655, 2, 0, -589654, 2, 0, -589653, 2, 0, -589652, 2, 0, -589651, 2, 0, -589650, 2, 0, -589649, 2, 0, 524376, 2, 0, 524377, 2, 0, 524378, 2, 0, 524379, 2, 0, 524380, 2, 0, 524381, 2, 0, 524382, 2, 0, 524383, 2, 0, 524384, 2, 0, 524385, 2, 0, 524386, 2, 0, 524387, 2, 0, 524388, 2, 0, 524389, 2, 0, 524390, 2, 0, 524391, 2, 0, 524392, 2, 0, 524393, 2, 0, 524394, 2, 0, 524395, 2, 0, 524396, 2, 0, 524397, 2, 0, 524398, 2, 0, 524399, 2, 0, 524400, 2, 0, 524401, 2, 0, 524402, 2, 0, 524403, 2, 0, 524404, 2, 0, 524405, 2, 0, 524406, 2, 0, 524407, 2, 0, 524408, 2, 0, 524409, 2, 0, 524410, 2, 0, 524411, 2, 0, 524412, 2, 0, 524413, 2, 0, 524414, 2, 0, 524415, 2, 0, 524416, 2, 0, 524417, 2, 0, 524418, 2, 0, 524419, 2, 0, 524420, 2, 0, 524421, 2, 0, 524422, 2, 0, 524423, 2, 0, 524424, 2, 0, 524425, 2, 0, 524426, 2, 0, 524427, 2, 0, 524428, 2, 0, 524429, 2, 0, 524430, 2, 0, 524431, 2, 0, 524432, 2, 0, 524433, 2, 0, 524434, 2, 0, 524435, 2, 0, 524436, 2, 0, 524437, 2, 0, 524438, 2, 0, 524439, 2, 0, 524440, 2, 0, 524441, 2, 0, 524442, 2, 0, 524443, 2, 0, 524444, 2, 0, 524445, 2, 0, 524446, 2, 0, 524447, 2, 0, 524448, 2, 0, 524449, 2, 0, 524450, 2, 0, 524451, 2, 0, 524452, 2, 0, 524453, 2, 0, 524454, 2, 0, 524455, 2, 0, 524456, 2, 0, 524457, 2, 0, 524458, 2, 0, 524459, 2, 0, 524460, 2, 0, 524461, 2, 0, 524462, 2, 0, 524463, 2, 0)
 metadata/_edit_lock_ = true
 
+[node name="MoveTrigger2" parent="." instance=ExtResource("9_18ohq")]
+position = Vector2(536, 0)
+
+[node name="Enemy" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(-32, -64)
+
+[node name="Enemy2" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(-32, -48)
+
+[node name="Enemy3" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(-16, -64)
+
+[node name="Enemy4" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(-16, -48)
+
+[node name="Enemy9" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(-16, 24)
+
+[node name="Enemy10" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(-16, 40)
+
+[node name="Enemy11" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(0, 24)
+
+[node name="Enemy12" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(0, 40)
+
+[node name="Enemy5" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(0, -56)
+
+[node name="Enemy6" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(0, -40)
+
+[node name="Enemy7" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(16, -56)
+
+[node name="Enemy8" parent="MoveTrigger2" instance=ExtResource("21_tyhu3")]
+position = Vector2(16, -40)
+
+[node name="MoveTrigger3" parent="." instance=ExtResource("9_18ohq")]
+position = Vector2(608, 0)
+
+[node name="Enemy7" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(-16, 64)
+
+[node name="point" parent="MoveTrigger3/Enemy7" index="3"]
+position = Vector2(-40, 0)
+
+[node name="point2" parent="MoveTrigger3/Enemy7" index="4"]
+position = Vector2(-88, -24)
+
+[node name="Enemy8" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(-16, 80)
+
+[node name="point" parent="MoveTrigger3/Enemy8" index="3"]
+position = Vector2(-40, 0)
+
+[node name="point2" parent="MoveTrigger3/Enemy8" index="4"]
+position = Vector2(-88, -23)
+
+[node name="MoveToPoint" parent="MoveTrigger3/Enemy8/Beehavior/SequenceComposite" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../../Enemy7/point")
+
+[node name="FirePattern" parent="MoveTrigger3/Enemy8/Beehavior/SequenceComposite" index="1" node_paths=PackedStringArray("pattern")]
+pattern = NodePath("../../../../Enemy7/Patterns/Pattern")
+
+[node name="Enemy9" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(0, 64)
+
+[node name="point" parent="MoveTrigger3/Enemy9" index="3"]
+position = Vector2(-40, 0)
+
+[node name="point2" parent="MoveTrigger3/Enemy9" index="4"]
+position = Vector2(-88, -24)
+
+[node name="MoveToPoint" parent="MoveTrigger3/Enemy9/Beehavior/SequenceComposite" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../../Enemy7/point")
+
+[node name="FirePattern" parent="MoveTrigger3/Enemy9/Beehavior/SequenceComposite" index="1" node_paths=PackedStringArray("pattern")]
+pattern = NodePath("../../../../Enemy7/Patterns/Pattern")
+
+[node name="Enemy10" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(0, 80)
+
+[node name="point" parent="MoveTrigger3/Enemy10" index="3"]
+position = Vector2(-40, 0)
+
+[node name="point2" parent="MoveTrigger3/Enemy10" index="4"]
+position = Vector2(-88, -23)
+
+[node name="MoveToPoint" parent="MoveTrigger3/Enemy10/Beehavior/SequenceComposite" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../../Enemy7/point")
+
+[node name="FirePattern" parent="MoveTrigger3/Enemy10/Beehavior/SequenceComposite" index="1" node_paths=PackedStringArray("pattern")]
+pattern = NodePath("../../../../Enemy7/Patterns/Pattern")
+
+[node name="Enemy11" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(40, -56)
+
+[node name="point2" parent="MoveTrigger3/Enemy11" index="4"]
+position = Vector2(-88, 40)
+
+[node name="MoveToPoint" parent="MoveTrigger3/Enemy11/Beehavior/SequenceComposite" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../../Enemy7/point")
+
+[node name="FirePattern" parent="MoveTrigger3/Enemy11/Beehavior/SequenceComposite" index="1" node_paths=PackedStringArray("pattern")]
+pattern = NodePath("../../../../Enemy7/Patterns/Pattern")
+
+[node name="Enemy12" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(24, -56)
+
+[node name="point2" parent="MoveTrigger3/Enemy12" index="4"]
+position = Vector2(-88, 40)
+
+[node name="MoveToPoint" parent="MoveTrigger3/Enemy12/Beehavior/SequenceComposite" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../../Enemy7/point")
+
+[node name="FirePattern" parent="MoveTrigger3/Enemy12/Beehavior/SequenceComposite" index="1" node_paths=PackedStringArray("pattern")]
+pattern = NodePath("../../../../Enemy7/Patterns/Pattern")
+
+[node name="Enemy13" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(72, -64)
+
+[node name="point2" parent="MoveTrigger3/Enemy13" index="4"]
+position = Vector2(-88, 40)
+
+[node name="MoveToPoint" parent="MoveTrigger3/Enemy13/Beehavior/SequenceComposite" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../../Enemy7/point")
+
+[node name="FirePattern" parent="MoveTrigger3/Enemy13/Beehavior/SequenceComposite" index="1" node_paths=PackedStringArray("pattern")]
+pattern = NodePath("../../../../Enemy7/Patterns/Pattern")
+
+[node name="Enemy14" parent="MoveTrigger3" instance=ExtResource("12_jj3oh")]
+position = Vector2(56, -64)
+
+[node name="point2" parent="MoveTrigger3/Enemy14" index="4"]
+position = Vector2(-88, 40)
+
+[node name="MoveToPoint" parent="MoveTrigger3/Enemy14/Beehavior/SequenceComposite" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../../Enemy7/point")
+
+[node name="FirePattern" parent="MoveTrigger3/Enemy14/Beehavior/SequenceComposite" index="1" node_paths=PackedStringArray("pattern")]
+pattern = NodePath("../../../../Enemy7/Patterns/Pattern")
+
+[node name="Enemy" parent="MoveTrigger3" instance=ExtResource("21_tyhu3")]
+position = Vector2(16, 0)
+
+[node name="Enemy2" parent="MoveTrigger3" instance=ExtResource("21_tyhu3")]
+position = Vector2(32, 0)
+
+[node name="Enemy3" parent="MoveTrigger3" instance=ExtResource("21_tyhu3")]
+position = Vector2(48, 8)
+
+[node name="Enemy4" parent="MoveTrigger3" instance=ExtResource("21_tyhu3")]
+position = Vector2(64, 8)
+
 [node name="MoveTrigger" parent="." instance=ExtResource("9_18ohq")]
-position = Vector2(648, 0)
+position = Vector2(1208, 0)
 
 [node name="Enemy" parent="MoveTrigger" instance=ExtResource("22_iyp8y")]
 position = Vector2(-32, -64)
@@ -645,6 +802,9 @@ libraries = {
 }
 autoplay = "spin"
 
+[node name="Enemy9" parent="EnemyTrigger" instance=ExtResource("12_jj3oh")]
+position = Vector2(-18, 16)
+
 [node name="EventTrigger" type="Area2D" parent="."]
 position = Vector2(2808, 0)
 collision_layer = 8192
@@ -656,3 +816,12 @@ shape = SubResource("RectangleShape2D_yd4ej")
 
 [node name="Event" type="Node" parent="EventTrigger"]
 script = ExtResource("23_607yv")
+
+[editable path="MoveTrigger3/Enemy7"]
+[editable path="MoveTrigger3/Enemy8"]
+[editable path="MoveTrigger3/Enemy9"]
+[editable path="MoveTrigger3/Enemy10"]
+[editable path="MoveTrigger3/Enemy11"]
+[editable path="MoveTrigger3/Enemy12"]
+[editable path="MoveTrigger3/Enemy13"]
+[editable path="MoveTrigger3/Enemy14"]
