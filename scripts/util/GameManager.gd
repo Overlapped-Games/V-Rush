@@ -70,14 +70,14 @@ func visible_menu(arg: bool) -> void:
 	$Main_Menu.visible = arg
 
 
-func _input(event: InputEvent) -> void:
-	if !v_rush_menu_open or (not event is InputEventKey and not event is InputEventAction): return
-	
-	var direction : Vector2 = Input.get_vector("input_left", "input_right", "input_up", "input_down")
-	
-	if direction and not event.is_echo():
-		print("moving=", direction)
-		# TODO: implement navigating menu
+#func _input(event: InputEvent) -> void:
+	#if !v_rush_menu_open or (not event is InputEventKey and not event is InputEventAction): return
+	#
+	#var direction : Vector2 = Input.get_vector("input_left", "input_right", "input_up", "input_down")
+	#
+	#if direction and not event.is_echo():
+		#print("moving=", direction)
+		## TODO: implement navigating menu
 
 
 func can_equip_skill() -> bool:

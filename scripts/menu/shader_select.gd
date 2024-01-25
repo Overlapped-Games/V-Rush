@@ -20,7 +20,7 @@ var curr_option : Control
 
 func _ready():
 	sleep_timer = Timer.new()  # Initialize the sleep timer
-	sleep_timer.connect("timeout", _on_sleep_timer_timeout)
+	sleep_timer.timeout.connect(_on_sleep_timer_timeout)
 	sleep_timer.wait_time = 1
 	add_child(sleep_timer)  # Add the sleep timer as a child of the Control node
 
@@ -53,7 +53,7 @@ func _input(event: InputEvent) -> void:
 			move_focus(-1)
 			menu_up_down_sound.play()
 		elif Input.is_action_just_pressed("ui_accept"):
-			sleep_timer.start()  # Start the sleep timer when a button is selected
+			#sleep_timer.start()  # Start the sleep timer when a button is selected
 			menu_select_sound.play()
 			option_selected.emit(focused_index)
 		elif Input.is_action_just_pressed("ui_cancel"):

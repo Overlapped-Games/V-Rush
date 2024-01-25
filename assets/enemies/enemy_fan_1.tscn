@@ -10,13 +10,13 @@
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveTowards.gd" id="8_y5ybp"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_lie73"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6anh"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8pi4"]
 size = Vector2(16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdvip"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvjlm"]
 size = Vector2(16, 16)
 
-[sub_resource type="Animation" id="Animation_bu03r"]
+[sub_resource type="Animation" id="Animation_sh77w"]
 resource_name = "spin"
 length = 0.8
 loop_mode = 1
@@ -33,9 +33,9 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbn4u"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q0wyb"]
 _data = {
-"spin": SubResource("Animation_bu03r")
+"spin": SubResource("Animation_sh77w")
 }
 
 [node name="Enemy" type="RigidBody2D"]
@@ -48,14 +48,14 @@ current_health = 20
 invlunerability_time = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_f6anh")
+shape = SubResource("RectangleShape2D_k8pi4")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 2048
 collision_mask = 2
 
 [node name="Collider" type="CollisionShape2D" parent="Hurtbox"]
-shape = SubResource("RectangleShape2D_wdvip")
+shape = SubResource("RectangleShape2D_dvjlm")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = 1
@@ -122,6 +122,6 @@ offset_bottom = 18.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_fbn4u")
+"": SubResource("AnimationLibrary_q0wyb")
 }
 autoplay = "spin"

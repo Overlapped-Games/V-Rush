@@ -12,6 +12,6 @@ func before_run(actor: Node, blackboard: Blackboard) -> void:
 
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
-	print("A.", name)
+	#print("A.", name)
 	return SUCCESS if player.global_position.distance_to(actor.global_position) <= distance else RUNNING
 

@@ -23,6 +23,7 @@ BulletUtil="*res://scripts/godonmaku/logic/BulletUtil.gd"
 GameManager="*res://assets/managers/game_manager.tscn"
 BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
 BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
+AudioManager="*res://scripts/util/AudioManager.gd"
 
 [display]
 

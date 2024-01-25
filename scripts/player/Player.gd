@@ -151,7 +151,7 @@ func revive() -> void:
 
 func damage(damage : int) -> void:
 	if invulnerable: return
-	$AudioStreamPlayer2.play()
+	#$AudioStreamPlayer2.play()
 	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
 	if current_health == 0:
 		print("DEAD")

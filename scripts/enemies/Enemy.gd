@@ -11,10 +11,11 @@ signal defeated(enemy : Enemy) # ded
 @onready var animator : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite
 @onready var health_bar : TextureProgressBar = $HealthBar
-@onready var beehavior : BeehaveTree = $Beehavior
+#@onready var beehavior : BeehaveTree = $Beehavior
 @onready var hit_sound = $hit_sound
 @onready var ph_delta : float = get_physics_process_delta_time()
 
+@export var enabled : bool = false
 ## Health
 @export var max_health : int = 50
 @export var current_health : int = 50
@@ -29,9 +30,14 @@ var t : float = 0.0
 
 
 func _ready() -> void:
-	set_physics_process(false)
-	set_invulnerable(true)
-	collider.set_disabled(true)
+	if !enabled:
+		set_physics_process(false)
+		set_invulnerable(true)
+		collider.set_disabled(true)
+		
+	for child in get_children().filter(func(child): return child is BeehaveTree):
+		child.enabled = enabled
+		
 	if !health_bar:
 		health_bar = load("res://assets/enemies/enemy_health_bar.tscn").instantiate()
 		health_bar.name = "HealthBar"
@@ -40,7 +46,7 @@ func _ready() -> void:
 	defeated.connect(GameManager._on_enemy_defeated)
 	hit.connect(GameManager._on_enemy_hit)
 	current_health = max_health
-	beehavior.enabled = false
+	#beehavior.enabled = false
 
 
 func _physics_process(delta : float) -> void:
@@ -63,7 +69,8 @@ func _start() -> void:
 	set_physics_process(true)
 	set_invulnerable(false)
 	collider.set_disabled(false)
-	beehavior.enabled = true
+	for child in get_children().filter(func(child): return child is BeehaveTree):
+		child.enabled = true
 
 
 func set_invulnerable(inv : bool) -> void:
@@ -85,13 +92,18 @@ func _on_hit(bullet : Bullet) -> void:
 		health_bar.value = 100.0 * current_health / max_health
 	
 	if current_health == 0:
-		print("DEAD")
-		set_physics_process(false)
-		defeated.emit(self)
-		queue_free()
+		_on_defeated()
 		return
 	
 	hit.emit(self)
+
+
+func _on_defeated() -> void:
+	print("DEAD")
+	AudioManager.enemy_death()
+	set_physics_process(false)
+	defeated.emit(self)
+	queue_free()
 
 
 func _on_projectile_collide(projectile : ProjectileBase, damage : int) -> void:

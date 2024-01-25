@@ -34,6 +34,7 @@ func _on_option_selected(index : int) -> void:
 	match index:
 		0:
 			fade = true
+			%Selector.set_process_input(false) # stop selector from handling inputs
 		1:
 			%SettingsMenu.show()
 			%Options.hide()
