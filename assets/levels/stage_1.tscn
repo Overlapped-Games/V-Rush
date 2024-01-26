@@ -351,6 +351,8 @@ position = Vector2(-16, -104)
 [node name="Enemy14" parent="MoveTrigger4" instance=ExtResource("17_lw3f0")]
 position = Vector2(-16, 104)
 
+[node name="Enemy15" parent="MoveTrigger4" instance=ExtResource("22_5gv6e")]
+
 [node name="MoveTrigger10" parent="." instance=ExtResource("9_18ohq")]
 position = Vector2(1907, 0)
 
@@ -441,10 +443,10 @@ position = Vector2(-16, -104)
 [node name="Enemy14" parent="MoveTrigger15" instance=ExtResource("17_lw3f0")]
 position = Vector2(-16, 104)
 
-[node name="MoveTrigger5" parent="." instance=ExtResource("9_18ohq")]
+[node name="Node2D" parent="." instance=ExtResource("9_18ohq")]
 position = Vector2(1160, 0)
 
-[node name="Enemy9" parent="MoveTrigger5" instance=ExtResource("15_shq66")]
+[node name="Enemy9" parent="Node2D" instance=ExtResource("15_shq66")]
 position = Vector2(16, -33)
 
 [node name="MoveTrigger6" parent="." instance=ExtResource("9_18ohq")]
@@ -498,13 +500,13 @@ position = Vector2(0, 23)
 position = Vector2(0, -24)
 
 [node name="MoveTrigger18" parent="." instance=ExtResource("9_18ohq")]
-position = Vector2(384, 0)
+position = Vector2(3416, 0)
 
 [node name="EnemyContainer2" parent="MoveTrigger18" instance=ExtResource("20_xk3yi")]
-position = Vector2(0, 23)
+position = Vector2(0, -32)
 
 [node name="EnemyContainer" parent="MoveTrigger18" instance=ExtResource("21_fp1yd")]
-position = Vector2(0, -24)
+position = Vector2(0, 32)
 
 [node name="MoveTrigger16" parent="." instance=ExtResource("9_18ohq")]
 position = Vector2(3104, 0)

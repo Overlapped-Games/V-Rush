@@ -1,16 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://bxdbu2fenabrv"]
+[gd_scene load_steps=16 format=3 uid="uid://bxdbu2fenabrv"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyContainer.gd" id="1_4nddp"]
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_pset4"]
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_441n2"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_si8si"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="4_baqw1"]
 [ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_nqhj1"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_1aqvi"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="5_i6sng"]
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_p84yl"]
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_fn2i8"]
-[ext_resource type="Script" path="res://scripts/beehaviors/NearPlayer.gd" id="7_gmd6s"]
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveTowardsPlayer.gd" id="9_8f35s"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_76nxt"]
 
@@ -94,25 +92,9 @@ velocity = 120
 spread = 2
 spread_degrees = 20.0
 
-[node name="BeehaveTree" type="Node" parent="Enemy" node_paths=PackedStringArray("blackboard", "actor")]
-script = ExtResource("4_baqw1")
-blackboard = NodePath("@Node@143807")
-actor = NodePath("..")
-
-[node name="SequenceComposite" type="Node" parent="Enemy/BeehaveTree"]
-script = ExtResource("5_1aqvi")
-
-[node name="NearPlayer" type="Node" parent="Enemy/BeehaveTree/SequenceComposite"]
-script = ExtResource("7_gmd6s")
-
-[node name="FirePattern" type="Node" parent="Enemy/BeehaveTree/SequenceComposite" node_paths=PackedStringArray("pattern")]
-script = ExtResource("7_fn2i8")
-pattern = NodePath("../../../Patterns/Pattern")
-
 [node name="Beehavior" type="Node" parent="Enemy" node_paths=PackedStringArray("actor")]
 script = ExtResource("4_nqhj1")
 enabled = false
-actor_node_path = NodePath("..")
 actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="Enemy/Beehavior"]
@@ -129,7 +111,7 @@ pattern = NodePath("../../../Patterns/Pattern")
 
 [node name="DelayDecorator2" type="Node" parent="Enemy/Beehavior/SequenceComposite"]
 script = ExtResource("5_i6sng")
-wait_time = 2.0
+wait_time = 1.5
 
 [node name="MoveToPoint2" type="Node" parent="Enemy/Beehavior/SequenceComposite/DelayDecorator2" node_paths=PackedStringArray("target")]
 script = ExtResource("6_p84yl")
@@ -142,7 +124,7 @@ pattern = NodePath("../../../Patterns/Pattern")
 
 [node name="DelayDecorator3" type="Node" parent="Enemy/Beehavior/SequenceComposite"]
 script = ExtResource("5_i6sng")
-wait_time = 2.0
+wait_time = 1.5
 
 [node name="MoveToPoint3" type="Node" parent="Enemy/Beehavior/SequenceComposite/DelayDecorator3" node_paths=PackedStringArray("target")]
 script = ExtResource("6_p84yl")
@@ -155,7 +137,7 @@ pattern = NodePath("../../../Patterns/Pattern")
 
 [node name="DelayDecorator4" type="Node" parent="Enemy/Beehavior/SequenceComposite"]
 script = ExtResource("5_i6sng")
-wait_time = 2.0
+wait_time = 1.5
 
 [node name="MoveTowardsPlayer" type="Node" parent="Enemy/Beehavior/SequenceComposite/DelayDecorator4"]
 script = ExtResource("9_8f35s")
