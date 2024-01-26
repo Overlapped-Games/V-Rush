@@ -3,6 +3,13 @@ class_name Level extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$EventTrigger.connect("next_level", spawn_new_level)
+	AudioManager.play_bgm("stage_1")
+	GameManager.process = true
+
+#func _process(_delta):
+	#if GameManager.player_dead:
+		#self.queue_free()
+
 
 func remove_all_enemies():
 	for child in get_children():

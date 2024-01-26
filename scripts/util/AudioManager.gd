@@ -9,7 +9,8 @@ const SFX := {
 
 const BGM := {
 	"main_menu": preload("res://assets/audio/songs/main_menu_120_bpm.wav"),
-	"stage_1": preload("res://assets/audio/songs/stage_1_135_bpm.wav")
+	"stage_1": preload("res://assets/audio/songs/stage_1_135_bpm.wav"),
+	"game_over": preload("res://assets/menus/assets/audio/4. GameOver (Loop).wav")
 }
 
 

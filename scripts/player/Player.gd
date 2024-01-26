@@ -21,7 +21,7 @@ const BASE_SPEED := 150.0
 
 ## Health
 @export var max_health : int = 50
-@export var current_health : int = 50:
+@export var current_health : int = 10:
 	set(value):
 		current_health = value
 		health_updated.emit(current_health)
@@ -75,13 +75,14 @@ func _ready() -> void:
 				show()
 	)
 	animator.play("invulnerable_flash")
+	#damage(10)
 
 func _physics_process(delta : float) -> void:
 	if Input.is_action_pressed("focus"):
 		speed_multiplier = focus_speed_multiplier
 	elif Input.is_action_just_released("focus"):
 		speed_multiplier = 1
-		
+	
 	
 	var direction : Vector2 = Input.get_vector("input_left", "input_right", "input_up", "input_down")
 	
@@ -151,14 +152,13 @@ func revive() -> void:
 
 func damage(damage : int) -> void:
 	if invulnerable: return
-	#$AudioStreamPlayer2.play()
 	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
 	if current_health == 0:
 		print("DEAD")
 		set_physics_process(false)
 		set_invulnerable(true)
 		hide()
-		#call game over screen
+		GameManager.player_dead = true
 		return
 	
 	set_invulnerable(true)

@@ -3,7 +3,7 @@ class_name MainMenu extends Node2D
 var fade_timer : Timer
 var fade_duration : float = 1
 var fade = false
-
+signal play()
 
 func _ready() -> void:
 	fade_timer = Timer.new()
@@ -36,6 +36,7 @@ func _on_option_selected(index : int) -> void:
 		0:
 			fade = true
 			%Selector.set_process_input(false) # stop selector from handling inputs
+			play.emit()
 			AudioManager.fade_bgm()
 		1:
 			%SettingsMenu.show()

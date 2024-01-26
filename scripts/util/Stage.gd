@@ -23,7 +23,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !auto_scrolling: return
 	position.x = roundi(position.x + 1 * delta * speed)
-	print(position.x)
 
 
 func next_level():

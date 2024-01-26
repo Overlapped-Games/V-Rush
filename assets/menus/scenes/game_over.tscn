@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://b22byourjfkfx"]
+
+[ext_resource type="Script" path="res://assets/menus/scenes/game_over.gd" id="1_wxgx6"]
+[ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="2_301ot"]
+[ext_resource type="Script" path="res://assets/menus/scenes/game_over_text_modulate.gd" id="4_fe8de"]
+[ext_resource type="AudioStream" uid="uid://3q0ul2o1r7pv" path="res://assets/menus/assets/audio/4. GameOver (Loop).wav" id="5_6f4fp"]
+
+[node name="GameOver" type="Node2D"]
+position = Vector2(213, 120)
+script = ExtResource("1_wxgx6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -221.0
+offset_top = -124.0
+offset_right = 217.0
+offset_bottom = 127.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Cammaku" type="Camera2D" parent="."]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -196.0
+offset_top = -111.0
+offset_right = 196.0
+offset_bottom = 111.0
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 90.0
+offset_right = 347.0
+offset_bottom = 130.0
+theme = ExtResource("2_301ot")
+theme_override_font_sizes/normal_font_size = 37
+text = "GAME OVER"
+fit_content = true
+script = ExtResource("4_fe8de")
+metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_6f4fp")
