@@ -40,9 +40,10 @@ texture = ExtResource("2_otai7")
 offset = Vector2(0, 1)
 hframes = 6
 vframes = 6
-frame = 9
+frame = 10
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_y7xaq")
 }
+autoplay = "flash"

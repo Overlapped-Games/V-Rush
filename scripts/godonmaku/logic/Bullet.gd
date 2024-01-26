@@ -201,6 +201,7 @@ func move_straight(delta : float) -> void:
 	current_distance += distance
 	
 	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+		print("g%s vs c%s, %s" % [global_position, camera.global_position, screen_extents])
 		if max_bounces > 0 and current_bounces < max_bounces:
 			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
 				direction = Vector2(direction.x, -direction.y)
@@ -226,6 +227,7 @@ func _move(origin : Vector2, target_direction : Vector2,  target_position : Vect
 
 
 func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0, max_vel := 1000) -> void:
+	print("origin-%s" % origin)
 	firing_state |= FiringState.FIRE
 	active = true
 	global_position = origin
@@ -243,11 +245,13 @@ func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0,
 func _change_shape(bullet_shape : BulletUtil.BulletShape, shape_properties := {}) -> void:
 	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties))
 
+
 func _move_and_fire(origin : Vector2, move_direction : Vector2,  target_position : Vector2, fire_direction : Vector2, bullet_shape : BulletUtil.BulletShape, shape_properties : Dictionary, move_vel := 100, fire_vel := 100) -> void:
 	pass
 
 
 func _disable():
+	print("d=%s" % [global_position])
 	expired.emit(self)
 	hide()
 	set_physics_process(false)

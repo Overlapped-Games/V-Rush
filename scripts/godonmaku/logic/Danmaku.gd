@@ -181,27 +181,7 @@ func update_target() -> void:
 
 
 func _start() -> void:
-	#active = true
-	#stacking = false
-	#stacks = 1
-	#velocity_modifier = 0.0
-	#delaying_call = false
-	#repeating = false
-	#repeatable = func(): pass
-	#repeat_count = 0
-	#max_repeats = 0
-	#call_rate = 1.0
-	#t = 0
-	#t_m = 0
-	#pattern_rot = 0.0
-	#spin_rate = 0
-	#max_bounces = 0
-	#fire_angle_modifier = 0
-	#move_type = Bullet.MoveType.LINE
-	#per_bullet_f = func(bullet : Bullet): pass
 	set_physics_process(true)
-	
-	#sequence.call()
 
 
 func _stop() -> void:

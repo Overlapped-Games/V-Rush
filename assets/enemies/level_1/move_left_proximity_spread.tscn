@@ -1,14 +1,14 @@
 [gd_scene load_steps=14 format=3 uid="uid://glfl6cu6l1m8"]
 
-[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_7eydf"]
-[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_fii7e"]
-[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_4s0fp"]
-[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_ke4hg"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_xcnot"]
-[ext_resource type="Script" path="res://scripts/beehaviors/NearPlayer.gd" id="6_hr5ar"]
-[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_g32mh"]
-[ext_resource type="Script" path="res://scripts/beehaviors/MoveLeft.gd" id="8_83mkx"]
-[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_tkyl0"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_r6bkj"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_h0cb4"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_bxfaa"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_0gdrn"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_1pbvx"]
+[ext_resource type="Script" path="res://scripts/beehaviors/NearPlayer.gd" id="6_0l76f"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_jew4l"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveLeft.gd" id="8_c554x"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_o5ymq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8pi4"]
 size = Vector2(16, 16)
@@ -39,11 +39,10 @@ _data = {
 }
 
 [node name="MoveLeftFireNearPlayer" type="RigidBody2D"]
-position = Vector2(270, -16)
 collision_layer = 4
 collision_mask = 514
 gravity_scale = 0.0
-script = ExtResource("1_7eydf")
+script = ExtResource("1_r6bkj")
 max_health = 20
 current_health = 20
 invlunerability_time = 0.0
@@ -61,14 +60,14 @@ shape = SubResource("RectangleShape2D_dvjlm")
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = 1
 rotation = -1.5708
-texture = ExtResource("2_fii7e")
+texture = ExtResource("2_h0cb4")
 hframes = 7
 vframes = 7
 region_rect = Rect2(16, 16, 16, 16)
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 z_index = 1
-texture = ExtResource("2_fii7e")
+texture = ExtResource("2_h0cb4")
 hframes = 7
 vframes = 7
 frame = 8
@@ -76,42 +75,40 @@ frame = 8
 [node name="Patterns" type="Node2D" parent="."]
 
 [node name="Pattern" type="Node2D" parent="Patterns"]
-script = ExtResource("3_4s0fp")
+script = ExtResource("3_bxfaa")
 angle_type = 1
 fire_direction = Vector2(-1, 0)
-shape_properties = {
-"radius": 4.0
-}
 spread = 7
 spread_degrees = 10.0
 
 [node name="AttackTree" type="Node" parent="." node_paths=PackedStringArray("actor")]
-script = ExtResource("4_ke4hg")
+script = ExtResource("4_0gdrn")
 actor_node_path = NodePath("..")
 actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="AttackTree"]
-script = ExtResource("5_xcnot")
+script = ExtResource("5_1pbvx")
 
 [node name="NearPlayer" type="Node" parent="AttackTree/SequenceComposite"]
-script = ExtResource("6_hr5ar")
+script = ExtResource("6_0l76f")
+radius = 320
 
 [node name="FirePattern" type="Node" parent="AttackTree/SequenceComposite" node_paths=PackedStringArray("pattern")]
-script = ExtResource("7_g32mh")
+script = ExtResource("7_jew4l")
 pattern = NodePath("../../../Patterns/Pattern")
 
 [node name="BasicEnemyAI" type="Node" parent="." node_paths=PackedStringArray("actor")]
-script = ExtResource("4_ke4hg")
+script = ExtResource("4_0gdrn")
 actor_node_path = NodePath("..")
 actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="BasicEnemyAI"]
-script = ExtResource("5_xcnot")
+script = ExtResource("5_1pbvx")
 
-[node name="MoveTowards" type="Node" parent="BasicEnemyAI/SequenceComposite"]
-script = ExtResource("8_83mkx")
+[node name="MoveLeft" type="Node" parent="BasicEnemyAI/SequenceComposite"]
+script = ExtResource("8_c554x")
 
-[node name="HealthBar" parent="." instance=ExtResource("9_tkyl0")]
+[node name="HealthBar" parent="." instance=ExtResource("9_o5ymq")]
 visible = false
 custom_minimum_size = Vector2(24, 8)
 offset_left = -12.0

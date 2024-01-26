@@ -8,6 +8,7 @@ texture = ExtResource("1_b235e")
 region_enabled = true
 region_rect = Rect2(8, 0, 16, 16)
 script = ExtResource("2_2p3j6")
+bullet_type = 1
 properties = {
 "radius": 7
 }

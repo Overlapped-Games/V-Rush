@@ -1,4 +1,3 @@
-@tool
 class_name FirePattern extends ActionLeaf
 
 
@@ -7,6 +6,6 @@ class_name FirePattern extends ActionLeaf
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
 	pattern._start()
-	print("%s firing" % [get_parent().get_parent().get_parent().name])
+	#print("%s firing" % [get_parent().get_parent().get_parent().name])
 	return SUCCESS
 
