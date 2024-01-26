@@ -114,7 +114,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_xipur")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0c8vq")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jeo4x")
 button_mask = 0
-text = "Settings"
+text = "CONTROLS"
 
 [node name="Frame" type="NinePatchRect" parent="ColorRect/Selector/Options/Settings"]
 visible = false

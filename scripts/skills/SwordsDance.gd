@@ -1,5 +1,5 @@
 # 4 rounds of 2 slashes for a total of 8, with a delay between each pair
-class_name SwordsDance extends Skill
+class_name SwordsDanceSkill extends Skill
 
 
 @export var damage : int = 200

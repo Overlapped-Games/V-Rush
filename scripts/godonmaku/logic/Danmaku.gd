@@ -27,20 +27,20 @@ enum Angle {
 @export var bullet_type : BulletUtil.BulletType
 @export var move_type : Bullet.MoveType = Bullet.MoveType.LINE
 @export_flags_2d_physics var hitbox_layer := 0b0010_0000_0000
-@export var velocity : int = 100
+@export var velocity : int = 150
 @export var max_velocity : int = 1000
 @export var acceleration : float = 0.0
 @export var max_bounces : int = 0
 @export var curve_angle : float = 0.0
-@export var bullet_shape : BulletUtil.BulletShape = BulletUtil.BulletShape.CIRCLE
-@export var shape_properties : Dictionary = {}
+#@export var bullet_shape : BulletUtil.BulletShape = BulletUtil.BulletShape.CIRCLE
+#@export var shape_properties : Dictionary = {}
 
 #var bullet_scn : PackedScene
 var per_bullet_f : Callable = func(bullet : Bullet): pass
 var move_f : Callable:
 	set(value):
 		move_f = value
-		moving = true
+		#moving = true
 var sequence : Callable
 
 
@@ -51,7 +51,6 @@ var sequence : Callable
 @export var spread_degrees := 0.0
 @export var origin_offset := 1
 @export var fire_angle_modifier := 0.0
-@export var pattern_rot := 0.0
 
 @export_group("Stack settings")
 @export var stacking : bool = false
@@ -65,15 +64,13 @@ var sequence : Callable
 @export_group("Repeat settings")
 @export var repeating : bool = false
 @export var max_repeats : int = 0
-@export var repeats : int = 0
 @export var repeatable : Callable
-@export var processed_frames : float = 0.0
 @export var repeat_frames : float = 0.0
 @export var call_rate : float = 1.0
 @export var call_delay : float = 0.0
 @export var repeats_to_delay : int = 1
 
-@export var moving : bool = false
+#@export var moving : bool = false
 
 var target : Vector2
 var t_m : float = 0.0
@@ -82,6 +79,9 @@ var finished_processing : bool = false
 var delaying_call : bool = false
 var active : bool = false
 
+var processed_frames : float = 0.0
+var pattern_rot := 0.0
+var repeat_count : int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -123,14 +123,16 @@ func _pattern_process(delta : float) -> void:
 	# stop repeating if reached repeat limit or not a repeating pattern
 	if finished_processing:
 		return
-		
+	
+	# fire once if not repeating
 	if !repeating and !finished_processing:
 		#fired = true
 		fire_pattern()
 		finished_processing  = true
 		return
-		
-	if max_repeats > 0 and repeats == max_repeats:
+	
+	# Stop processing if reached max repeat count
+	if max_repeats > 0 and repeat_count == max_repeats:
 		#print(pool.get_child_count())
 		_stop()
 		return
@@ -150,15 +152,15 @@ func _pattern_process(delta : float) -> void:
 		t = 0
 		#repeatable.call()
 		fire_pattern()
-		repeats += 1
+		repeat_count += 1
 		if spin_rate > 0:
 			pattern_rot = pattern_rot + spin_rate if pattern_rot + spin_rate < 2 * PI else pattern_rot + spin_rate - (2 * PI)
 		elif spin_rate < 0:
 			pattern_rot = pattern_rot + spin_rate if pattern_rot + spin_rate > 0 else (2 * PI) + (pattern_rot + spin_rate)
 		
-		if repeats == repeats_to_delay and call_delay > 0:
+		if repeat_count == repeats_to_delay and call_delay > 0:
 			delaying_call = true
-			repeats = 0
+			repeat_count = 0
 	
 	if repeat_frames > 0 and processed_frames >= repeat_frames:
 		_stop()
@@ -186,7 +188,7 @@ func _start() -> void:
 	#delaying_call = false
 	#repeating = false
 	#repeatable = func(): pass
-	#repeats = 0
+	#repeat_count = 0
 	#max_repeats = 0
 	#call_rate = 1.0
 	#t = 0
@@ -204,14 +206,40 @@ func _start() -> void:
 
 func _stop() -> void:
 	active = false
+	#stacking = false
+	#stacks = 1
+	#velocity_modifier = 0.0
+	finished_processing = false
+	delaying_call = false
+	#repeating = false
+	#repeatable = func(): pass
+	repeat_count = 0
+	#max_repeats = 0
+	processed_frames = 0
+	#call_rate = 1.0
+	t = 0
+	t_m = 0
+	pattern_rot = 0.0
+	#spin_rate = 0
+	#max_bounces = 0
+	#fire_angle_modifier = 0
+	#move_type = Bullet.MoveType.LINE
+	#per_bullet_f = func(bullet : Bullet): pass
+	set_physics_process(false)
+
+
+func _reset() -> void:
+	active = false
 	stacking = false
 	stacks = 1
 	velocity_modifier = 0.0
+	finished_processing = false
 	delaying_call = false
 	repeating = false
 	repeatable = func(): pass
-	repeats = 0
+	repeat_count = 0
 	max_repeats = 0
+	processed_frames = 0
 	call_rate = 1.0
 	t = 0
 	t_m = 0
@@ -253,7 +281,7 @@ func delay(delay := 0.0, repeats_delay := 1, f : Callable = func(): pass) -> voi
 func repeat(rate := 1.0, max := 0, f : Callable = func(): pass) -> void:
 	repeating = true
 	repeatable = f
-	repeats = 0
+	repeat_count = 0
 	max_repeats = max
 	call_rate = rate
 	t = 0
@@ -262,7 +290,7 @@ func repeat(rate := 1.0, max := 0, f : Callable = func(): pass) -> void:
 func repeat_timed(rate := 1.0, frames := 60, f : Callable = func(): pass) -> void:
 	repeating = true
 	repeatable = f
-	repeats = 0
+	repeat_count = 0
 	repeat_frames = frames
 	call_rate = rate
 	t = 0
@@ -312,7 +340,8 @@ func fire_ring() -> void:
 				fire_direction = pos.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
 				if max_bounces > 0: bullet.max_bounces = max_bounces
-				bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
+				bullet._fire(fire_origin, fire_direction, v, acceleration, max_velocity)
+				#bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
 
 
 func set_ring(lines := 1, fire_ang := 0.0, spread_count := 1, spread_ang := 0.0, o_offset := 1, vel := 100, acceleration := 0, max_velocity := 500, f : Callable = func(bullet : Bullet = null): pass) -> void:
@@ -363,7 +392,8 @@ func ring(lines := 1, fire_ang := 0.0, spread_count := 1, spread_ang := 0.0, o_o
 				fire_direction = global_position.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
 				if max_bounces > 0: bullet.max_bounces = max_bounces
-				bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
+				bullet._fire(fire_origin, fire_direction, v, acceleration, max_velocity)
+				#bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
 				
 				## FOR DEBUGGING PURPOSES ##
 				#if stack == 1 and i == ceil(-spread / 2.0) and line == 1:

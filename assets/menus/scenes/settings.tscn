@@ -141,7 +141,7 @@ offset_top = 140.0
 offset_right = 206.0
 offset_bottom = 160.0
 theme = ExtResource("10_dllab")
-text = "ability"
+text = "Skill "
 
 [node name="RichTextLabel7" type="RichTextLabel" parent="."]
 offset_left = 92.0

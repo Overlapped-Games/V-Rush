@@ -3,10 +3,10 @@ class_name Player extends CharacterBody2D
 signal grazed()
 signal stats_changed()
 signal health_updated(new_health : int)
+signal defeated()
 
 
 const BASE_SPEED := 150.0
-
 
 @onready var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -17,6 +17,7 @@ const BASE_SPEED := 150.0
 @onready var abilities : Node = $Abilities # meant for use with the cards
 @onready var animator : AnimationPlayer = $AnimationPlayer
 @onready var invuln_timer : Timer = $InvulnTimer
+@onready var graze_fx : CPUParticles2D = $graze_fx
 
 
 ## Health
@@ -39,7 +40,8 @@ const BASE_SPEED := 150.0
 @export var gauge_fill_rate : float = 1.0
 
 # gain 1 additional memory every 1024 pieces collected
-var memory_experience : int = 0 # in kilobytes
+var memory_exp : int = 0 # in kilobytes
+var attack_exp : int = 0
 
 var invulnerable : bool = false
 var dead : bool = false
@@ -59,6 +61,8 @@ var bugs := []
 func _ready() -> void:
 	hurtbox.hit.connect(_on_hit)
 	hurtbox.body_entered.connect(_on_hit_body)
+	
+	grazebox.area_entered.connect(_on_area_entered)
 	grazebox.grazed.connect(_on_grazed)
 	camera = get_tree().get_first_node_in_group("camera") as Cammaku
 	screen_extents = get_viewport_rect().size / (2 * camera.zoom)
@@ -75,13 +79,14 @@ func _ready() -> void:
 				show()
 	)
 	animator.play("invulnerable_flash")
+	#damage(10)
 
 func _physics_process(delta : float) -> void:
 	if Input.is_action_pressed("focus"):
 		speed_multiplier = focus_speed_multiplier
 	elif Input.is_action_just_released("focus"):
 		speed_multiplier = 1
-		
+	
 	
 	var direction : Vector2 = Input.get_vector("input_left", "input_right", "input_up", "input_down")
 	
@@ -102,7 +107,7 @@ func _physics_process(delta : float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event is InputEventKey and not event is InputEventAction: return
+	if not event is InputEventKey and not event is InputEventAction and not event is InputEventJoypadButton and not event is InputEventJoypadMotion: return
 	
 	if Input.is_action_just_pressed("skill_menu"):
 		GameManager.open_skill_menu()
@@ -112,26 +117,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		print("skill=", a.name)
 	elif Input.is_action_just_pressed("escape_menu"):
 		print("escape menu")
+	
+	var just_pressed = event.is_pressed() and not event.is_echo()
+	if Input.is_key_pressed(KEY_1) and just_pressed:
+		weapon.stage = 1
+	elif Input.is_key_pressed(KEY_2) and just_pressed:
+		weapon.stage = 2
+	elif Input.is_key_pressed(KEY_3) and just_pressed:
+		weapon.stage = 3
 
 
 func do_attack(delta : float) -> void:
 	firing = weapon._attack(delta, Input.is_action_pressed("fire"), global_position, Vector2.RIGHT)
-	#if !can_fire:
-		#t_fire += weapon.attack_rate * delta
-	#
-	#if !can_fire and t_fire >= 1:
-		#t_fire = 0
-		#can_fire = true
-	#
-	#if can_fire and Input.is_action_pressed("fire"):
-		#if !firing: firing = true
-		#weapon._attack(delta, global_position, Vector2.RIGHT)
-		#
-		#can_fire = false
-		#
-	#if Input.is_action_just_released("fire"):
-		#firing = false
-		
+
+
+func attack_up(value : int) -> void:
+	attack_exp = min(attack_exp + value, 20)
+	
+	if attack_exp == 20:
+		weapon.stage_up()
+		attack_exp = 0
 
 
 func set_invulnerable(inv : bool) -> void:
@@ -151,15 +156,17 @@ func revive() -> void:
 
 func damage(damage : int) -> void:
 	if invulnerable: return
-	#$AudioStreamPlayer2.play()
 	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
 	if current_health == 0:
 		print("DEAD")
+		AudioManager.player_sfx("player_death")
 		set_physics_process(false)
 		set_invulnerable(true)
 		hide()
+		defeated.emit()
 		return
 	
+	AudioManager.player_sfx("player_damaged")
 	set_invulnerable(true)
 	animator.play("invulnerable_flash")
 
@@ -172,7 +179,15 @@ func _on_hit(bullet : Bullet) -> void:
 	damage(bullet.damage)
 
 
+func _on_area_entered(area : Area2D) -> void:
+	#if area.collision_layer & 0b0100_0000 > 0:
+		## collectibles
+		#pass
+	pass
+
+
 # TODO: implement collecting power-ups. when change stats, should updat all projectile stats too
 
 func _on_grazed() -> void:
 	grazed.emit()
+	graze_fx.set_emitting(true)

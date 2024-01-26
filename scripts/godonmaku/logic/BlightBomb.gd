@@ -53,8 +53,8 @@ func _physics_process(delta: float) -> void:
 		#frame = (frame - 14 + 1 + 2) % 2 + 14
 
 
-func _fire(origin : Vector2, target_direction : Vector2, bullet_shape : BulletUtil.BulletShape, vel := 100, accel := 0, max_vel := 1000, shape_properties := {}) -> void:
-	super._fire(origin, target_direction, bullet_shape, vel, accel, max_vel, shape_properties)
+func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0, max_vel := 1000) -> void:
+	super._fire(origin, target_direction, vel, accel, max_vel)
 	collider.set_disabled(false)
 
 

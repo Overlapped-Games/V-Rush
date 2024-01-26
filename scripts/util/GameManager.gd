@@ -4,7 +4,9 @@ extends Node
 const MAX_SCORE : int = 999_999_999_999
 
 const STAGES := {
-	1: "res://assets/levels/stage_1.tscn"
+	1: "res://assets/levels/stage_1.tscn",
+	2: "res://assets/levels/stage_1.tscn",
+	3: "res://assets/menus/scenes/game_over.tscn"
 }
 
 const level_colors : Array[Color] = [
@@ -18,13 +20,21 @@ const level_colors : Array[Color] = [
 ]
 
 
+const POWER_UPS := {
+	1: preload("res://assets/collectibles/attack_up.tscn"),
+	2: preload("res://assets/collectibles/gauge_up.tscn"),
+}
+
+@onready var collect_fx : PackedScene = preload("res://assets/fx/collect_fx.tscn")
+@onready var collect_fx_small : PackedScene = preload("res://assets/fx/collect_fx_small.tscn")
+
 @onready var health : RichTextLabel = %HealthCounter
 @onready var gauge : TextureProgressBar = $CanvasLayer/VRushGauge
 @onready var score_label : RichTextLabel = %Score
+
 var player : Player
-
 var current_level : int = 1
-
+var process : bool = true
 var gauge_ready := false
 var v_rush_menu_open := false
 var score := 0:
@@ -37,6 +47,10 @@ func _ready() -> void:
 	var window : Window = get_tree().root
 	window.size = Vector2(1280, 720)
 	visible_canvas(false)
+	var mainMenuScene = preload("res://assets/menus/scenes/main_menu.tscn")
+	var mainMenuInit = mainMenuScene.instantiate()
+	add_child(mainMenuInit)
+	#player = get_tree().get_first_node_in_group("player")
 
 
 func start_level(level : int) -> void:
@@ -52,6 +66,7 @@ func start_level(level : int) -> void:
 func init_stat() -> void:
 	visible_menu(false)
 	player = get_tree().get_first_node_in_group("player")
+	player.defeated.connect(_on_player_defeated)
 	player.grazed.connect(_on_player_grazed)
 	player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
 	health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
@@ -69,6 +84,21 @@ func visible_canvas(arg: bool) -> void:
 func visible_menu(arg: bool) -> void:
 	$Main_Menu.visible = arg
 
+func remove_child_by_name(childName: String) -> void:
+	if has_node(childName):
+		var node = get_node(childName)
+		node.queue_free()
+
+func hide_child_by_name(childName: String) -> void:
+	if has_node(childName):
+		var node = get_node(childName)
+		node.visible = false
+
+func get_node_by_name(node_name: String):
+	if has_node(node_name):
+		var node = get_node(node_name)
+		return node
+	
 
 #func _input(event: InputEvent) -> void:
 	#if !v_rush_menu_open or (not event is InputEventKey and not event is InputEventAction): return
@@ -94,13 +124,27 @@ func open_skill_menu() -> void:
 		# TODO: freeze game physics processing, except for the menu
 
 
-func _on_player_grazed() -> void:
+func clean_up_bullets():
+	pass # TODO: implement
+
+
+func fill_gauge(value := 5) -> void:
 	if gauge.value < 100:
-		gauge.value += 5 * player.gauge_fill_rate
+		gauge.value += value * player.gauge_fill_rate
 		
 		if gauge.value >= 100:
 			print("gauge ready")
 			gauge_ready = true
+
+
+func _on_player_defeated():
+	clean_up_bullets()
+	get_tree().change_scene_to_file(STAGES[3])
+	await get_tree().create_timer(0.01).timeout
+
+
+func _on_player_grazed() -> void:
+	fill_gauge()	
 
 
 func _on_scorable_hit(value : int) -> void:
@@ -116,6 +160,11 @@ func _on_enemy_hit(enemy : Enemy) -> void:
 
 func _on_enemy_defeated(enemy : Enemy) -> void:
 	score += 1000
+	
+	var power_up : Area2D = POWER_UPS[randi_range(1, 2)].instantiate()
+	add_child(power_up)
+	power_up.set_as_top_level(true)
+	power_up.global_position = enemy.global_position
 
 
 func _on_boss_defeated(enemy : Enemy) -> void:

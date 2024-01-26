@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0dhsh04r64fw"]
+
+[ext_resource type="Script" path="res://scripts/enemies/MoveTrigger.gd" id="1_isrv1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nbwan"]
+size = Vector2(16, 240)
+
+[node name="MoveTrigger" type="Node2D"]
+script = ExtResource("1_isrv1")
+
+[node name="Area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area"]
+shape = SubResource("RectangleShape2D_nbwan")

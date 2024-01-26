@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://y3nus7wjkqul"]
+
+[ext_resource type="Texture2D" uid="uid://dgnd1lnuc5jw2" path="res://assets/art/bullets/player_bullets.png" id="1_5svnr"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Bullet.gd" id="2_rsank"]
+
+[node name="Bullet" type="Sprite2D"]
+texture = ExtResource("1_5svnr")
+region_enabled = true
+region_rect = Rect2(0, 16, 8, 8)
+script = ExtResource("2_rsank")
+type = 0
+bullet_type = 7
+base_velocity = 200
+acceleration = 20.0
+properties = {
+"radius": 6
+}
+hitbox_layer = 2084
+grazebox_layer = 0

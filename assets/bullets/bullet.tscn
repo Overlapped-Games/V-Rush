@@ -1,11 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://cxl3m4s7qfypi"]
 
-[ext_resource type="Texture2D" uid="uid://djybca1aelv41" path="res://assets/art/bullet_1.png" id="1_gyc5j"]
+[ext_resource type="Texture2D" uid="uid://bxrxgvhay4bnc" path="res://assets/art/bullets/enemy_bullets.png" id="1_xbyrj"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Bullet.gd" id="2_iqa6w"]
 
 [node name="Bullet" type="Sprite2D"]
 z_index = 2
-texture = ExtResource("1_gyc5j")
+texture = ExtResource("1_xbyrj")
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
 script = ExtResource("2_iqa6w")
 properties = {
 "radius": 4

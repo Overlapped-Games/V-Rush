@@ -16,6 +16,7 @@ signal defeated(enemy : Enemy) # ded
 @onready var ph_delta : float = get_physics_process_delta_time()
 
 @export var enabled : bool = false
+@export var speed : int = 120
 ## Health
 @export var max_health : int = 50
 @export var current_health : int = 50
@@ -34,6 +35,7 @@ func _ready() -> void:
 		set_physics_process(false)
 		set_invulnerable(true)
 		collider.set_disabled(true)
+		
 		
 	for child in get_children().filter(func(child): return child is BeehaveTree):
 		child.enabled = enabled
@@ -98,11 +100,30 @@ func _on_hit(bullet : Bullet) -> void:
 	hit.emit(self)
 
 
+func _hit_by_skill(damage : int) -> void:
+	print("%s hit for %s..." % [name, damage])
+	if invulnerable: return
+	if invlunerability_time > 0:
+		set_invulnerable(true)
+	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
+	var tween : Tween = create_tween()
+	tween.tween_property(sprite, "modulate:v", 1, 5 * ph_delta).from(15)
+	if current_health > 0:
+		health_bar.show()
+		health_bar.value = 100.0 * current_health / max_health
+	
+	if current_health == 0:
+		_on_defeated()
+		return
+	
+	hit.emit(self)
+
+
 func _on_defeated() -> void:
 	print("DEAD")
+	defeated.emit(self)
 	AudioManager.enemy_death()
 	set_physics_process(false)
-	defeated.emit(self)
 	queue_free()
 
 

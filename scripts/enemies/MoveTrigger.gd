@@ -11,6 +11,7 @@ func _ready() -> void:
 	area.collision_mask = 0b0001_0000_0000_0000
 	area.area_entered.connect(_on_entered_view)
 	stage = get_tree().get_first_node_in_group("stage")
+	print('im new')
 
 
 func _on_entered_view(area : Area2D) -> void:

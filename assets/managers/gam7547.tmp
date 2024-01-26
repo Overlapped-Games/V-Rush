@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvpaospjlmejf"]
+
+[ext_resource type="Script" path="res://scripts/util/GameManager.gd" id="1_aqmqm"]
+[ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="2_eiqmw"]
+[ext_resource type="PackedScene" uid="uid://birg0nkb48fv4" path="res://assets/player/v_rush_gauge.tscn" id="3_fk6op"]
+
+[node name="GAME" type="Node"]
+script = ExtResource("1_aqmqm")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(852, 32)
+offset_left = 1.0
+offset_right = 853.0
+offset_bottom = 32.0
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(56, 0)
+layout_mode = 2
+theme = ExtResource("2_eiqmw")
+bbcode_enabled = true
+text = "HEALTH:"
+scroll_active = false
+
+[node name="HealthCounter" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme = ExtResource("2_eiqmw")
+bbcode_enabled = true
+text = "50"
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(135, 0)
+layout_mode = 2
+
+[node name="ScoreLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_eiqmw")
+bbcode_enabled = true
+text = "[color=yellow]SCORE[/color]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 0
+
+[node name="Score" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme = ExtResource("2_eiqmw")
+bbcode_enabled = true
+text = "[right]999999999999[/right]"
+fit_content = true
+scroll_active = false
+scroll_following = true
+autowrap_mode = 0
+
+[node name="AbilityMenu" type="GridContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VRushGauge" parent="CanvasLayer" instance=ExtResource("3_fk6op")]
+offset_left = 21.0
+offset_top = 28.0
+offset_right = 85.0
+offset_bottom = 44.0
+scale = Vector2(1, 1)

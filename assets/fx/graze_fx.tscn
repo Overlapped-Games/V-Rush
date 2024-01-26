@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://coe4j35yr1jot"]
+
+[ext_resource type="Texture2D" uid="uid://c58rfh7q8kwwy" path="res://assets/art/graze_fx.png" id="1_lbu7f"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5qpxv"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[node name="graze_fx" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_5qpxv")
+emitting = false
+amount = 1
+one_shot = true
+texture = ExtResource("1_lbu7f")
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+linear_accel_min = 5.0
+linear_accel_max = 5.0
+anim_speed_min = 1.5
+anim_speed_max = 1.5

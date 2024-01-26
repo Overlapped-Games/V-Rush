@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b5wchcq4jknt6"]
 
-[ext_resource type="Texture2D" uid="uid://dx0w4sflkksnj" path="res://assets/art/enemies/enemies.png" id="1_ofpdu"]
+[ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="1_ofpdu"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/BlightBomb.gd" id="2_0n4cu"]
 [ext_resource type="Script" path="res://scripts/player/Hurtbox.gd" id="3_3hqw0"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="4_8s06t"]
@@ -16,9 +16,23 @@ vframes = 7
 frame = 14
 region_rect = Rect2(8, 0, 16, 16)
 script = ExtResource("2_0n4cu")
+score_value = null
+damage = null
+type = null
+move_type = null
+curve_angle = null
+frequency = null
+amplitude = null
+bullet_type = null
+bullet_shape = null
+base_velocity = null
+acceleration = null
+max_distance = null
 properties = {
 "radius": 8
 }
+hitbox_layer = null
+grazebox_layer = null
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false

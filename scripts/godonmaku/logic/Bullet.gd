@@ -32,12 +32,14 @@ enum FiringState {
 @export var frequency := 0.0
 @export var amplitude := 0.0
 @export var bullet_type := BulletUtil.BulletType.NON_DIRECTIONAL
+@export var bullet_shape := BulletUtil.BulletShape.CIRCLE
 @export var base_velocity := 100
-@export var max_distance := 2400
+@export var acceleration := 0.0
+@export var max_distance := 3200
 @export var properties := {}
 
-@export_flags_2d_physics var hitbox_layer := 0b0010_0000_0000
-@export_flags_2d_physics var grazebox_layer := 0b0001_0000_0000
+@export_flags_2d_physics var hitbox_layer := 0b0100_0010_0000_0000
+@export_flags_2d_physics var grazebox_layer := 0b0000_0001_0000_0000
 
 
 #var sub_pos : Vector2
@@ -47,7 +49,6 @@ var pre_position : Vector2
 
 var max_velocity := 1000
 var velocity := base_velocity
-var acceleration := 0
 var t := 0.0
 var c_t := 0.0
 var w_t := 0.0
@@ -111,6 +112,10 @@ func _physics_process(delta: float) -> void:
 		_disable()
 		return
 	
+	_handle_collision(delta)
+
+
+func _handle_collision(delta : float) -> void:
 	query.collision_mask = hitbox_layer
 	query.transform = global_transform
 	
@@ -133,6 +138,10 @@ func _physics_process(delta: float) -> void:
 
 
 func move_wave(delta : float) -> void:
+	if !camera: 
+		_disable()
+		return
+		
 	w_t += delta
 	var offset : Vector2 = direction.orthogonal() * sin(w_t * frequency) * amplitude
 	var distance : float = velocity * delta
@@ -143,7 +152,6 @@ func move_wave(delta : float) -> void:
 	current_distance += distance
 	
 	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-		##expired.emit(self)
 		if max_bounces > 0 and current_bounces < max_bounces:
 			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
 				direction = Vector2(direction.x, -direction.y)
@@ -156,6 +164,10 @@ func move_wave(delta : float) -> void:
 
 
 func move_curve(delta : float) -> void:
+	if !camera: 
+		_disable()
+		return
+		
 	velocity = clamp(velocity + acceleration, 0, max_velocity)
 	c_t += delta * curve_angle
 	var dir : Vector2 = direction.from_angle(direction.angle() + (c_t * PI / 180))
@@ -166,7 +178,6 @@ func move_curve(delta : float) -> void:
 	current_distance += distance
 	
 	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-		##expired.emit(self)
 		if max_bounces > 0 and current_bounces < max_bounces:
 			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
 				direction = Vector2(dir.x, -dir.y)
@@ -177,8 +188,10 @@ func move_curve(delta : float) -> void:
 			_disable()
 		return
 
-
 func move_straight(delta : float) -> void:
+	if !camera: 
+		_disable()
+		return
 	velocity = clamp(velocity + acceleration, 0, max_velocity)
 	t += delta
 	var distance := velocity * delta
@@ -188,7 +201,6 @@ func move_straight(delta : float) -> void:
 	current_distance += distance
 	
 	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-		##expired.emit(self)
 		if max_bounces > 0 and current_bounces < max_bounces:
 			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
 				direction = Vector2(direction.x, -direction.y)
@@ -213,13 +225,13 @@ func _move(origin : Vector2, target_direction : Vector2,  target_position : Vect
 	show()
 
 
-func _fire(origin : Vector2, target_direction : Vector2, bullet_shape : BulletUtil.BulletShape, vel := 100, accel := 0, max_vel := 1000, shape_properties := {}) -> void:
+func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0, max_vel := 1000) -> void:
 	firing_state |= FiringState.FIRE
 	active = true
 	global_position = origin
 	direction = target_direction
 	query.collision_mask = hitbox_layer
-	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties if !shape_properties.is_empty() else properties))
+	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, properties))
 	current_distance = 0.0
 	velocity = vel
 	acceleration = accel
@@ -227,6 +239,9 @@ func _fire(origin : Vector2, target_direction : Vector2, bullet_shape : BulletUt
 	show()
 	set_physics_process(true)
 
+
+func _change_shape(bullet_shape : BulletUtil.BulletShape, shape_properties := {}) -> void:
+	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties))
 
 func _move_and_fire(origin : Vector2, move_direction : Vector2,  target_position : Vector2, fire_direction : Vector2, bullet_shape : BulletUtil.BulletShape, shape_properties : Dictionary, move_vel := 100, fire_vel := 100) -> void:
 	pass
@@ -239,7 +254,7 @@ func _disable():
 	active = false
 
 
-func _swap(bullet_type : BulletUtil.BulletType) -> void:
-	if bullet_type == bullet_type: return
-	bullet_type = bullet_type
-	texture = BulletUtil.BULLET_SPRITES[bullet_type]
+#func _swap(bullet_type : BulletUtil.BulletType) -> void:
+	#if bullet_type == bullet_type: return
+	#bullet_type = bullet_type
+	#texture = BulletUtil.BULLET_SPRITES[bullet_type]
