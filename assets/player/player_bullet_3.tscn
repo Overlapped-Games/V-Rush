@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://8xdfilx1nwb7"]
+
+[ext_resource type="Texture2D" uid="uid://dgnd1lnuc5jw2" path="res://assets/art/bullets/player_bullets.png" id="1_8iyqh"]
+[ext_resource type="Script" path="res://scripts/player/PlayerFragBullet.gd" id="2_s41u1"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_5wfon"]
+
+[node name="PlayerBullet" type="Sprite2D"]
+z_index = 2
+texture = ExtResource("1_8iyqh")
+hframes = 8
+vframes = 8
+frame = 1
+region_rect = Rect2(16, 0, 16, 16)
+script = ExtResource("2_s41u1")
+frame_start = 1
+frame_end = 2
+damage = 20
+type = 0
+bullet_type = 7
+acceleration = 10.0
+properties = {
+"radius": 6
+}
+hitbox_layer = 36
+
+[node name="Danmaku" type="Node2D" parent="."]
+script = ExtResource("3_5wfon")
+fire_direction = Vector2(1, 0)
+bullet_type = 7
+hitbox_layer = 1060
+velocity = 200
+line_count = 6
+origin_offset = 8

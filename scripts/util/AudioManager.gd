@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 		
 
 func player_sfx(name : String) -> void:
-	player_sfx_player.volume_db = 10 if name == "player_damaged" else 0
+	player_sfx_player.volume_db = 10 if name == "player_damaged" else -10 if name == "player_death" else 0
 	player_sfx_player.set_stream(SFX.get(name, "player_damaged"))
 	player_sfx_player.play()
 

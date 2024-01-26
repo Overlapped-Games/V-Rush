@@ -10,6 +10,12 @@ region_enabled = true
 region_rect = Rect2(0, 0, 16, 8)
 script = ExtResource("1_iuese")
 type = 0
+bullet_type = 6
+bullet_shape = 1
 base_velocity = 400
+properties = {
+"x": 14,
+"y": 6
+}
 hitbox_layer = 1060
 grazebox_layer = 0

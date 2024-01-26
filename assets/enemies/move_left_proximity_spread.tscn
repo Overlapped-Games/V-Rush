@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_xcnot"]
 [ext_resource type="Script" path="res://scripts/beehaviors/NearPlayer.gd" id="6_hr5ar"]
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_g32mh"]
-[ext_resource type="Script" path="res://assets/levels/MoveLeft.gd" id="8_83mkx"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveLeft.gd" id="8_83mkx"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_tkyl0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8pi4"]

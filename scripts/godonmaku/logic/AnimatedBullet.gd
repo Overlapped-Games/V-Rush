@@ -2,9 +2,9 @@ class_name AnimatedBullet extends Bullet
 
 @export var ani_speed : float = 15.0
 
-# inclusive
+# first frame
 @export var frame_start : int = 0
-# exclusive
+# last frame
 @export var frame_end : int = 0
 
 var a_t : float = 0.0
@@ -22,5 +22,5 @@ func _physics_process(delta : float) -> void:
 	
 	if a_t >= 1:
 		a_t = 0
-		frame = wrapi(frame + 1, frame_start, frame_end)
+		frame = wrapi(frame + 1, frame_start, frame_end + 1)
 		#frame = (frame - frame_start + 1 + (frame_end - frame_start)) % (frame_end - frame_start) + frame_start

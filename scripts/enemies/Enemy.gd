@@ -121,9 +121,9 @@ func _hit_by_skill(damage : int) -> void:
 
 func _on_defeated() -> void:
 	print("DEAD")
+	defeated.emit(self)
 	AudioManager.enemy_death()
 	set_physics_process(false)
-	defeated.emit(self)
 	queue_free()
 
 

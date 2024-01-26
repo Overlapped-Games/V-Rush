@@ -3,13 +3,6 @@ class_name ProjectileWeapon extends Weapon
 
 const ENEMY_HITBOX_LAYER := 0b0100
 
-
-@export var attack_rate := 10
-
-var active_projectiles := 0
-var t_fire := 0.0
-var can_fire := true
-
 #func _ready() -> void:
 	#while pool.get_child_count() < max_projectiles:
 		#var projectile : ProjectileBase = projectile_snc.instantiate()
@@ -36,16 +29,49 @@ func _attack(delta : float, action_pressed : bool, origin : Vector2, direction :
 		can_fire = true
 	
 	if can_fire and action_pressed:
-		#$"../AudioStreamPlayer".play()
-		#AudioManager.play("player_fire")
+		#AudioManager.play("player_fire") # might be too annoying
 		can_fire = false
-		var next : Bullet = BulletUtil.get_player_bullet()
-		next._fire(Vector2(origin.x + 16, origin.y), direction, BulletUtil.BulletShape.BOX, 800, 0, 1600, {"x": 14, "y": 6})
-		return true
-	return false
+		fire(origin, direction)
+		#var next : Bullet = BulletUtil.get_player_bullet()
+		#next._fire(Vector2(origin.x + 16, origin.y), direction, BulletUtil.BulletShape.BOX, 800, 0, 1600, {"x": 14, "y": 6})
 	
+	if stage == 3:
+		if !can_fire_3:
+			t_fire_3 += delta
+			
+		if !can_fire_3 and t_fire_3 >= 1:
+			t_fire_3 = 0
+			can_fire_3 = true
+		
+		if can_fire_3 and action_pressed:
+			can_fire_3 = false
+			var frag_one : Bullet = BulletUtil.get_player_bullet(3)
+			var frag_two : Bullet = BulletUtil.get_player_bullet(3)
+			frag_one._fire(Vector2(origin.x + 4, origin.y - 18), direction, 300, 5, 1600)
+			frag_two._fire(Vector2(origin.x + 4, origin.y + 18), direction, 300, 5, 1600)
+	
+	if can_fire: return true
+	
+	return false
+
+
+func fire(origin : Vector2, direction : Vector2) -> void:
+	match stage:
+		1:
+			var next : Bullet = BulletUtil.get_player_bullet(1)
+			next._fire(Vector2(origin.x + 16, origin.y), direction, 800, 0, 1600)
+		2:
+			var one : Bullet = BulletUtil.get_player_bullet(2)
+			var two : Bullet = BulletUtil.get_player_bullet(2)
+			one._fire(Vector2(origin.x + 16, origin.y - 4), direction, 800, 0, 1600)
+			two._fire(Vector2(origin.x + 16, origin.y + 4), direction, 800, 0, 1600)
+		3:
+			var one : Bullet = BulletUtil.get_player_bullet(2)
+			var two : Bullet = BulletUtil.get_player_bullet(2)
+			one._fire(Vector2(origin.x + 16, origin.y - 4), direction, 800, 0, 1600)
+			two._fire(Vector2(origin.x + 16, origin.y + 4), direction, 800, 0, 1600)
 
 
 func _on_projectile_expired(projectile : ProjectileBase):
-	active_projectiles -= 1
+	#active_projectiles -= 1
 	projectile.expired.disconnect(_on_projectile_expired)

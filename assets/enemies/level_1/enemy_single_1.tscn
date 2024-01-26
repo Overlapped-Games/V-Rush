@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_1pi4a"]
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_pxx3j"]
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_npm04"]
-[ext_resource type="Script" path="res://assets/levels/MoveLeft.gd" id="8_lhh70"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveLeft.gd" id="8_lhh70"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_0jalw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yq0j7"]
@@ -74,9 +74,6 @@ position = Vector2(-40, 0)
 script = ExtResource("3_dt4f5")
 angle_type = 1
 fire_direction = Vector2(-1, 0)
-shape_properties = {
-"radius": 4.0
-}
 
 [node name="Beehavior" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("4_cm2y6")

@@ -20,6 +20,13 @@ const level_colors : Array[Color] = [
 ]
 
 
+const POWER_UPS := {
+	1: preload("res://assets/collectibles/attack_up.tscn"),
+	2: preload("res://assets/collectibles/gauge_up.tscn"),
+}
+
+@onready var collect_fx : PackedScene = preload("res://assets/fx/collect_fx.tscn")
+@onready var collect_fx_small : PackedScene = preload("res://assets/fx/collect_fx_small.tscn")
 
 @onready var health : RichTextLabel = %HealthCounter
 @onready var gauge : TextureProgressBar = $CanvasLayer/VRushGauge
@@ -121,6 +128,15 @@ func clean_up_bullets():
 	pass # TODO: implement
 
 
+func fill_gauge(value := 5) -> void:
+	if gauge.value < 100:
+		gauge.value += value * player.gauge_fill_rate
+		
+		if gauge.value >= 100:
+			print("gauge ready")
+			gauge_ready = true
+
+
 func _on_player_defeated():
 	clean_up_bullets()
 	get_tree().change_scene_to_file(STAGES[3])
@@ -128,12 +144,7 @@ func _on_player_defeated():
 
 
 func _on_player_grazed() -> void:
-	if gauge.value < 100:
-		gauge.value += 5 * player.gauge_fill_rate
-		
-		if gauge.value >= 100:
-			print("gauge ready")
-			gauge_ready = true
+	fill_gauge()	
 
 
 func _on_scorable_hit(value : int) -> void:
@@ -149,6 +160,11 @@ func _on_enemy_hit(enemy : Enemy) -> void:
 
 func _on_enemy_defeated(enemy : Enemy) -> void:
 	score += 1000
+	
+	var power_up : Area2D = POWER_UPS[randi_range(1, 2)].instantiate()
+	add_child(power_up)
+	power_up.set_as_top_level(true)
+	power_up.global_position = enemy.global_position
 
 
 func _on_boss_defeated(enemy : Enemy) -> void:

@@ -8,7 +8,7 @@ size = Vector2(426, 240)
 [node name="Cammaku" type="Camera2D" groups=["camera"]]
 script = ExtResource("1_pyyx0")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["camera_boundary"]]
 collision_layer = 32
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]

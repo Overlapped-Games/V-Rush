@@ -32,8 +32,8 @@ enum Angle {
 @export var acceleration : float = 0.0
 @export var max_bounces : int = 0
 @export var curve_angle : float = 0.0
-@export var bullet_shape : BulletUtil.BulletShape = BulletUtil.BulletShape.CIRCLE
-@export var shape_properties : Dictionary = {}
+#@export var bullet_shape : BulletUtil.BulletShape = BulletUtil.BulletShape.CIRCLE
+#@export var shape_properties : Dictionary = {}
 
 #var bullet_scn : PackedScene
 var per_bullet_f : Callable = func(bullet : Bullet): pass
@@ -340,7 +340,8 @@ func fire_ring() -> void:
 				fire_direction = pos.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
 				if max_bounces > 0: bullet.max_bounces = max_bounces
-				bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
+				bullet._fire(fire_origin, fire_direction, v, acceleration, max_velocity)
+				#bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
 
 
 func set_ring(lines := 1, fire_ang := 0.0, spread_count := 1, spread_ang := 0.0, o_offset := 1, vel := 100, acceleration := 0, max_velocity := 500, f : Callable = func(bullet : Bullet = null): pass) -> void:
@@ -391,7 +392,8 @@ func ring(lines := 1, fire_ang := 0.0, spread_count := 1, spread_ang := 0.0, o_o
 				fire_direction = global_position.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
 				if max_bounces > 0: bullet.max_bounces = max_bounces
-				bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
+				bullet._fire(fire_origin, fire_direction, v, acceleration, max_velocity)
+				#bullet._fire(fire_origin, fire_direction, bullet_shape, v, acceleration, max_velocity, shape_properties)
 				
 				## FOR DEBUGGING PURPOSES ##
 				#if stack == 1 and i == ceil(-spread / 2.0) and line == 1:
