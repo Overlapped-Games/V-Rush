@@ -142,18 +142,17 @@ func move_wave(delta : float) -> void:
 	global_position = virtual_pos + offset
 	current_distance += distance
 	
-	if visible:
-		if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-			expired.emit(self)
-			if max_bounces > 0 and current_bounces < max_bounces:
-				if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
-					direction = Vector2(direction.x, -direction.y)
-				elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-					direction = Vector2(-direction.x, direction.y)
-				current_bounces += 1
-			else:
-				_disable()
-			return
+	if camera and global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+		expired.emit(self)
+		if max_bounces > 0 and current_bounces < max_bounces:
+			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
+				direction = Vector2(direction.x, -direction.y)
+			elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+				direction = Vector2(-direction.x, direction.y)
+			current_bounces += 1
+		else:
+			_disable()
+		return
 	else:
 		_disable()
 
@@ -167,25 +166,22 @@ func move_curve(delta : float) -> void:
 	
 	global_position += motion
 	current_distance += distance
-	if visible:
-		if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-			##expired.emit(self)
-			if max_bounces > 0 and current_bounces < max_bounces:
-				if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
-					direction = Vector2(dir.x, -dir.y)
-				elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-					direction = Vector2(-dir.x, dir.y)
-				current_bounces += 1
-			else:
-				_disable()
-			return
+	
+	if camera and global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+		##expired.emit(self)
+		if max_bounces > 0 and current_bounces < max_bounces:
+			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
+				direction = Vector2(dir.x, -dir.y)
+			elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+				direction = Vector2(-dir.x, dir.y)
+			current_bounces += 1
+		else:
+			_disable()
+		return
 	else:
 		_disable()
 
 func move_straight(delta : float) -> void:
-	if !camera:
-		_disable()
-		return
 	velocity = clamp(velocity + acceleration, 0, max_velocity)
 	t += delta
 	var distance := velocity * delta
@@ -193,18 +189,18 @@ func move_straight(delta : float) -> void:
 	
 	global_position += motion
 	current_distance += distance
-	if visible:
-		if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-			##expired.emit(self)
-			if max_bounces > 0 and current_bounces < max_bounces:
-				if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
-					direction = Vector2(direction.x, -direction.y)
-				elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-					direction = Vector2(-direction.x, direction.y)
-				current_bounces += 1
-			else:
-				_disable()
-			return
+	
+	if camera and global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+		##expired.emit(self)
+		if max_bounces > 0 and current_bounces < max_bounces:
+			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
+				direction = Vector2(direction.x, -direction.y)
+			elif global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
+				direction = Vector2(-direction.x, direction.y)
+			current_bounces += 1
+		else:
+			_disable()
+		return
 	else:
 		_disable()
 
