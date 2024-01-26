@@ -158,6 +158,7 @@ func damage(damage : int) -> void:
 		set_physics_process(false)
 		set_invulnerable(true)
 		hide()
+		#call game over screen
 		return
 	
 	set_invulnerable(true)

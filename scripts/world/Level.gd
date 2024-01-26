@@ -1,12 +1,23 @@
 class_name Level extends Node2D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$EventTrigger.connect("next_level", spawn_new_level)
 
+func remove_all_enemies():
+	for child in get_children():
+		if child.name.begins_with("MoveTrigger"):
+			child.queue_free()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
- 
+func add_new_enemies():
+	var stage_scene = preload("res://assets/levels/stage_2.tscn")
+	var stage_instance = stage_scene.instantiate()
+	for child in stage_instance.get_children():
+		if child.name.begins_with("MoveTrigger") or child.name.begins_with("EventTrigger"):
+			var duplicate = child.duplicate()
+			add_child(duplicate)
+
+func spawn_new_level():
+	remove_all_enemies()
+	var current_level = GameManager.get_level()
+	add_new_enemies()

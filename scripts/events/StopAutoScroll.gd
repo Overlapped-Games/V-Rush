@@ -6,4 +6,5 @@ func _ready() -> void:
 
 
 func _trigger() -> void:
-	get_tree().get_first_node_in_group("stage")._stop()
+	#get_tree().get_first_node_in_group("stage")._stop()
+	pass

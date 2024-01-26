@@ -46,26 +46,9 @@ func _on_option_selected(index : int) -> void:
 func _on_play_pressed() -> void:
 	fade = true
 
-
 func _on_settings_pressed() -> void:
 	%SettingsMenu.show()
 	%Options.hide()
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
-
-# probably shouldnt have mouse and button controls if mouse is never used again in the game
-# --------- mouse hover event ------------
-#func _on_play_shader_mouse_entered() -> void:
-	#$Control/PlayShader.visible = false
-#func _on_play_shader_mouse_exited() -> void:
-	#$Control/PlayShader.visible = true
-#func _on_settings_shader_mouse_entered() -> void:
-	#$Control/SettingsShader.visible = false
-#func _on_settings_shader_mouse_exited() -> void:
-	#$Control/SettingsShader.visible = true
-#func _on_quit_shader_mouse_entered() -> void:
-	#$Control/QuitShader.visible = false
-#func _on_quit_shader_mouse_exited() -> void:
-	#$Control/QuitShader.visible = true
-# ----------------------------------------
