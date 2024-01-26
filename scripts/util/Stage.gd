@@ -17,10 +17,6 @@ class_name Stage extends Node2D
 
 
 func _ready() -> void:
-#<<<<<<< Updated upstream
-	#GameManager.init_stat()
-	#level_background.set_target_color(level_colors[GameManager.get_level() - 1])
-#=======
 	set_physics_process(auto_scrolling)
 
 

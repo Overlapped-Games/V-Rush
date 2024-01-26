@@ -133,6 +133,10 @@ func _physics_process(delta: float) -> void:
 
 
 func move_wave(delta : float) -> void:
+	if !camera: 
+		_disable()
+		return
+		
 	w_t += delta
 	var offset : Vector2 = direction.orthogonal() * sin(w_t * frequency) * amplitude
 	var distance : float = velocity * delta
@@ -143,7 +147,7 @@ func move_wave(delta : float) -> void:
 	current_distance += distance
 	
 	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-		##expired.emit(self)
+		expired.emit(self)
 		if max_bounces > 0 and current_bounces < max_bounces:
 			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
 				direction = Vector2(direction.x, -direction.y)
@@ -156,6 +160,10 @@ func move_wave(delta : float) -> void:
 
 
 func move_curve(delta : float) -> void:
+	if !camera: 
+		_disable()
+		return
+		
 	velocity = clamp(velocity + acceleration, 0, max_velocity)
 	c_t += delta * curve_angle
 	var dir : Vector2 = direction.from_angle(direction.angle() + (c_t * PI / 180))
@@ -177,8 +185,10 @@ func move_curve(delta : float) -> void:
 			_disable()
 		return
 
-
 func move_straight(delta : float) -> void:
+	if !camera: 
+		_disable()
+		return
 	velocity = clamp(velocity + acceleration, 0, max_velocity)
 	t += delta
 	var distance := velocity * delta

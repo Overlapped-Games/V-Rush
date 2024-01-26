@@ -3,6 +3,7 @@ class_name Player extends CharacterBody2D
 signal grazed()
 signal stats_changed()
 signal health_updated(new_health : int)
+signal defeated()
 
 
 const BASE_SPEED := 150.0
@@ -21,7 +22,7 @@ const BASE_SPEED := 150.0
 
 ## Health
 @export var max_health : int = 50
-@export var current_health : int = 50:
+@export var current_health : int = 10:
 	set(value):
 		current_health = value
 		health_updated.emit(current_health)
@@ -75,13 +76,14 @@ func _ready() -> void:
 				show()
 	)
 	animator.play("invulnerable_flash")
+	#damage(10)
 
 func _physics_process(delta : float) -> void:
 	if Input.is_action_pressed("focus"):
 		speed_multiplier = focus_speed_multiplier
 	elif Input.is_action_just_released("focus"):
 		speed_multiplier = 1
-		
+	
 	
 	var direction : Vector2 = Input.get_vector("input_left", "input_right", "input_up", "input_down")
 	
@@ -158,6 +160,7 @@ func damage(damage : int) -> void:
 		set_physics_process(false)
 		set_invulnerable(true)
 		hide()
+		defeated.emit()
 		return
 	
 	AudioManager.player_sfx("player_damaged")
