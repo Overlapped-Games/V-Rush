@@ -3,6 +3,8 @@ extends Node
 
 const SFX := {
 	"player_fire": "",
+	"player_damaged": preload("res://assets/audio/sfx/player_damaged.wav"),
+	"player_death": preload("res://assets/audio/sfx/player_death.wav"),
 	"enemy_death": preload("res://assets/enemies/assets/enemy_death.wav")
 }
 
@@ -13,6 +15,7 @@ const BGM := {
 }
 
 
+@onready var player_sfx_player : AudioStreamPlayer = $player_sfx
 @onready var enemy_death_player : AudioStreamPlayer = $enemy_death_player
 @onready var bgm_player : AudioStreamPlayer = $bgm_player
 
@@ -25,6 +28,7 @@ func _ready() -> void:
 	var stream : AudioStreamWAV = SFX["enemy_death"]
 	enemy_death_player.max_polyphony = 10
 	enemy_death_player.set_stream(stream)
+	player_sfx_player.volume_db = 10
 	set_physics_process(false)
 
 
@@ -38,7 +42,11 @@ func _physics_process(delta: float) -> void:
 		t = 0
 		bgm_player.volume_db -= 0.5
 		
-	
+
+func player_sfx(name : String) -> void:
+	player_sfx_player.volume_db = 10 if name == "player_damaged" else 0
+	player_sfx_player.set_stream(SFX.get(name, "player_damaged"))
+	player_sfx_player.play()
 
 
 func play_bgm(name : String) -> void:

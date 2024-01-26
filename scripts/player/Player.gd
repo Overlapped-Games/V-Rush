@@ -151,15 +151,16 @@ func revive() -> void:
 
 func damage(damage : int) -> void:
 	if invulnerable: return
-	#$AudioStreamPlayer2.play()
 	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
 	if current_health == 0:
 		print("DEAD")
+		AudioManager.player_sfx("player_death")
 		set_physics_process(false)
 		set_invulnerable(true)
 		hide()
 		return
 	
+	AudioManager.player_sfx("player_damaged")
 	set_invulnerable(true)
 	animator.play("invulnerable_flash")
 

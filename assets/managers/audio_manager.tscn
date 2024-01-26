@@ -9,3 +9,5 @@ script = ExtResource("1_5aynq")
 
 [node name="bgm_player" type="AudioStreamPlayer" parent="."]
 autoplay = true
+
+[node name="player_sfx" type="AudioStreamPlayer" parent="."]

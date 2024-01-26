@@ -141,6 +141,7 @@ skill_menu={
 2d_physics/layer_12="enemy_hurtbox"
 2d_physics/layer_13="view_area"
 2d_physics/layer_14="event_trigger"
+2d_physics/layer_15="bomb"
 
 [rendering]
 

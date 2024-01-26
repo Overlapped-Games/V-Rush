@@ -100,6 +100,25 @@ func _on_hit(bullet : Bullet) -> void:
 	hit.emit(self)
 
 
+func _hit_by_skill(damage : int) -> void:
+	print("%s hit for %s..." % [name, damage])
+	if invulnerable: return
+	if invlunerability_time > 0:
+		set_invulnerable(true)
+	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
+	var tween : Tween = create_tween()
+	tween.tween_property(sprite, "modulate:v", 1, 5 * ph_delta).from(15)
+	if current_health > 0:
+		health_bar.show()
+		health_bar.value = 100.0 * current_health / max_health
+	
+	if current_health == 0:
+		_on_defeated()
+		return
+	
+	hit.emit(self)
+
+
 func _on_defeated() -> void:
 	print("DEAD")
 	AudioManager.enemy_death()

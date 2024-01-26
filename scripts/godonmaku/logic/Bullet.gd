@@ -36,8 +36,8 @@ enum FiringState {
 @export var max_distance := 2400
 @export var properties := {}
 
-@export_flags_2d_physics var hitbox_layer := 0b0010_0000_0000
-@export_flags_2d_physics var grazebox_layer := 0b0001_0000_0000
+@export_flags_2d_physics var hitbox_layer := 0b0100_0010_0000_0000
+@export_flags_2d_physics var grazebox_layer := 0b0000_0001_0000_0000
 
 
 #var sub_pos : Vector2

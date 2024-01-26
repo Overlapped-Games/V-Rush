@@ -212,7 +212,7 @@ position = Vector2(-32, -64)
 position = Vector2(-32, 64)
 
 [node name="MoveTrigger8" parent="." instance=ExtResource("9_18ohq")]
-position = Vector2(1352, -1)
+position = Vector2(1400, -1)
 
 [node name="Enemy" parent="MoveTrigger8" instance=ExtResource("22_iyp8y")]
 position = Vector2(-16, -79)
