@@ -31,6 +31,8 @@ const POWER_UPS := {
 @onready var health : RichTextLabel = %HealthCounter
 @onready var gauge : TextureProgressBar = $CanvasLayer/VRushGauge
 @onready var score_label : RichTextLabel = %Score
+@onready var hi_score_label : RichTextLabel = %HiScore
+@onready var power_stage_icons : HBoxContainer = %PowerIcons
 
 var player : Player
 var current_level : int = 1
@@ -70,8 +72,9 @@ func init_stat() -> void:
 	player.defeated.connect(_on_player_defeated)
 	player.grazed.connect(_on_player_grazed)
 	player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
+	player.weapon.stage_changed.connect(_on_weapon_stage_changed)
 	health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
-	score_label.text = "%012d" % score # sets digits to 12 digits, fills unused with 0s
+	score_label.text = "[right]%012d[/right]" % score # sets digits to 12 digits, fills unused with 0s
 
 
 func get_background_color(level : int) -> Color:
@@ -175,6 +178,14 @@ func _on_enemy_defeated(enemy : Enemy) -> void:
 
 func _on_boss_defeated(enemy : Enemy) -> void:
 	score += enemy.defeat_value if enemy.get("defeat_value") else 10000
+
+
+func _on_weapon_stage_changed(stage : int) -> void:
+	for i in range(power_stage_icons.get_child_count() - 1, -1 , -1):
+		if i + 1 > stage:
+			power_stage_icons.get_child(i).frame = 15
+		else:
+			power_stage_icons.get_child(i).frame = 16
 
 
 func get_level() -> int:

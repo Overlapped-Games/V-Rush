@@ -1,7 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://dma8t24m3qel6"]
+[gd_scene load_steps=16 format=3 uid="uid://dma8t24m3qel6"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyContainer.gd" id="1_r71tt"]
-[ext_resource type="Texture2D" uid="uid://o8n22ycn4qsq" path="res://assets/art/16x16_black.png" id="2_8qmd4"]
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="2_s0x2d"]
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="3_2fqgt"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="4_nnm6a"]
@@ -49,20 +48,11 @@ script = ExtResource("1_r71tt")
 [node name="point" type="Marker2D" parent="Node2D"]
 position = Vector2(-96, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/point"]
-texture = ExtResource("2_8qmd4")
-
 [node name="point2" type="Marker2D" parent="Node2D"]
 position = Vector2(-176, 64)
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/point2"]
-texture = ExtResource("2_8qmd4")
-
 [node name="point3" type="Marker2D" parent="Node2D"]
 position = Vector2(-176, -64)
-
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/point3"]
-texture = ExtResource("2_8qmd4")
 
 [node name="Enemy" type="RigidBody2D" parent="."]
 collision_layer = 4

@@ -35,7 +35,7 @@ func _attack(delta : float, action_pressed : bool, origin : Vector2, direction :
 		#var next : Bullet = BulletUtil.get_player_bullet()
 		#next._fire(Vector2(origin.x + 16, origin.y), direction, BulletUtil.BulletShape.BOX, 800, 0, 1600, {"x": 14, "y": 6})
 	
-	if stage == 3:
+	if stage == 3 or stage == 4:
 		if !can_fire_3:
 			t_fire_3 += delta
 			
@@ -47,8 +47,8 @@ func _attack(delta : float, action_pressed : bool, origin : Vector2, direction :
 			can_fire_3 = false
 			var frag_one : Bullet = BulletUtil.get_player_bullet(3)
 			var frag_two : Bullet = BulletUtil.get_player_bullet(3)
-			frag_one._fire(Vector2(origin.x + 4, origin.y - 18), direction, 300, 5, 1600)
-			frag_two._fire(Vector2(origin.x + 4, origin.y + 18), direction, 300, 5, 1600)
+			frag_one._fire(Vector2(origin.x + 4, origin.y - 22), direction, 300, 5, 1600)
+			frag_two._fire(Vector2(origin.x + 4, origin.y + 22), direction, 300, 5, 1600)
 	
 	if can_fire: return true
 	
@@ -70,6 +70,15 @@ func fire(origin : Vector2, direction : Vector2) -> void:
 			var two : Bullet = BulletUtil.get_player_bullet(2)
 			one._fire(Vector2(origin.x + 16, origin.y - 4), direction, 800, 0, 1600)
 			two._fire(Vector2(origin.x + 16, origin.y + 4), direction, 800, 0, 1600)
+		4:
+			var one : Bullet = BulletUtil.get_player_bullet(2)
+			var two : Bullet = BulletUtil.get_player_bullet(2)
+			var three : Bullet = BulletUtil.get_player_bullet(2)
+			var four : Bullet = BulletUtil.get_player_bullet(2)
+			one._fire(Vector2(origin.x + 16, origin.y - 6), direction + Vector2(0, -0.1), 800, 0, 1600)
+			two._fire(Vector2(origin.x + 16, origin.y - 4), direction, 800, 0, 1600)
+			three._fire(Vector2(origin.x + 16, origin.y + 4), direction, 800, 0, 1600)
+			four._fire(Vector2(origin.x + 16, origin.y + 6), direction + Vector2(0, 0.1), 800, 0, 1600)
 
 
 func _on_projectile_expired(projectile : ProjectileBase):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c7080ownnkuig"]
+[gd_scene load_steps=17 format=3 uid="uid://c7080ownnkuig"]
 
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_6j7lv"]
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_p5jqa"]
@@ -6,7 +6,9 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="4_6vdsb"]
 [ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_rqj0e"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_4v4us"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="5_15ex8"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="5_747ce"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_has.gd" id="6_hwo0y"]
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_jdi3d"]
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveTowardsPlayer.gd" id="9_fubad"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_yjym8"]
@@ -77,9 +79,17 @@ velocity = 200
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("4_6vdsb")
+enabled = false
 actor_node_path = NodePath("..")
 blackboard = NodePath("@Node@17467")
 actor = NodePath("..")
+
+[node name="InverterDecorator" type="Node" parent="BeehaveTree"]
+script = ExtResource("5_15ex8")
+
+[node name="BlackboardHasCondition" type="Node" parent="BeehaveTree/InverterDecorator"]
+script = ExtResource("6_hwo0y")
+key = "fired"
 
 [node name="DelayDecorator" type="Node" parent="BeehaveTree"]
 script = ExtResource("5_747ce")

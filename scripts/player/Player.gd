@@ -140,9 +140,11 @@ func do_attack(delta : float) -> void:
 
 
 func attack_up(value : int) -> void:
-	attack_exp = min(attack_exp + value, 20)
+	if weapon.stage == weapon.max_stage: return
+	var max = 30 if weapon.stage == 1 else 50 if weapon.stage == 2 else 70
+	attack_exp = clamp(attack_exp + value, 0, max)
 	
-	if attack_exp == 20:
+	if attack_exp == max:
 		weapon.stage_up()
 		attack_exp = 0
 
