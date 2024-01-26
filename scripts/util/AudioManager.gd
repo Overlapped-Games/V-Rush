@@ -7,7 +7,8 @@ const SFX := {
 	"player_death": preload("res://assets/audio/sfx/player_death.wav"),
 	"enemy_death": preload("res://assets/enemies/assets/enemy_death.wav"),
 	"power_up": preload("res://assets/levels/assets/Power-up.wav"),
-	"collect": preload("res://assets/audio/sfx/collect.wav")
+	"collect": preload("res://assets/audio/sfx/collect.wav"),
+	"generator": preload("res://assets/audio/sfx/Laser - 3.wav")
 }
 
 const SFX_VOLUME := {
@@ -15,7 +16,8 @@ const SFX_VOLUME := {
 	"player_death": -10,
 	"enemy_death": 0,
 	"power_up": 0,
-	"collect": -8
+	"collect": -8,
+	"generator": -10
 }
 
 
@@ -36,6 +38,7 @@ const BGM_VOLUME := {
 @onready var player_sfx_player : AudioStreamPlayer = $player_sfx
 @onready var enemy_death_player : AudioStreamPlayer = $enemy_death_player
 @onready var bgm_player : AudioStreamPlayer = $bgm_player
+@onready var sfx_player : AudioStreamPlayer = $sfx
 
 
 #var bgm_volume : float = -10.0
@@ -65,6 +68,12 @@ func player_sfx(name : String) -> void:
 	player_sfx_player.volume_db = SFX_VOLUME.get(name, 0)
 	player_sfx_player.set_stream(SFX.get(name, "player_damaged"))
 	player_sfx_player.play()
+		
+
+func play_sfx(name : String) -> void:
+	sfx_player.volume_db = SFX_VOLUME.get(name, 0)
+	sfx_player.set_stream(SFX.get(name, "player_damaged"))
+	sfx_player.play()
 
 
 func play_bgm(name : String) -> void:

@@ -2,7 +2,7 @@ class_name Level extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$EventTrigger.connect("next_level", spawn_new_level)
+	%level_triggr.connect("next_level", spawn_new_level)
 	AudioManager.play_bgm("stage_1")
 	GameManager.process = true
 
@@ -23,7 +23,7 @@ func add_new_enemies():
 		if child.name.begins_with("MoveTrigger") or child.name.begins_with("EventTrigger"):
 			var duplicate = child.duplicate()
 			add_child(duplicate)
-
+	 
 func spawn_new_level():
 	remove_all_enemies()
 	var current_level = GameManager.get_level()

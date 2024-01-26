@@ -7,7 +7,7 @@ signal defeated(enemy : Enemy) # ded
 
 
 @onready var hurtbox : Area2D = $Hurtbox
-@onready var collider : CollisionShape2D = $Hurtbox/Collider
+@onready var collider : Node2D = $Hurtbox/Collider
 @onready var animator : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite
 @onready var health_bar : TextureProgressBar = $HealthBar

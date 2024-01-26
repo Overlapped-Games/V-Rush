@@ -63,6 +63,7 @@ func start_level(level : int) -> void:
 	var bg = get_tree().get_first_node_in_group("level_background")
 	bg.set_target_color(get_background_color(current_level))
 	init_stat()
+	#BulletUtil.reparent(get_tree().get_first_node_in_group("stage"))
 
 
 func init_stat() -> void:
@@ -171,8 +172,8 @@ func _on_enemy_defeated(enemy : Enemy) -> void:
 	score += 1000
 	
 	var power_up : Area2D = POWER_UPS[randi_range(1, 2)].instantiate()
-	add_child(power_up)
-	power_up.set_as_top_level(true)
+	get_tree().get_first_node_in_group("scroller").add_child(power_up)
+	#power_up.set_as_top_level(true)
 	power_up.global_position = enemy.global_position
 
 

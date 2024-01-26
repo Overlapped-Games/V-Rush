@@ -1,0 +1,196 @@
+[gd_scene load_steps=14 format=3 uid="uid://tx1qcx12ixg7"]
+
+[ext_resource type="Script" path="res://scripts/enemies/EnemyContainer.gd" id="1_imgar"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_oo6jm"]
+[ext_resource type="Texture2D" uid="uid://dqq5dwaymoib0" path="res://assets/art/enemies/boss.png" id="2_764sj"]
+[ext_resource type="Texture2D" uid="uid://bhqxo5x177veh" path="res://assets/art/enemies/boss_eyes.png" id="3_368fm"]
+[ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_rj8oh"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_th7tj"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_ywyni"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_2sdgx"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_f6qi1"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_s14ba"]
+[ext_resource type="Script" path="res://scripts/beehaviors/AwaitSignal.gd" id="10_lbov2"]
+
+[sub_resource type="Animation" id="Animation_sh77w"]
+resource_name = "spin"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q0wyb"]
+_data = {
+"spin": SubResource("Animation_sh77w")
+}
+
+[node name="boss_1" type="Node2D"]
+script = ExtResource("1_imgar")
+
+[node name="points" type="Node2D" parent="."]
+
+[node name="point" type="Marker2D" parent="points"]
+position = Vector2(-80, 0)
+
+[node name="point2" type="Marker2D" parent="points"]
+position = Vector2(-64, -64)
+
+[node name="Enemy" type="RigidBody2D" parent="."]
+collision_layer = 4
+collision_mask = 514
+gravity_scale = 0.0
+script = ExtResource("1_oo6jm")
+max_health = 3000
+current_health = 3000
+invlunerability_time = 0.0
+defeat_value = 100000
+
+[node name="Collider" type="CollisionPolygon2D" parent="Enemy"]
+visible = false
+polygon = PackedVector2Array(-32, 16, 0, 32, 32, 16, 32, -16, 0, -32, -32, -16)
+
+[node name="Hurtbox" type="Area2D" parent="Enemy"]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionPolygon2D" parent="Enemy/Hurtbox"]
+visible = false
+polygon = PackedVector2Array(-32, 16, 0, 32, 32, 16, 32, -16, 0, -32, -32, -16)
+
+[node name="Sprite" type="Sprite2D" parent="Enemy"]
+z_index = 1
+texture = ExtResource("2_764sj")
+hframes = 4
+vframes = 4
+frame = 1
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Enemy/Sprite"]
+z_index = 1
+position = Vector2(-13, -4)
+texture = ExtResource("3_368fm")
+
+[node name="Patterns" type="Node2D" parent="Enemy"]
+
+[node name="Pattern1" type="Node2D" parent="Enemy/Patterns"]
+script = ExtResource("3_rj8oh")
+pattern_origin = null
+fire_direction = Vector2(-1, 0)
+hitbox_layer = null
+velocity = 80
+max_velocity = null
+acceleration = null
+max_bounces = null
+curve_angle = null
+wave_frequency = null
+wave_amplitude = null
+line_count = 16
+fire_angle = null
+spread = null
+spread_degrees = null
+origin_offset = 32
+fire_angle_modifier = null
+stacking = null
+stacks = null
+velocity_modifier = null
+spin_rate = 0.125
+repeating = true
+max_repeats = 32
+repeatable = null
+repeat_frames = null
+call_rate = 10.0
+call_delay = null
+repeats_to_delay = null
+
+[node name="Danmaku" type="Node2D" parent="Enemy/Patterns"]
+script = ExtResource("3_rj8oh")
+pattern_type = 2
+pattern_origin = null
+fire_direction = null
+bullet_type = 3
+hitbox_layer = null
+velocity = 80
+max_velocity = null
+acceleration = null
+max_bounces = null
+curve_angle = null
+wave_frequency = null
+wave_amplitude = null
+line_count = 2
+fire_angle = null
+spread = null
+spread_degrees = null
+origin_offset = null
+fire_angle_modifier = null
+stacking = null
+stacks = null
+velocity_modifier = null
+spin_rate = 0.25
+repeating = true
+max_repeats = 256
+repeatable = null
+repeat_frames = null
+call_rate = 40.0
+call_delay = null
+repeats_to_delay = null
+
+[node name="BasicEnemyAI" type="Node" parent="Enemy" node_paths=PackedStringArray("actor")]
+script = ExtResource("4_th7tj")
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="Enemy/BasicEnemyAI"]
+script = ExtResource("5_ywyni")
+
+[node name="MoveToPoint" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point")
+reparent = false
+
+[node name="FirePattern" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_f6qi1")
+pattern = NodePath("../../../Patterns/Pattern1")
+
+[node name="AwaitSignal" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("node")]
+script = ExtResource("10_lbov2")
+node = NodePath("../../../Patterns/Pattern1")
+signal_name = "pattern_stopped"
+
+[node name="MoveToPoint2" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point2")
+reparent = false
+
+[node name="FirePattern2" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_f6qi1")
+pattern = NodePath("../../../Patterns/Danmaku")
+
+[node name="AwaitSignal2" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("node")]
+script = ExtResource("10_lbov2")
+node = NodePath("../../../Patterns/Danmaku")
+signal_name = "pattern_stopped"
+
+[node name="HealthBar" parent="Enemy" instance=ExtResource("9_s14ba")]
+custom_minimum_size = Vector2(48, 8)
+offset_left = -24.0
+offset_top = 36.0
+offset_right = 24.0
+offset_bottom = 44.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy"]
+libraries = {
+"": SubResource("AnimationLibrary_q0wyb")
+}
+autoplay = "spin"

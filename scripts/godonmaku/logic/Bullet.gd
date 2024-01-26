@@ -83,7 +83,7 @@ func _ready() -> void:
 	active = false
 	#print("HI")
 	
-	virtual_pos = position
+	virtual_pos = global_position
 	velocity = base_velocity
 	query.collide_with_areas = true
 	query.collision_mask = hitbox_layer
@@ -188,6 +188,7 @@ func move_curve(delta : float) -> void:
 			_disable()
 		return
 
+
 func move_straight(delta : float) -> void:
 	if !camera: 
 		_disable()
@@ -219,6 +220,7 @@ func _move(origin : Vector2, target_direction : Vector2,  target_position : Vect
 	firing_state |= FiringState.MOVE
 	moving = true
 	global_position = origin
+	virtual_pos = origin
 	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties))
 	current_distance = 0.0
 	velocity = vel
@@ -231,6 +233,7 @@ func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0,
 	firing_state |= FiringState.FIRE
 	active = true
 	global_position = origin
+	virtual_pos = origin
 	direction = target_direction
 	query.collision_mask = hitbox_layer
 	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, properties))

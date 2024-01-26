@@ -123,8 +123,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		add_child(v)
 		v.set_as_top_level(true)
 		v.global_position = Vector2(global_position.x + 80, global_position.y)
-	elif Input.is_action_just_pressed("escape_menu"):
-		print("escape menu")
+
 	
 	var just_pressed = event.is_pressed() and not event.is_echo()
 	if Input.is_key_pressed(KEY_1) and just_pressed:
@@ -133,6 +132,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		weapon.stage = 2
 	elif Input.is_key_pressed(KEY_3) and just_pressed:
 		weapon.stage = 3
+	elif Input.is_key_pressed(KEY_4) and just_pressed:
+		weapon.stage = 4
 
 
 func do_attack(delta : float) -> void:

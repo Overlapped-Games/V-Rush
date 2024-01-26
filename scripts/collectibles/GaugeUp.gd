@@ -2,6 +2,7 @@ class_name GaugeUp extends Collectible
 
 @onready var sprite : Sprite2D = $Sprite2D
 
+@export var fill_value : int = 10
 
 func _ready() -> void:
 	super._ready()
@@ -19,7 +20,7 @@ func _on_player_entered(player : Node2D) -> void:
 	set_physics_process(false)
 	modulate.s = 0
 	modulate.h = 0
-	GameManager.fill_gauge(10)
+	GameManager.fill_gauge(fill_value)
 	sprite.hide()
 	collider.set_disabled(true)
 	var fx : Node2D = GameManager.collect_fx.instantiate()

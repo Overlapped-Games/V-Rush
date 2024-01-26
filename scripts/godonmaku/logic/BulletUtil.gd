@@ -3,7 +3,11 @@ extends Node2D
 
 enum BulletType {
 	NON_DIRECTIONAL,
+	NON_DIRECTIONAL_2,
+	NON_DIRECTIONAL_3,
+	NON_DIRECTIONAL_4,
 	NON_DIRECTIONAL_MEDIUM,
+	NON_DIRECTIONAL_MEDIUM_4,
 	DIRECTIONAL,
 	VECTOR,
 	BLIGHT_BOMB,
@@ -21,7 +25,11 @@ enum BulletShape {
 # TODO: if making an actual plugin, make load bullets from a folder or something
 const BULLETS := {
 	BulletType.NON_DIRECTIONAL: preload("res://assets/bullets/bullet.tscn"),
+	BulletType.NON_DIRECTIONAL_2: preload("res://assets/bullets/bullet_2.tscn"),
+	BulletType.NON_DIRECTIONAL_3: preload("res://assets/bullets/bullet_3.tscn"),
+	BulletType.NON_DIRECTIONAL_4: preload("res://assets/bullets/bullet_4.tscn"),
 	BulletType.NON_DIRECTIONAL_MEDIUM: preload("res://assets/bullets/bullet_medium.tscn"),
+	BulletType.NON_DIRECTIONAL_MEDIUM_4: preload("res://assets/bullets/bullet_medium_4.tscn"),
 	BulletType.BLIGHT_BOMB: preload("res://assets/bullets/blight_bomb.tscn"),
 	BulletType.FRAG_1: preload("res://assets/bullets/frag_bullet.tscn"),
 	BulletType.PLAYER_FRAG: preload("res://assets/player/player_bullet_3_frag.tscn")
@@ -75,7 +83,9 @@ func _ready() -> void:
 	kill_bullets()
 
 
+
 func _exit_tree() -> void:
+	reparent(get_tree().root)
 	kill_bullets()
 
 

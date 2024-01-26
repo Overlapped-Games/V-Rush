@@ -4,12 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_p5jqa"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_50oro"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="4_6vdsb"]
+[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="4_a6cnd"]
 [ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_rqj0e"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_4v4us"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="5_15ex8"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="5_747ce"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_has.gd" id="6_hwo0y"]
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_jdi3d"]
+[ext_resource type="Script" path="res://scripts/beehaviors/DisableTree.gd" id="9_d28e2"]
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveTowardsPlayer.gd" id="9_fubad"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_yjym8"]
 
@@ -73,31 +73,62 @@ region_rect = Rect2(16, 16, 16, 16)
 
 [node name="Pattern" type="Node2D" parent="Patterns"]
 script = ExtResource("3_50oro")
+pattern_type = null
 angle_type = 1
+pattern_origin = null
 fire_direction = Vector2(-1, 0)
+bullet_type = 2
+move_type = null
+hitbox_layer = null
 velocity = 200
+max_velocity = null
+acceleration = null
+max_bounces = null
+curve_angle = null
+wave_frequency = null
+wave_amplitude = null
+line_count = null
+fire_angle = null
+spread = null
+spread_degrees = null
+origin_offset = null
+fire_angle_modifier = null
+stacking = null
+stacks = null
+velocity_modifier = null
+spin_rate = null
+repeating = null
+max_repeats = null
+repeatable = null
+repeat_frames = null
+call_rate = null
+call_delay = null
+repeats_to_delay = null
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("4_a6cnd")
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("4_6vdsb")
 enabled = false
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@17467")
+blackboard = NodePath("../Blackboard")
 actor = NodePath("..")
 
-[node name="InverterDecorator" type="Node" parent="BeehaveTree"]
-script = ExtResource("5_15ex8")
+[node name="SequenceComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("5_4v4us")
 
-[node name="BlackboardHasCondition" type="Node" parent="BeehaveTree/InverterDecorator"]
-script = ExtResource("6_hwo0y")
-key = "fired"
-
-[node name="DelayDecorator" type="Node" parent="BeehaveTree"]
+[node name="DelayDecorator" type="Node" parent="BeehaveTree/SequenceComposite"]
 script = ExtResource("5_747ce")
 wait_time = 1.0
 
-[node name="FirePattern" type="Node" parent="BeehaveTree/DelayDecorator" node_paths=PackedStringArray("pattern")]
+[node name="FirePattern" type="Node" parent="BeehaveTree/SequenceComposite/DelayDecorator" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_jdi3d")
-pattern = NodePath("../../../Patterns/Pattern")
+pattern = NodePath("../../../../Patterns/Pattern")
+
+[node name="DisableTree" type="Node" parent="BeehaveTree/SequenceComposite" node_paths=PackedStringArray("beehave_tree")]
+script = ExtResource("9_d28e2")
+beehave_tree = NodePath("../..")
 
 [node name="Beehavior" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("4_rqj0e")
