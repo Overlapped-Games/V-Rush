@@ -104,6 +104,7 @@ script = ExtResource("5_1aqvi")
 script = ExtResource("6_p84yl")
 speed = 200
 target = NodePath("../../../../Node2D/point")
+reparent = false
 
 [node name="FirePattern" type="Node" parent="Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_fn2i8")
@@ -117,6 +118,7 @@ wait_time = 1.5
 script = ExtResource("6_p84yl")
 speed = 200
 target = NodePath("../../../../../Node2D/point2")
+reparent = false
 
 [node name="FirePattern2" type="Node" parent="Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_fn2i8")
@@ -130,6 +132,7 @@ wait_time = 1.5
 script = ExtResource("6_p84yl")
 speed = 200
 target = NodePath("../../../../../Node2D/point3")
+reparent = false
 
 [node name="FirePattern3" type="Node" parent="Enemy/Beehavior/SequenceComposite" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_fn2i8")

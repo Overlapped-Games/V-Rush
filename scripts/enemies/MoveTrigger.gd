@@ -21,7 +21,7 @@ func _on_entered_view(area : Area2D) -> void:
 		#print_debug("c[%s]" % [1])
 		if !child: return
 		if child.has_method("_start"):
-			print_debug("_s[%s]" % [1])
+			#print_debug("_s[%s]" % [1])
 			child._start() 
 			child.reparent(stage)
 	collider.disabled = true

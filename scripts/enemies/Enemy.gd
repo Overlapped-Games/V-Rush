@@ -78,7 +78,7 @@ func _start() -> void:
 func set_invulnerable(inv : bool) -> void:
 	collider.disabled = inv
 	invulnerable = inv
-	print_debug("invuln=", inv)
+	#print_debug("invuln=", inv)
 
 
 func _on_hit(bullet : Bullet) -> void:

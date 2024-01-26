@@ -4,7 +4,7 @@ class_name MoveToPoint extends ActionLeaf
 
 @export var speed : int = 0
 @export var target : Node2D
-@export var reparent : bool = false
+@export var reparent : bool = true
 
 
 

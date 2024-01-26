@@ -500,7 +500,7 @@ position = Vector2(0, 23)
 position = Vector2(0, -24)
 
 [node name="MoveTrigger18" parent="." instance=ExtResource("9_18ohq")]
-position = Vector2(3416, 0)
+position = Vector2(232, 0)
 
 [node name="EnemyContainer2" parent="MoveTrigger18" instance=ExtResource("20_xk3yi")]
 position = Vector2(0, -32)
