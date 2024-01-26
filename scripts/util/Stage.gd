@@ -24,7 +24,6 @@ func _physics_process(delta: float) -> void:
 	if !auto_scrolling: return
 	position.x = roundi(position.x + 1 * delta * speed)
 
-
 func next_level():
 	GameManager.set_level(GameManager.get_level() + 1)
 	if GameManager.get_level() >= len(level_colors) - 1:

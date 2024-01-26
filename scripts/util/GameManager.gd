@@ -34,7 +34,7 @@ var score := 0:
 	set(value):
 		score = clamp(value, 0, MAX_SCORE)
 		score_label.text = "%012d" % score
-
+var is_game_paused : bool = false
 
 func _ready() -> void:
 	var window : Window = get_tree().root
@@ -44,6 +44,19 @@ func _ready() -> void:
 	var mainMenuInit = mainMenuScene.instantiate()
 	add_child(mainMenuInit)
 	#player = get_tree().get_first_node_in_group("player")
+
+func _process(_delta) -> void:
+	if is_game_paused:
+		pass
+		get_tree().paused
+		
+
+func _input(event):
+	if event.is_action_pressed("escape_menu"):
+		toggle_pause()
+
+func toggle_pause():
+	is_game_paused = not is_game_paused
 
 
 func start_level(level : int) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgn4lrmu2hmuk"]
+[gd_scene load_steps=5 format=3 uid="uid://b22byourjfkfx"]
 
 [ext_resource type="Script" path="res://assets/menus/scenes/game_over.gd" id="1_wxgx6"]
 [ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="2_301ot"]

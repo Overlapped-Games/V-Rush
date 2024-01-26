@@ -22,7 +22,7 @@ const BASE_SPEED := 150.0
 
 ## Health
 @export var max_health : int = 50
-@export var current_health : int = 10:
+@export var current_health : int = 50:
 	set(value):
 		current_health = value
 		health_updated.emit(current_health)
