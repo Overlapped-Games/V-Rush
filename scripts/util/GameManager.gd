@@ -26,7 +26,6 @@ const level_colors : Array[Color] = [
 @onready var score_label : RichTextLabel = %Score
 
 var player : Player
-var player_dead: bool = false
 var current_level : int = 1
 var process : bool = true
 var gauge_ready := false
@@ -44,15 +43,8 @@ func _ready() -> void:
 	var mainMenuScene = preload("res://assets/menus/scenes/main_menu.tscn")
 	var mainMenuInit = mainMenuScene.instantiate()
 	add_child(mainMenuInit)
+	#player = get_tree().get_first_node_in_group("player")
 
-func _process(_delta):
-	if player_dead:
-		game_over()
-
-func game_over():
-	set_process_input(process)
-	await get_tree().create_timer(0.01).timeout
-	get_tree().change_scene_to_file(STAGES[3])
 
 func start_level(level : int) -> void:
 	current_level = level
@@ -67,6 +59,7 @@ func start_level(level : int) -> void:
 func init_stat() -> void:
 	visible_menu(false)
 	player = get_tree().get_first_node_in_group("player")
+	player.defeated.connect(_on_player_defeated)
 	player.grazed.connect(_on_player_grazed)
 	player.health_updated.connect(func(new_health : int): health.text = "[color=%s]%02d[/color]" % ["green" if new_health > 10 else "red", new_health])
 	health.text = "[color=%s]%02d[/color]" % ["green" if player.current_health > 10 else "red", player.current_health]
@@ -122,6 +115,16 @@ func open_skill_menu() -> void:
 		gauge.value = 0
 		gauge_ready = false
 		# TODO: freeze game physics processing, except for the menu
+
+
+func clean_up_bullets():
+	pass # TODO: implement
+
+
+func _on_player_defeated():
+	clean_up_bullets()
+	get_tree().change_scene_to_file(STAGES[3])
+	await get_tree().create_timer(0.01).timeout
 
 
 func _on_player_grazed() -> void:

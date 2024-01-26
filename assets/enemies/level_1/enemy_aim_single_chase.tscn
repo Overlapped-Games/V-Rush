@@ -81,7 +81,7 @@ shape_properties = {
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("4_6vdsb")
 actor_node_path = NodePath("..")
-blackboard = NodePath("@Node@17493")
+blackboard = NodePath("@Node@17467")
 actor = NodePath("..")
 
 [node name="DelayDecorator" type="Node" parent="BeehaveTree"]

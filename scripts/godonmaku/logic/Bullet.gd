@@ -99,9 +99,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if GameManager.player_dead:
-		self.visible = false
-
 	match move_type:
 		MoveType.LINE:
 			move_straight(delta)
@@ -186,6 +183,9 @@ func move_curve(delta : float) -> void:
 		_disable()
 
 func move_straight(delta : float) -> void:
+	if !camera:
+		_disable()
+		return
 	velocity = clamp(velocity + acceleration, 0, max_velocity)
 	t += delta
 	var distance := velocity * delta

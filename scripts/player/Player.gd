@@ -3,6 +3,7 @@ class_name Player extends CharacterBody2D
 signal grazed()
 signal stats_changed()
 signal health_updated(new_health : int)
+signal defeated()
 
 
 const BASE_SPEED := 150.0
@@ -158,7 +159,7 @@ func damage(damage : int) -> void:
 		set_physics_process(false)
 		set_invulnerable(true)
 		hide()
-		GameManager.player_dead = true
+		defeated.emit()
 		return
 	
 	set_invulnerable(true)
