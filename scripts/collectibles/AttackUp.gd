@@ -10,12 +10,8 @@ func _ready() -> void:
 	body_entered.connect(_on_player_entered)
 
 
-#func collect(player : Player) -> void:
-	#player.attack_up(value)
-	#queue_free()
-
-
 func _on_player_entered(player : Node2D) -> void:
+	AudioManager.player_sfx("collect")
 	player.attack_up(value)
 	sprite.hide()
 	collider.set_disabled(true)

@@ -65,6 +65,7 @@ func start_level(level : int) -> void:
 
 func init_stat() -> void:
 	visible_menu(false)
+	reset_gauge()
 	player = get_tree().get_first_node_in_group("player")
 	player.defeated.connect(_on_player_defeated)
 	player.grazed.connect(_on_player_grazed)
@@ -112,6 +113,11 @@ func get_node_by_name(node_name: String):
 
 func can_equip_skill() -> bool:
 	return false
+
+
+func reset_gauge() -> void:
+	gauge.value = 0
+	gauge_ready = false
 
 
 # TODO: 
@@ -170,8 +176,10 @@ func _on_enemy_defeated(enemy : Enemy) -> void:
 func _on_boss_defeated(enemy : Enemy) -> void:
 	score += enemy.defeat_value if enemy.get("defeat_value") else 10000
 
+
 func get_level() -> int:
 	return current_level
+
 
 func set_level(arg: int) -> void:
 	current_level = arg

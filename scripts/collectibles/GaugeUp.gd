@@ -10,10 +10,12 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
 	modulate.h = wrapf(modulate.h + (delta / 2), 0, 1)
 
 
 func _on_player_entered(player : Node2D) -> void:
+	AudioManager.player_sfx("collect")
 	set_physics_process(false)
 	modulate.s = 0
 	modulate.h = 0

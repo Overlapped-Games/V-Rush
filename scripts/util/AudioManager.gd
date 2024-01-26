@@ -5,7 +5,17 @@ const SFX := {
 	"player_fire": "",
 	"player_damaged": preload("res://assets/audio/sfx/player_damaged.wav"),
 	"player_death": preload("res://assets/audio/sfx/player_death.wav"),
-	"enemy_death": preload("res://assets/enemies/assets/enemy_death.wav")
+	"enemy_death": preload("res://assets/enemies/assets/enemy_death.wav"),
+	"power_up": preload("res://assets/levels/assets/Power-up.wav"),
+	"collect": preload("res://assets/audio/sfx/collect.wav")
+}
+
+const SFX_VOLUME := {
+	"player_damaged": 10,
+	"player_death": -10,
+	"enemy_death": 0,
+	"power_up": 0,
+	"collect": -8
 }
 
 
@@ -16,12 +26,19 @@ const BGM := {
 }
 
 
+const BGM_VOLUME := {
+	"main_menu": -10,
+	"stage_1": -15,
+	"game_over": -12
+}
+
+
 @onready var player_sfx_player : AudioStreamPlayer = $player_sfx
 @onready var enemy_death_player : AudioStreamPlayer = $enemy_death_player
 @onready var bgm_player : AudioStreamPlayer = $bgm_player
 
 
-var bgm_volume : float = -10.0
+#var bgm_volume : float = -10.0
 
 var t : float = 0.0
 
@@ -45,7 +62,7 @@ func _physics_process(delta: float) -> void:
 		
 
 func player_sfx(name : String) -> void:
-	player_sfx_player.volume_db = 10 if name == "player_damaged" else -10 if name == "player_death" else 0
+	player_sfx_player.volume_db = SFX_VOLUME.get(name, 0)
 	player_sfx_player.set_stream(SFX.get(name, "player_damaged"))
 	player_sfx_player.play()
 
@@ -56,16 +73,18 @@ func play_bgm(name : String) -> void:
 		push_warning("Song '%s' not found." % [name])
 		return
 	bgm_player.set_stream(BGM[name])
-	bgm_player.set_volume_db(bgm_volume)
+	bgm_player.set_volume_db(BGM_VOLUME.get(name, -10))
 	bgm_player.play()
 
 
 func fade_bgm() -> void:
 	set_physics_process(true)
 
+var can_play_death_sfx : bool = true
 
 func enemy_death() -> void:
-	#AudioEffectPitchShift
+	if !can_play_death_sfx: return
+	can_play_death_sfx = false
 	enemy_death_player.pitch_scale = randf_range(0.5, 1.5)
-	#enemy_death_player.pitch_scale
 	enemy_death_player.play()
+	get_tree().create_timer(0.05).timeout.connect(func(): can_play_death_sfx = true)

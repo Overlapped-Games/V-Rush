@@ -8,6 +8,7 @@ signal defeated()
 
 const BASE_SPEED := 150.0
 
+@onready var void_bomb : PackedScene = preload("res://assets/skills/void_bomb.tscn")
 @onready var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var grazebox : Grazebox = $Grazebox
@@ -110,11 +111,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventKey and not event is InputEventAction and not event is InputEventJoypadButton and not event is InputEventJoypadMotion: return
 	
 	if Input.is_action_just_pressed("skill_menu"):
-		GameManager.open_skill_menu()
+		#GameManager.open_skill_menu()
+		pass
 	elif Input.is_action_just_pressed("skill"):
-		if skill_queue.is_empty(): return
-		var a = skill_queue.pop_front()
-		print("skill=", a.name)
+		#if skill_queue.is_empty(): return
+		#var a = skill_queue.pop_front()
+		#print("skill=", a.name)
+		if !GameManager.gauge_ready: return
+		GameManager.reset_gauge()
+		var v : VoidBomb = void_bomb.instantiate()
+		add_child(v)
+		v.set_as_top_level(true)
+		v.global_position = Vector2(global_position.x + 80, global_position.y)
 	elif Input.is_action_just_pressed("escape_menu"):
 		print("escape menu")
 	

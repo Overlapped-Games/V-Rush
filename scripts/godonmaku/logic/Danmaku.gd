@@ -26,7 +26,7 @@ enum Angle {
 @export_group("Bullet settings")
 @export var bullet_type : BulletUtil.BulletType
 @export var move_type : Bullet.MoveType = Bullet.MoveType.LINE
-@export_flags_2d_physics var hitbox_layer := 0b0010_0000_0000
+@export_flags_2d_physics var hitbox_layer := 0b0100_0010_0000_0000
 @export var velocity : int = 150
 @export var max_velocity : int = 1000
 @export var acceleration : float = 0.0
