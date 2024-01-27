@@ -16,37 +16,11 @@ danmaku = NodePath("Danmaku")
 
 [node name="Danmaku" type="Node2D" parent="."]
 script = ExtResource("2_jkxj4")
-pattern_type = null
-angle_type = null
-pattern_origin = null
 fire_direction = Vector2(-1, 0)
 bullet_type = 2
-move_type = null
-hitbox_layer = null
-velocity = null
-max_velocity = null
-acceleration = null
-max_bounces = null
-curve_angle = null
-wave_frequency = null
-wave_amplitude = null
 line_count = 8
 fire_angle = 180.0
-spread = null
-spread_degrees = null
 origin_offset = 16
-fire_angle_modifier = null
-stacking = null
-stacks = null
-velocity_modifier = null
-spin_rate = null
-repeating = null
-max_repeats = null
-repeatable = null
-repeat_frames = null
-call_rate = null
-call_delay = null
-repeats_to_delay = null
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("3_dwsd7")

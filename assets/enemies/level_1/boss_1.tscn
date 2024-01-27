@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://tx1qcx12ixg7"]
+[gd_scene load_steps=16 format=3 uid="uid://tx1qcx12ixg7"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyContainer.gd" id="1_imgar"]
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_oo6jm"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_f6qi1"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_s14ba"]
 [ext_resource type="Script" path="res://scripts/beehaviors/AwaitSignal.gd" id="10_lbov2"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="11_b3dba"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/action.gd" id="12_bo48b"]
 
 [sub_resource type="Animation" id="Animation_sh77w"]
 resource_name = "spin"
@@ -40,18 +42,42 @@ script = ExtResource("1_imgar")
 [node name="points" type="Node2D" parent="."]
 
 [node name="point" type="Marker2D" parent="points"]
-position = Vector2(-80, 0)
+position = Vector2(-104, 0)
 
 [node name="point2" type="Marker2D" parent="points"]
-position = Vector2(-64, -64)
+position = Vector2(-112, -128)
 
-[node name="Enemy" type="RigidBody2D" parent="."]
+[node name="point3" type="Marker2D" parent="points"]
+position = Vector2(-96, -112)
+
+[node name="point4" type="Marker2D" parent="points"]
+position = Vector2(-80, -88)
+
+[node name="point5" type="Marker2D" parent="points"]
+position = Vector2(-64, -48)
+
+[node name="point7" type="Marker2D" parent="points"]
+position = Vector2(-112, 128)
+
+[node name="point8" type="Marker2D" parent="points"]
+position = Vector2(-96, 112)
+
+[node name="point9" type="Marker2D" parent="points"]
+position = Vector2(-80, 89)
+
+[node name="point10" type="Marker2D" parent="points"]
+position = Vector2(-64, 48)
+
+[node name="point6" type="Marker2D" parent="points"]
+position = Vector2(-56, 0)
+
+[node name="Enemy" type="RigidBody2D" parent="." groups=["boss"]]
 collision_layer = 4
 collision_mask = 514
 gravity_scale = 0.0
 script = ExtResource("1_oo6jm")
-max_health = 3000
-current_health = 3000
+max_health = 8000
+current_health = 8000
 invlunerability_time = 0.0
 defeat_value = 100000
 
@@ -84,65 +110,75 @@ texture = ExtResource("3_368fm")
 
 [node name="Pattern1" type="Node2D" parent="Enemy/Patterns"]
 script = ExtResource("3_rj8oh")
-pattern_origin = null
 fire_direction = Vector2(-1, 0)
-hitbox_layer = null
 velocity = 80
-max_velocity = null
-acceleration = null
-max_bounces = null
-curve_angle = null
-wave_frequency = null
-wave_amplitude = null
 line_count = 16
-fire_angle = null
-spread = null
-spread_degrees = null
 origin_offset = 32
-fire_angle_modifier = null
-stacking = null
-stacks = null
-velocity_modifier = null
 spin_rate = 0.125
 repeating = true
 max_repeats = 32
-repeatable = null
-repeat_frames = null
 call_rate = 10.0
-call_delay = null
-repeats_to_delay = null
 
 [node name="Danmaku" type="Node2D" parent="Enemy/Patterns"]
 script = ExtResource("3_rj8oh")
 pattern_type = 2
-pattern_origin = null
-fire_direction = null
 bullet_type = 3
-hitbox_layer = null
 velocity = 80
-max_velocity = null
-acceleration = null
-max_bounces = null
-curve_angle = null
-wave_frequency = null
-wave_amplitude = null
 line_count = 2
-fire_angle = null
-spread = null
-spread_degrees = null
-origin_offset = null
-fire_angle_modifier = null
-stacking = null
-stacks = null
-velocity_modifier = null
 spin_rate = 0.25
 repeating = true
 max_repeats = 256
-repeatable = null
-repeat_frames = null
 call_rate = 40.0
-call_delay = null
-repeats_to_delay = null
+
+[node name="Danmaku2" type="Node2D" parent="Enemy/Patterns"]
+script = ExtResource("3_rj8oh")
+fire_direction = Vector2(-1, 0)
+velocity = 100
+line_count = 8
+spin_rate = 0.125
+repeating = true
+max_repeats = 128
+call_rate = 16.0
+
+[node name="Danmaku3" type="Node2D" parent="Enemy/Patterns/Danmaku2"]
+script = ExtResource("3_rj8oh")
+fire_direction = Vector2(-1, 0)
+velocity = 100
+line_count = 8
+spin_rate = -0.125
+repeating = true
+max_repeats = 128
+call_rate = 16.0
+
+[node name="Danmaku3" type="Node2D" parent="Enemy/Patterns"]
+script = ExtResource("3_rj8oh")
+angle_type = 1
+bullet_type = 2
+velocity = 100
+spread = 4
+spread_degrees = 20.0
+origin_offset = 32
+stacking = true
+stacks = 2
+velocity_modifier = 0.2
+repeating = true
+max_repeats = 3
+call_rate = 4.0
+
+[node name="Danmaku4" type="Node2D" parent="Enemy/Patterns/Danmaku3"]
+script = ExtResource("3_rj8oh")
+angle_type = 1
+bullet_type = 2
+velocity = 80
+spread = 3
+spread_degrees = 20.0
+origin_offset = 32
+stacking = true
+stacks = 2
+velocity_modifier = 0.2
+repeating = true
+max_repeats = 3
+call_rate = 4.0
 
 [node name="BasicEnemyAI" type="Node" parent="Enemy" node_paths=PackedStringArray("actor")]
 script = ExtResource("4_th7tj")
@@ -175,12 +211,102 @@ reparent = false
 
 [node name="FirePattern2" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_f6qi1")
-pattern = NodePath("../../../Patterns/Danmaku")
+pattern = NodePath("../../../Patterns/Danmaku3")
+
+[node name="MoveToPoint3" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point3")
+reparent = false
+
+[node name="MoveToPoint4" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point4")
+reparent = false
+
+[node name="MoveToPoint5" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point5")
+reparent = false
+
+[node name="MoveToPoint6" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point6")
+reparent = false
+
+[node name="FirePattern3" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_f6qi1")
+pattern = NodePath("../../../Patterns/Danmaku2")
 
 [node name="AwaitSignal2" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("node")]
 script = ExtResource("10_lbov2")
+node = NodePath("../../../Patterns/Danmaku2")
+signal_name = "pattern_stopped"
+
+[node name="DelayDecorator3" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("11_b3dba")
+wait_time = 1.0
+
+[node name="FirePattern4" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator3" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_f6qi1")
+pattern = NodePath("../../../../Patterns/Danmaku3")
+
+[node name="MoveToPoint7" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point7")
+reparent = false
+
+[node name="MoveToPoint8" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point8")
+reparent = false
+
+[node name="MoveToPoint9" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point9")
+reparent = false
+
+[node name="MoveToPoint10" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 80
+target = NodePath("../../../../points/point10")
+reparent = false
+
+[node name="MoveToPoint11" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+speed = 100
+target = NodePath("../../../../points/point")
+reparent = false
+
+[node name="DelayDecorator2" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("11_b3dba")
+wait_time = 2.0
+
+[node name="FirePattern5" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator2" node_paths=PackedStringArray("pattern")]
+script = ExtResource("7_f6qi1")
+pattern = NodePath("../../../../Patterns/Danmaku")
+
+[node name="AwaitSignal3" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("node")]
+script = ExtResource("10_lbov2")
 node = NodePath("../../../Patterns/Danmaku")
 signal_name = "pattern_stopped"
+
+[node name="MoveToPoint12" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("6_2sdgx")
+target = NodePath("../../../../points/point6")
+
+[node name="DelayDecorator" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("11_b3dba")
+wait_time = 4.0
+
+[node name="ActionLeaf" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator"]
+script = ExtResource("12_bo48b")
 
 [node name="HealthBar" parent="Enemy" instance=ExtResource("9_s14ba")]
 custom_minimum_size = Vector2(48, 8)

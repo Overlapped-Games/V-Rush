@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://co3by8dlgkk3m"]
+
+[ext_resource type="Script" path="res://assets/menus/WinMenu.gd" id="1_aj14m"]
+[ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="1_tkn2q"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_aj14m")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(426, 240)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.592157)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = -11.5
+offset_right = 104.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_tkn2q")
+text = "! YOU ARE A SUPER PLAYER !
+
+
+
+
+Press fire to go back to the main menu"
+horizontal_alignment = 1

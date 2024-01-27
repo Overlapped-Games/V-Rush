@@ -44,22 +44,23 @@ func _on_sleep_timer_timeout():
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventAction or event is InputEventKey or event is InputEventMouseButton:
-		var just_pressed = event.is_pressed() and not event.is_echo()
-		if Input.is_key_pressed(KEY_DOWN) and just_pressed:
-			move_focus(1)
-			menu_up_down_sound.play()
-		elif Input.is_key_pressed(KEY_UP) and just_pressed:
-			move_focus(-1)
-			menu_up_down_sound.play()
-		elif Input.is_action_just_pressed("ui_accept"):
-			#sleep_timer.start()  # Start the sleep timer when a button is selected
-			menu_select_sound.play()
-			option_selected.emit(focused_index)
-		elif Input.is_action_just_pressed("ui_cancel"):
-			menu_back_sound.play()
-			%SettingsMenu.hide()
-			%Options.show()
+	if not event is InputEventKey and not event is InputEventAction and not event is InputEventJoypadButton and not event is InputEventJoypadMotion: return
+	
+	var just_pressed = event.is_pressed() and not event.is_echo()
+	if Input.is_action_just_pressed("input_down"):
+		move_focus(1)
+		menu_up_down_sound.play()
+	elif Input.is_action_just_pressed("input_up"):
+		move_focus(-1)
+		menu_up_down_sound.play()
+	elif Input.is_action_just_pressed("fire") or Input.is_action_just_pressed("skill"):
+		#sleep_timer.start()  # Start the sleep timer when a button is selected
+		menu_select_sound.play()
+		option_selected.emit(focused_index)
+	elif Input.is_action_just_pressed("escape_menu"):
+		menu_back_sound.play()
+		%SettingsMenu.hide()
+		%Options.show()
 
 
 func move_focus(direction : int):

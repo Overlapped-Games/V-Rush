@@ -202,7 +202,7 @@ func move_straight(delta : float) -> void:
 	current_distance += distance
 	
 	if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y or global_position.x <= -(camera.global_position + screen_extents).x or global_position.x >= (camera.global_position + screen_extents).x:
-		print("g%s vs c%s, %s" % [global_position, camera.global_position, screen_extents])
+		#print("g%s vs c%s, %s" % [global_position, camera.global_position, screen_extents])
 		if max_bounces > 0 and current_bounces < max_bounces:
 			if global_position.y <= -(camera.global_position + screen_extents).y or global_position.y >= (camera.global_position + screen_extents).y:
 				direction = Vector2(direction.x, -direction.y)

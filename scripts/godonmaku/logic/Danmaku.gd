@@ -193,6 +193,10 @@ func update_target() -> void:
 func _start() -> void:
 	finished_processing = false
 	set_physics_process(true)
+	
+	# start any cildren patterns
+	for child in get_children().filter(func(c): return c is Danmaku):
+		child._start()
 
 
 func _stop() -> void:

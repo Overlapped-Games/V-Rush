@@ -73,7 +73,7 @@ func _ready() -> void:
 	animator.animation_finished.connect(
 		func(anim_name): 
 			if anim_name == "invulnerable_flash":
-				print("finished '%s'" % [anim_name])
+				#print("finished '%s'" % [anim_name])
 				set_invulnerable(false)
 				animator.play("floating")
 				sprite.show()
@@ -89,7 +89,7 @@ func _physics_process(delta : float) -> void:
 		speed_multiplier = 1
 	
 	
-	var direction : Vector2 = Input.get_vector("input_left", "input_right", "input_up", "input_down")
+	var direction : Vector2 = Input.get_vector("input_left", "input_right", "input_up", "input_down").normalized()
 	
 	velocity = direction * ((BASE_SPEED * speed_multiplier) + speed_modifier)
 	
@@ -125,15 +125,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		v.global_position = Vector2(global_position.x + 80, global_position.y)
 
 	
-	var just_pressed = event.is_pressed() and not event.is_echo()
-	if Input.is_key_pressed(KEY_1) and just_pressed:
-		weapon.stage = 1
-	elif Input.is_key_pressed(KEY_2) and just_pressed:
-		weapon.stage = 2
-	elif Input.is_key_pressed(KEY_3) and just_pressed:
-		weapon.stage = 3
-	elif Input.is_key_pressed(KEY_4) and just_pressed:
-		weapon.stage = 4
+	# debugging
+	#var just_pressed = event.is_pressed() and not event.is_echo()
+	#if Input.is_key_pressed(KEY_1) and just_pressed:
+		#weapon.stage = 1
+	#elif Input.is_key_pressed(KEY_2) and just_pressed:
+		#weapon.stage = 2
+	#elif Input.is_key_pressed(KEY_3) and just_pressed:
+		#weapon.stage = 3
+	#elif Input.is_key_pressed(KEY_4) and just_pressed:
+		#weapon.stage = 4
 
 
 func do_attack(delta : float) -> void:
@@ -142,7 +143,7 @@ func do_attack(delta : float) -> void:
 
 func attack_up(value : int) -> void:
 	if weapon.stage == weapon.max_stage: return
-	var max = 30 if weapon.stage == 1 else 50 if weapon.stage == 2 else 70
+	var max = 10 if weapon.stage == 1 else 20 if weapon.stage == 2 else 30
 	attack_exp = clamp(attack_exp + value, 0, max)
 	
 	if attack_exp == max:
@@ -169,7 +170,7 @@ func damage(damage : int) -> void:
 	if invulnerable: return
 	current_health = clampi(current_health - max(damage - defense, 1), 0, max_health)
 	if current_health == 0:
-		print("DEAD")
+		#print("DEAD")
 		AudioManager.player_sfx("player_death")
 		set_physics_process(false)
 		set_invulnerable(true)

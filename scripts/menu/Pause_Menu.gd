@@ -2,9 +2,10 @@ extends Node2D
 
 
 func _input(event):
-	if event is InputEventAction or (event is InputEventKey and event.pressed):
-		if Input.is_action_just_pressed("escape_menu"):
-			toggle_pause_menu()
+	if not event is InputEventKey and not event is InputEventAction and not event is InputEventJoypadButton and not event is InputEventJoypadMotion: return
+	
+	if Input.is_action_just_pressed("escape_menu"):
+		toggle_pause_menu()
 
 
 func toggle_pause_menu():

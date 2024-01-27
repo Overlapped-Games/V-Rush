@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dmreaj7b0lh0e"]
+[gd_scene load_steps=44 format=3 uid="uid://dmreaj7b0lh0e"]
 
 [ext_resource type="Script" path="res://scripts/util/Stage.gd" id="1_1jxbv"]
 [ext_resource type="Script" path="res://scripts/world/Level.gd" id="1_m8snf"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://scripts/events/EventTrigger.gd" id="22_i4q3a"]
 [ext_resource type="PackedScene" uid="uid://c7080ownnkuig" path="res://assets/enemies/level_1/enemy_aim_single_chase.tscn" id="22_iyp8y"]
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="23_4imcd"]
+[ext_resource type="PackedScene" uid="uid://d07gumtv6aups" path="res://assets/enemies/level_1/enemy_fan_2.tscn" id="23_6rgt4"]
 [ext_resource type="PackedScene" uid="uid://cuequixoqbc5d" path="res://assets/enemies/level_1/enemy_wave_turret.tscn" id="23_7iti3"]
 [ext_resource type="Script" path="res://scripts/events/StopAutoScroll.gd" id="23_607yv"]
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="24_asn67"]
@@ -33,7 +34,8 @@
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="29_blj5m"]
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveTowardsPlayer.gd" id="30_esmc7"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="31_ep8h5"]
-[ext_resource type="PackedScene" uid="uid://c5jcnmv1hl4re" path="res://assets/collectibles/gauge_up.tscn" id="34_gksy2"]
+[ext_resource type="PackedScene" uid="uid://tx1qcx12ixg7" path="res://assets/enemies/level_1/boss_1.tscn" id="33_2i6os"]
+[ext_resource type="PackedScene" uid="uid://yoowov7lwvj1" path="res://assets/enemies/level_1/invis_generator_no_repeat.tscn" id="36_2wkxe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0bf26"]
 texture = ExtResource("9_xegp5")
@@ -142,7 +144,6 @@ metadata/_edit_lock_ = true
 
 [node name="scroller" type="Node2D" parent="." groups=["scroller"]]
 script = ExtResource("10_qt6se")
-speed = 0.0
 
 [node name="MoveTrigger" parent="scroller" instance=ExtResource("9_18ohq")]
 position = Vector2(512, 0)
@@ -201,36 +202,6 @@ position = Vector2(48, -40)
 [node name="Enemy" parent="scroller/MoveTrigger2" instance=ExtResource("13_mb6d1")]
 position = Vector2(0, -64)
 
-[node name="Pattern" parent="scroller/MoveTrigger2/Enemy/Patterns" index="0"]
-pattern_type = null
-pattern_origin = null
-bullet_type = null
-move_type = null
-hitbox_layer = null
-max_velocity = null
-acceleration = null
-max_bounces = null
-curve_angle = null
-wave_frequency = null
-wave_amplitude = null
-line_count = null
-fire_angle = null
-spread = null
-spread_degrees = null
-origin_offset = null
-fire_angle_modifier = null
-stacking = null
-stacks = null
-velocity_modifier = null
-spin_rate = null
-repeating = null
-max_repeats = null
-repeatable = null
-repeat_frames = null
-call_rate = null
-call_delay = null
-repeats_to_delay = null
-
 [node name="Enemy2" parent="scroller/MoveTrigger2" instance=ExtResource("13_mb6d1")]
 position = Vector2(0, -48)
 
@@ -278,6 +249,8 @@ position = Vector2(16, 80)
 
 [node name="Enemy8" parent="scroller/MoveTrigger3" instance=ExtResource("12_jj3oh")]
 position = Vector2(16, 96)
+
+[node name="EnemyContainer" parent="scroller/MoveTrigger3" instance=ExtResource("23_6rgt4")]
 
 [node name="MoveTrigger11" parent="scroller" instance=ExtResource("9_18ohq")]
 position = Vector2(2145, 0)
@@ -390,37 +363,13 @@ position = Vector2(-16, 104)
 [node name="Enemy15" parent="scroller/MoveTrigger4" instance=ExtResource("22_5gv6e")]
 
 [node name="MoveTrigger10" parent="scroller" instance=ExtResource("9_18ohq")]
-position = Vector2(1907, 0)
-
-[node name="Enemy" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(8, -56)
-
-[node name="Enemy2" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(8, 56)
-
-[node name="Enemy3" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(16, -40)
-
-[node name="Enemy4" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(16, 40)
-
-[node name="Enemy5" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(24, -24)
-
-[node name="Enemy6" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(24, 24)
-
-[node name="Enemy7" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(32, 8)
-
-[node name="Enemy8" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(32, -8)
+position = Vector2(1904, 0)
 
 [node name="Enemy9" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(0, -72)
+position = Vector2(-16, -72)
 
 [node name="Enemy10" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(0, 72)
+position = Vector2(-16, 72)
 
 [node name="Enemy11" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
 position = Vector2(-8, -88)
@@ -429,10 +378,22 @@ position = Vector2(-8, -88)
 position = Vector2(-8, 88)
 
 [node name="Enemy13" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(-16, -104)
+position = Vector2(0, -104)
 
 [node name="Enemy14" parent="scroller/MoveTrigger10" instance=ExtResource("17_lw3f0")]
-position = Vector2(-16, 104)
+position = Vector2(0, 104)
+
+[node name="Enemy16" parent="scroller/MoveTrigger10" instance=ExtResource("22_5gv6e")]
+position = Vector2(32, -48)
+
+[node name="Enemy" parent="scroller/MoveTrigger10" instance=ExtResource("22_5gv6e")]
+position = Vector2(32, 48)
+
+[node name="Enemy2" parent="scroller/MoveTrigger10" instance=ExtResource("22_5gv6e")]
+position = Vector2(0, 16)
+
+[node name="Enemy3" parent="scroller/MoveTrigger10" instance=ExtResource("22_5gv6e")]
+position = Vector2(0, -16)
 
 [node name="MoveTrigger15" parent="scroller" instance=ExtResource("9_18ohq")]
 position = Vector2(2571, 0)
@@ -456,28 +417,16 @@ position = Vector2(24, -24)
 position = Vector2(24, 24)
 
 [node name="Enemy7" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(32, 8)
+position = Vector2(-19, 8)
 
 [node name="Enemy8" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(32, -8)
+position = Vector2(-19, -8)
 
-[node name="Enemy9" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(0, -72)
+[node name="Enemy16" parent="scroller/MoveTrigger15" instance=ExtResource("23_7iti3")]
+position = Vector2(-27, -56)
 
-[node name="Enemy10" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(0, 72)
-
-[node name="Enemy11" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(-8, -88)
-
-[node name="Enemy12" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(-8, 88)
-
-[node name="Enemy13" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(-16, -104)
-
-[node name="Enemy14" parent="scroller/MoveTrigger15" instance=ExtResource("17_lw3f0")]
-position = Vector2(-16, 104)
+[node name="Enemy15" parent="scroller/MoveTrigger15" instance=ExtResource("23_7iti3")]
+position = Vector2(-27, 56)
 
 [node name="Node2D" parent="scroller" instance=ExtResource("9_18ohq")]
 position = Vector2(1160, 0)
@@ -509,20 +458,20 @@ position = Vector2(1664, 1)
 [node name="Enemy9" parent="scroller/MoveTrigger9" instance=ExtResource("15_shq66")]
 position = Vector2(16, 33)
 
-[node name="level_triggr" type="Area2D" parent="scroller"]
+[node name="level_trigger" type="Area2D" parent="scroller"]
 unique_name_in_owner = true
-position = Vector2(4352, 0)
+position = Vector2(4496, 0)
 collision_layer = 8192
 collision_mask = 4096
 script = ExtResource("22_i4q3a")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="scroller/level_triggr"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="scroller/level_trigger"]
 shape = SubResource("RectangleShape2D_yd4ej")
 
-[node name="Event" type="Node" parent="scroller/level_triggr"]
+[node name="Event" type="Node" parent="scroller/level_trigger"]
 script = ExtResource("23_607yv")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="scroller/level_triggr"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="scroller/level_trigger"]
 position = Vector2(-2808, 0)
 stream = ExtResource("19_23vxv")
 volume_db = 7.482
@@ -530,11 +479,17 @@ volume_db = 7.482
 [node name="MoveTrigger14" parent="scroller" instance=ExtResource("9_18ohq")]
 position = Vector2(2944, 0)
 
+[node name="EnemyContainer4" parent="scroller/MoveTrigger14" instance=ExtResource("23_6rgt4")]
+position = Vector2(16, -63)
+
 [node name="EnemyContainer2" parent="scroller/MoveTrigger14" instance=ExtResource("20_xk3yi")]
 position = Vector2(0, 23)
 
 [node name="EnemyContainer" parent="scroller/MoveTrigger14" instance=ExtResource("21_fp1yd")]
 position = Vector2(0, -24)
+
+[node name="EnemyContainer3" parent="scroller/MoveTrigger14" instance=ExtResource("23_6rgt4")]
+position = Vector2(16, 64)
 
 [node name="MoveTrigger18" parent="scroller" instance=ExtResource("9_18ohq")]
 position = Vector2(3648, 0)
@@ -619,37 +574,8 @@ position = Vector2(-40, 0)
 
 [node name="Pattern" type="Node2D" parent="scroller/MoveTrigger17/Enemy7/Patterns"]
 script = ExtResource("25_62ppg")
-pattern_type = null
 angle_type = 1
-pattern_origin = null
 fire_direction = Vector2(-1, 0)
-bullet_type = null
-move_type = null
-hitbox_layer = null
-velocity = null
-max_velocity = null
-acceleration = null
-max_bounces = null
-curve_angle = null
-wave_frequency = null
-wave_amplitude = null
-line_count = null
-fire_angle = null
-spread = null
-spread_degrees = null
-origin_offset = null
-fire_angle_modifier = null
-stacking = null
-stacks = null
-velocity_modifier = null
-spin_rate = null
-repeating = null
-max_repeats = null
-repeatable = null
-repeat_frames = null
-call_rate = null
-call_delay = null
-repeats_to_delay = null
 
 [node name="Beehavior" type="Node" parent="scroller/MoveTrigger17/Enemy7" node_paths=PackedStringArray("actor")]
 script = ExtResource("26_3pjgg")
@@ -721,37 +647,8 @@ position = Vector2(-40, 0)
 
 [node name="Pattern" type="Node2D" parent="scroller/MoveTrigger17/Enemy8/Patterns"]
 script = ExtResource("25_62ppg")
-pattern_type = null
 angle_type = 1
-pattern_origin = null
 fire_direction = Vector2(-1, 0)
-bullet_type = null
-move_type = null
-hitbox_layer = null
-velocity = null
-max_velocity = null
-acceleration = null
-max_bounces = null
-curve_angle = null
-wave_frequency = null
-wave_amplitude = null
-line_count = null
-fire_angle = null
-spread = null
-spread_degrees = null
-origin_offset = null
-fire_angle_modifier = null
-stacking = null
-stacks = null
-velocity_modifier = null
-spin_rate = null
-repeating = null
-max_repeats = null
-repeatable = null
-repeat_frames = null
-call_rate = null
-call_delay = null
-repeats_to_delay = null
 
 [node name="Beehavior" type="Node" parent="scroller/MoveTrigger17/Enemy8" node_paths=PackedStringArray("actor")]
 script = ExtResource("26_3pjgg")
@@ -788,11 +685,52 @@ libraries = {
 }
 autoplay = "spin"
 
-[node name="MoveTrigger5" parent="scroller" instance=ExtResource("9_18ohq")]
-position = Vector2(216, -1)
+[node name="MoveTrigger20" parent="scroller" instance=ExtResource("9_18ohq")]
+position = Vector2(3832, 0)
 
-[node name="GaugeUp2" parent="." instance=ExtResource("34_gksy2")]
-position = Vector2(-152, -55)
-fill_value = 100
+[node name="InvisGenerator3" parent="scroller/MoveTrigger20" instance=ExtResource("36_2wkxe")]
+position = Vector2(-16, 48)
+
+[node name="InvisGenerator4" parent="scroller/MoveTrigger20" instance=ExtResource("36_2wkxe")]
+position = Vector2(-16, -48)
+
+[node name="MoveTrigger21" parent="scroller" instance=ExtResource("9_18ohq")]
+position = Vector2(3848, 0)
+
+[node name="InvisGenerator3" parent="scroller/MoveTrigger21" instance=ExtResource("36_2wkxe")]
+position = Vector2(-16, -31)
+
+[node name="InvisGenerator4" parent="scroller/MoveTrigger21" instance=ExtResource("36_2wkxe")]
+position = Vector2(-16, 33)
+
+[node name="MoveTrigger22" parent="scroller" instance=ExtResource("9_18ohq")]
+position = Vector2(3864, 0)
+
+[node name="InvisGenerator" parent="scroller/MoveTrigger22" instance=ExtResource("36_2wkxe")]
+position = Vector2(-16, -17)
+
+[node name="InvisGenerator2" parent="scroller/MoveTrigger22" instance=ExtResource("36_2wkxe")]
+position = Vector2(-16, 14)
+
+[node name="MoveTrigger23" parent="scroller" instance=ExtResource("9_18ohq")]
+position = Vector2(4032, 0)
+
+[node name="Node2D" parent="scroller/MoveTrigger23" instance=ExtResource("15_shq66")]
+position = Vector2(40, -64)
+
+[node name="EnemyContainer" parent="scroller/MoveTrigger23" instance=ExtResource("23_6rgt4")]
+
+[node name="EnemySingleChase" parent="scroller/MoveTrigger23" instance=ExtResource("22_iyp8y")]
+
+[node name="Node2D3" parent="scroller/MoveTrigger23" instance=ExtResource("15_shq66")]
+position = Vector2(40, 0)
+
+[node name="Node2D4" parent="scroller/MoveTrigger23" instance=ExtResource("15_shq66")]
+position = Vector2(40, 64)
+
+[node name="MoveTrigger19" parent="scroller" instance=ExtResource("9_18ohq")]
+position = Vector2(4480, 0)
+
+[node name="boss_1" parent="scroller/MoveTrigger19" instance=ExtResource("33_2i6os")]
 
 [editable path="scroller/MoveTrigger2/Enemy"]

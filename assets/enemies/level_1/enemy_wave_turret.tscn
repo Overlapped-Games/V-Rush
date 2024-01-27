@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cuequixoqbc5d"]
+[gd_scene load_steps=15 format=3 uid="uid://cuequixoqbc5d"]
 
 [ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_sud1i"]
 [ext_resource type="Texture2D" uid="uid://dhhpiqh5shcjx" path="res://assets/art/enemies/enemies.png" id="2_305gc"]
@@ -6,8 +6,9 @@
 [ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="4_jyjc8"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="5_sjghe"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/cooldown.gd" id="6_1u0f6"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/repeater.gd" id="7_nnb2m"]
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_vct4q"]
-[ext_resource type="Script" path="res://scripts/beehaviors/SetAsTopLevel.gd" id="8_4bijy"]
+[ext_resource type="Script" path="res://assets/enemies/level_1/ForceLeft.gd" id="8_ve72u"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="9_l4eqk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yq0j7"]
@@ -105,16 +106,21 @@ actor = NodePath("..")
 [node name="SequenceComposite" type="Node" parent="Beehavior"]
 script = ExtResource("5_sjghe")
 
-[node name="CooldownDecorator" type="Node" parent="Beehavior/SequenceComposite"]
+[node name="ForceLeft" type="Node" parent="Beehavior/SequenceComposite"]
+script = ExtResource("8_ve72u")
+speed = 30
+
+[node name="RepeaterDecorator" type="Node" parent="Beehavior/SequenceComposite"]
+script = ExtResource("7_nnb2m")
+repetitions = 5
+
+[node name="CooldownDecorator" type="Node" parent="Beehavior/SequenceComposite/RepeaterDecorator"]
 script = ExtResource("6_1u0f6")
-wait_time = 3.0
+wait_time = 4.0
 
-[node name="FirePattern" type="Node" parent="Beehavior/SequenceComposite/CooldownDecorator" node_paths=PackedStringArray("pattern")]
+[node name="FirePattern" type="Node" parent="Beehavior/SequenceComposite/RepeaterDecorator/CooldownDecorator" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_vct4q")
-pattern = NodePath("../../../../Patterns/Pattern")
-
-[node name="SetAsTopLevel" type="Node" parent="Beehavior/SequenceComposite"]
-script = ExtResource("8_4bijy")
+pattern = NodePath("../../../../../Patterns/Pattern")
 
 [node name="HealthBar" parent="." instance=ExtResource("9_l4eqk")]
 visible = false

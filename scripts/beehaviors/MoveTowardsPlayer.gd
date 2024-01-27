@@ -14,7 +14,7 @@ func before_run(actor : Node, blackboard : Blackboard) -> void:
 	screen_extents.x += + 32
 	var player : Player = get_tree().get_first_node_in_group("player")
 	direction = (player.global_position - actor.global_position).normalized()
-	print("dir=%s" % [direction])
+	#print("dir=%s" % [direction])
  
 
 func tick(actor : Node, blackboard : Blackboard) -> int:

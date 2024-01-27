@@ -42,7 +42,7 @@ var v_rush_menu_open := false
 var score := 0:
 	set(value):
 		score = clamp(value, 0, MAX_SCORE)
-		score_label.text = "%012d" % score
+		score_label.text = "[right]%012d[/right]" % score
 
 
 func _ready() -> void:
@@ -128,7 +128,7 @@ func reset_gauge() -> void:
 func open_skill_menu() -> void:
 	if !v_rush_menu_open and gauge_ready:
 		v_rush_menu_open = true
-		print("open gauge")
+		#print("open gauge")
 		gauge.value = 0
 		gauge_ready = false
 		# TODO: freeze game physics processing, except for the menu
@@ -143,7 +143,7 @@ func fill_gauge(value := 5) -> void:
 		gauge.value += value * player.gauge_fill_rate
 		
 		if gauge.value >= 100:
-			print("gauge ready")
+			#print("gauge ready")
 			gauge_ready = true
 
 
@@ -154,7 +154,8 @@ func _on_player_defeated():
 
 
 func _on_player_grazed() -> void:
-	fill_gauge()	
+	fill_gauge()
+	score += 100
 
 
 func _on_scorable_hit(value : int) -> void:
@@ -175,10 +176,17 @@ func _on_enemy_defeated(enemy : Enemy) -> void:
 	get_tree().get_first_node_in_group("scroller").add_child(power_up)
 	#power_up.set_as_top_level(true)
 	power_up.global_position = enemy.global_position
+	
+	if enemy.is_in_group("boss"):
+		_on_boss_defeated(enemy)
 
 
 func _on_boss_defeated(enemy : Enemy) -> void:
 	score += enemy.defeat_value if enemy.get("defeat_value") else 10000
+	# TODO end level and play fanfare
+	get_tree().paused = true
+	AudioManager.play_bgm("win")
+	$WIN.win()
 
 
 func _on_weapon_stage_changed(stage : int) -> void:

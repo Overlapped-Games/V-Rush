@@ -16,9 +16,10 @@ func _on_camera_entered(area : Area2D) -> void:
 	for child in get_children():
 		if not child is Event: continue
 		child._trigger()
-	$CollisionShape2D.disabled = true
-	GameManager.set_level(GameManager.get_level() + 1)
-	level_background.set_target_color(GameManager.level_colors[GameManager.get_level() - 1])
-	level_background.change_color(1)
-	$AudioStreamPlayer2D.play()
-	next_level.emit()
+		
+	#$CollisionShape2D.disabled = true
+	#GameManager.set_level(GameManager.get_level() + 1)
+	#level_background.set_target_color(GameManager.level_colors[GameManager.get_level() - 1])
+	#level_background.change_color(1)
+	#$AudioStreamPlayer2D.play()
+	#next_level.emit()

@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="6_hl2j1"]
 [ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="7_8sfy0"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="8_snmme"]
-[ext_resource type="Script" path="res://scripts/beehaviors/MoveTowards.gd" id="9_f58ge"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveTowardsPlayer.gd" id="9_838ea"]
 [ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="10_n0f1o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f6anh"]
@@ -44,8 +44,8 @@ collision_layer = 4
 collision_mask = 514
 gravity_scale = 0.0
 script = ExtResource("1_5lack")
-max_health = 40
-current_health = 40
+max_health = 60
+current_health = 60
 invlunerability_time = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -82,7 +82,7 @@ position = Vector2(-48, 0)
 script = ExtResource("3_hnwi3")
 angle_type = 1
 fire_direction = Vector2(-1, 0)
-bullet_type = 4
+bullet_type = 8
 spread = 3
 spread_degrees = 15.0
 
@@ -98,6 +98,7 @@ script = ExtResource("5_yomms")
 script = ExtResource("6_hl2j1")
 speed = 120
 target = NodePath("../../../point")
+reparent = false
 
 [node name="FirePattern" type="Node" parent="BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
 script = ExtResource("7_8sfy0")
@@ -107,10 +108,9 @@ pattern = NodePath("../../../Patterns/Pattern1")
 script = ExtResource("8_snmme")
 wait_time = 1.0
 
-[node name="MoveTowards" type="Node" parent="BasicEnemyAI/SequenceComposite/DelayDecorator"]
-script = ExtResource("9_f58ge")
-speed = 100
-direction = Vector2(-2, 1)
+[node name="MoveTowardsPlayer" type="Node" parent="BasicEnemyAI/SequenceComposite/DelayDecorator"]
+script = ExtResource("9_838ea")
+speed = 150
 
 [node name="HealthBar" parent="." instance=ExtResource("10_n0f1o")]
 visible = false

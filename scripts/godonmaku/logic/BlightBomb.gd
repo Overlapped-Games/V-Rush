@@ -67,18 +67,15 @@ func _disable():
 
 
 func detonate() -> void:
-	print("kaboom")
 	detonated.emit(score_value)
 	detonation_pattern._start()
 	_disable()
 
 
 func _on_hit(bullet : Bullet) -> void:
-	print("hit by player, explode")
 	detonate()
 
 
 func _on_hit_by_blight(area : Area2D) -> void:
 	if area.collision_layer & 0b0100_0000_0000 > 0:
-		print("hit by blight")
 		detonate()

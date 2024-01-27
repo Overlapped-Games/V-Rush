@@ -76,37 +76,10 @@ frame = 8
 
 [node name="Pattern" type="Node2D" parent="Patterns"]
 script = ExtResource("3_bxfaa")
-pattern_type = null
 angle_type = 1
-pattern_origin = null
 fire_direction = Vector2(-1, 0)
-bullet_type = null
-move_type = null
-hitbox_layer = null
-velocity = null
-max_velocity = null
-acceleration = null
-max_bounces = null
-curve_angle = null
-wave_frequency = null
-wave_amplitude = null
-line_count = null
-fire_angle = null
 spread = 7
 spread_degrees = 10.0
-origin_offset = null
-fire_angle_modifier = null
-stacking = null
-stacks = null
-velocity_modifier = null
-spin_rate = null
-repeating = null
-max_repeats = null
-repeatable = null
-repeat_frames = null
-call_rate = null
-call_delay = null
-repeats_to_delay = null
 
 [node name="AttackTree" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("4_0gdrn")
