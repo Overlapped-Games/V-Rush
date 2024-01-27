@@ -167,3 +167,5 @@ func kill_bullets() -> void:
 	for bullet in player_pool.get_children():
 		bullet.queue_free()
 		
+func _on_win() -> void:
+	kill_bullets()

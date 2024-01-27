@@ -12,5 +12,5 @@ func _ready() -> void:
 func _on_timer_timeout() -> void:
 	GameManager.start_level(1)
 	
-	#get_tree().change_scene_to_file(GameManager.STAGES[1])
+	#get_tree().change_scene_to_packed(GameManager.STAGES[1])
 	#get_tree().change_scene_to_file("res://scripts/godonmaku/danmaku_tester.tscn")

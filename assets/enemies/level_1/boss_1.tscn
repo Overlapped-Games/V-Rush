@@ -143,6 +143,7 @@ call_rate = 16.0
 [node name="Danmaku3" type="Node2D" parent="Enemy/Patterns/Danmaku2"]
 script = ExtResource("3_rj8oh")
 fire_direction = Vector2(-1, 0)
+bullet_type = 2
 velocity = 100
 line_count = 8
 spin_rate = -0.125
@@ -257,25 +258,25 @@ pattern = NodePath("../../../../Patterns/Danmaku3")
 [node name="MoveToPoint7" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
 script = ExtResource("6_2sdgx")
 speed = 80
-target = NodePath("../../../../points/point7")
+target = NodePath("../../../../points/point10")
 reparent = false
 
 [node name="MoveToPoint8" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
 script = ExtResource("6_2sdgx")
 speed = 80
-target = NodePath("../../../../points/point8")
+target = NodePath("../../../../points/point9")
 reparent = false
 
 [node name="MoveToPoint9" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
 script = ExtResource("6_2sdgx")
 speed = 80
-target = NodePath("../../../../points/point9")
+target = NodePath("../../../../points/point8")
 reparent = false
 
 [node name="MoveToPoint10" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
 script = ExtResource("6_2sdgx")
 speed = 80
-target = NodePath("../../../../points/point10")
+target = NodePath("../../../../points/point7")
 reparent = false
 
 [node name="MoveToPoint11" type="Node" parent="Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
@@ -309,6 +310,7 @@ wait_time = 4.0
 script = ExtResource("12_bo48b")
 
 [node name="HealthBar" parent="Enemy" instance=ExtResource("9_s14ba")]
+z_index = 4
 custom_minimum_size = Vector2(48, 8)
 offset_left = -24.0
 offset_top = 36.0

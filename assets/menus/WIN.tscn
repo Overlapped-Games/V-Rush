@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://b1kjj6od21d1d" path="res://assets/fonts/pixel_font.tres" id="1_tkn2q"]
 
 [node name="Node2D" type="Node2D"]
+z_index = 14
 script = ExtResource("1_aj14m")
 
 [node name="ColorRect" type="ColorRect" parent="."]

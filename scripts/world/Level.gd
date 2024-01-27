@@ -1,5 +1,9 @@
 class_name Level extends Node2D
 
+
+@export var level : int = 1
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#%level_trigger.connect("next_level", spawn_new_level)

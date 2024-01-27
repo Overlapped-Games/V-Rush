@@ -4,9 +4,10 @@ extends Node
 const MAX_SCORE : int = 999_999_999_999
 
 const STAGES := {
-	1: "res://assets/levels/stage_1.tscn",
-	2: "res://assets/levels/stage_1.tscn",
-	3: "res://assets/menus/scenes/game_over.tscn"
+	1: preload("res://assets/levels/stage_1.tscn"),
+	2: preload("res://assets/levels/stage_1.tscn"),
+	3: preload("res://assets/menus/scenes/game_over.tscn"),
+	100: preload("res://assets/test_levels/test_boss.tscn")
 }
 
 const level_colors : Array[Color] = [
@@ -49,16 +50,27 @@ func _ready() -> void:
 	var window : Window = get_tree().root
 	window.size = Vector2(1280, 720)
 	visible_canvas(false)
-	var mainMenuScene = preload("res://assets/menus/scenes/main_menu.tscn")
-	var mainMenuInit = mainMenuScene.instantiate()
-	add_child(mainMenuInit)
+	#var mainMenuScene = preload("res://assets/menus/scenes/main_menu.tscn")
+	#var mainMenuInit = mainMenuScene.instantiate()
+	#add_child(mainMenuInit)
 	#player = get_tree().get_first_node_in_group("player")
+	var level : Level = get_tree().get_first_node_in_group("level")
+	if level:
+		call_deferred("init_level", level.level)
+
+
+func init_level(level : int) -> void:
+	current_level = level
+	visible_canvas(true)
+	var bg = get_tree().get_first_node_in_group("level_background")
+	bg.set_target_color(get_background_color(current_level))
+	init_stat()
 
 
 func start_level(level : int) -> void:
 	current_level = level
 	visible_canvas(true)
-	get_tree().change_scene_to_file(STAGES[current_level])
+	get_tree().change_scene_to_packed(STAGES[current_level])
 	await get_tree().create_timer(0.01).timeout
 	var bg = get_tree().get_first_node_in_group("level_background")
 	bg.set_target_color(get_background_color(current_level))
@@ -67,7 +79,6 @@ func start_level(level : int) -> void:
 
 
 func init_stat() -> void:
-	visible_menu(false)
 	reset_gauge()
 	player = get_tree().get_first_node_in_group("player")
 	player.defeated.connect(_on_player_defeated)
@@ -79,15 +90,12 @@ func init_stat() -> void:
 
 
 func get_background_color(level : int) -> Color:
-	return level_colors[level - 1]
+	return level_colors[level - 1] if level < level_colors.size() else level_colors[0]
 
 
 func visible_canvas(arg: bool) -> void:
 	$CanvasLayer.visible = arg
 
-
-func visible_menu(arg: bool) -> void:
-	$Main_Menu.visible = arg
 
 func remove_child_by_name(childName: String) -> void:
 	if has_node(childName):
@@ -149,7 +157,7 @@ func fill_gauge(value := 5) -> void:
 
 func _on_player_defeated():
 	clean_up_bullets()
-	get_tree().change_scene_to_file(STAGES[3])
+	get_tree().change_scene_to_packed(STAGES[3])
 	await get_tree().create_timer(0.01).timeout
 
 
@@ -186,6 +194,8 @@ func _on_boss_defeated(enemy : Enemy) -> void:
 	# TODO end level and play fanfare
 	get_tree().paused = true
 	AudioManager.play_bgm("win")
+	BulletUtil._on_win()
+	$CanvasLayer.hide()
 	$WIN.win()
 
 

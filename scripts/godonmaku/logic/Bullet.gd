@@ -229,7 +229,7 @@ func _move(origin : Vector2, target_direction : Vector2,  target_position : Vect
 
 
 func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0, max_vel := 1000) -> void:
-	print("origin-%s" % origin)
+	#print("origin-%s" % origin)
 	firing_state |= FiringState.FIRE
 	active = true
 	global_position = origin
@@ -254,7 +254,7 @@ func _move_and_fire(origin : Vector2, move_direction : Vector2,  target_position
 
 
 func _disable():
-	print("d=%s" % [global_position])
+	#print("d=%s" % [global_position])
 	expired.emit(self)
 	hide()
 	set_physics_process(false)
