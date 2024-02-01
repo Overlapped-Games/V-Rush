@@ -5,7 +5,7 @@ class_name DanmakuTest extends Node2D
 @onready var enemy_scn : PackedScene = preload("res://assets/enemies/base_enemy.tscn")
 @onready var blight_bomb_scn : PackedScene = preload("res://assets/bullets/blight_bomb.tscn")
 @onready var enemy_1 : PackedScene = preload("res://assets/enemies/enemy_fan_1.tscn")
-@onready var enemy_2 : PackedScene = preload("res://assets/enemies/enemy_blight_1.tscn")
+#@onready var enemy_2 : PackedScene = preload("res://assets/enemies/enemy_blight_1.tscn")
 
 @onready var bg : Sprite2D = $Stage/SkewllaxBackground/WireFrameBg
 
@@ -125,11 +125,11 @@ func _input(event: InputEvent) -> void:
 			add_child(enemy)
 			enemy.position = Vector2(195, randi_range(-99, 99))
 			enemy._start()
-		if Input.is_key_pressed(KEY_Y) and just_pressed:
-			var enemy : Enemy = enemy_2.instantiate()
-			add_child(enemy)
-			enemy.position = Vector2(256, 0)
-			enemy._start()
+		#if Input.is_key_pressed(KEY_Y) and just_pressed:
+			#var enemy : Enemy = enemy_2.instantiate()
+			#add_child(enemy)
+			#enemy.position = Vector2(256, 0)
+			#enemy._start()
 		if Input.is_key_pressed(KEY_E) and just_pressed:
 			if !e:
 				e_e = enemy_scn.instantiate()

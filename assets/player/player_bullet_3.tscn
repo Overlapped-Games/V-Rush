@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://8xdfilx1nwb7"]
+[gd_scene load_steps=5 format=3 uid="uid://8xdfilx1nwb7"]
 
 [ext_resource type="Texture2D" uid="uid://dgnd1lnuc5jw2" path="res://assets/art/bullets/player_bullets.png" id="1_8iyqh"]
 [ext_resource type="Script" path="res://scripts/player/PlayerFragBullet.gd" id="2_s41u1"]
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Danmaku.gd" id="3_5wfon"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fkn7o"]
+radius = 7.0
 
 [node name="PlayerBullet" type="Sprite2D"]
 z_index = 2
@@ -16,6 +19,7 @@ frame_start = 1
 frame_end = 2
 damage = 20
 type = 0
+shape = SubResource("CircleShape2D_fkn7o")
 bullet_type = 7
 acceleration = 10.0
 properties = {

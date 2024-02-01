@@ -24,7 +24,7 @@ origin_offset = 16
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("3_7w46c")
-blackboard = NodePath("@Node@198702")
+blackboard = NodePath("@Node@17477")
 actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="BeehaveTree"]

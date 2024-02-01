@@ -1,7 +1,7 @@
 @tool
 class_name EventTrigger extends Area2D
 
-@onready var level_background = $"../Stage/SkewllaxBackground/LevelBackground"
+#@onready var level_background = $"../Stage/SkewllaxBackground/LevelBackground"
 @onready var collider : CollisionShape2D = $CollisionShape2D
 signal next_level
 

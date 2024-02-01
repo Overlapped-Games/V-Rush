@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpv5tlqxx5cws"]
+[gd_scene load_steps=4 format=3 uid="uid://cpv5tlqxx5cws"]
 
 [ext_resource type="Script" path="res://scripts/godonmaku/logic/Bullet.gd" id="1_iuese"]
 [ext_resource type="Texture2D" uid="uid://dgnd1lnuc5jw2" path="res://assets/art/bullets/player_bullets.png" id="1_v2qv8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_afw3p"]
+size = Vector2(16, 6)
 
 [node name="PlayerBullet" type="Sprite2D"]
 z_index = 2
@@ -10,6 +13,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 16, 8)
 script = ExtResource("1_iuese")
 type = 0
+shape = SubResource("RectangleShape2D_afw3p")
 bullet_type = 6
 bullet_shape = 1
 base_velocity = 400

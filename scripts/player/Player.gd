@@ -126,15 +126,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	
 	# debugging
-	#var just_pressed = event.is_pressed() and not event.is_echo()
-	#if Input.is_key_pressed(KEY_1) and just_pressed:
-		#weapon.stage = 1
-	#elif Input.is_key_pressed(KEY_2) and just_pressed:
-		#weapon.stage = 2
-	#elif Input.is_key_pressed(KEY_3) and just_pressed:
-		#weapon.stage = 3
-	#elif Input.is_key_pressed(KEY_4) and just_pressed:
-		#weapon.stage = 4
+	var just_pressed = event.is_pressed() and not event.is_echo()
+	if Input.is_key_pressed(KEY_1) and just_pressed:
+		weapon.stage = 1
+	elif Input.is_key_pressed(KEY_2) and just_pressed:
+		weapon.stage = 2
+	elif Input.is_key_pressed(KEY_3) and just_pressed:
+		weapon.stage = 3
+	elif Input.is_key_pressed(KEY_4) and just_pressed:
+		weapon.stage = 4
+	elif Input.is_key_pressed(KEY_I) and just_pressed:
+		invulnerable = !invulnerable
+		if invulnerable:
+			sprite.modulate = Color.GOLD
+		else:
+			sprite.modulate = Color.WHITE
 
 
 func do_attack(delta : float) -> void:
@@ -183,11 +189,11 @@ func damage(damage : int) -> void:
 	animator.play("invulnerable_flash")
 
 
-func _on_hit_body(body : Node) -> void:
+func _on_hit_body(body : Node2D) -> void:
 	damage(10)
 
 
-func _on_hit(bullet : Bullet) -> void:
+func _on_hit(bullet : Node2D) -> void:
 	damage(bullet.damage)
 
 

@@ -72,6 +72,7 @@ var sequence : Callable
 @export var repeatable : Callable
 @export var repeat_frames : float = 0.0
 @export var call_rate : float = 1.0
+@export var initial_delay : float = 0.0
 @export var call_delay : float = 0.0
 @export var repeats_to_delay : int = 1
 
@@ -164,9 +165,9 @@ func _pattern_process(delta : float) -> void:
 		elif spin_rate < 0:
 			pattern_rot = pattern_rot + spin_rate if pattern_rot + spin_rate > 0 else (2 * PI) + (pattern_rot + spin_rate)
 		
-		if repeat_count == repeats_to_delay and call_delay > 0:
-			delaying_call = true
-			repeat_count = 0
+		#if repeat_count == repeats_to_delay and call_delay > 0:
+			#delaying_call = true
+			#repeat_count = 0
 	
 	if repeat_frames > 0 and processed_frames >= repeat_frames:
 		_stop()
@@ -189,14 +190,24 @@ func update_target() -> void:
 	else:
 		target = global_position + fire_direction
 
+var finished_sub_patterns := {}
 
+
+# actually fire particle
+func fire() -> void:
+	_start()
+	
+	
 func _start() -> void:
 	finished_processing = false
 	set_physics_process(true)
+	delaying_call = call_delay > 0
 	
 	# start any cildren patterns
 	for child in get_children().filter(func(c): return c is Danmaku):
 		child._start()
+		finished_sub_patterns[child.name] = false
+		child.pattern_stopped.connect(func(): finished_sub_patterns[child.name] = true)
 
 
 func _stop() -> void:
@@ -208,8 +219,10 @@ func _stop() -> void:
 	t = 0
 	t_m = 0
 	pattern_rot = 0.0
-	pattern_stopped.emit()
 	set_physics_process(false)
+	
+	# TODO: wait for children patterns
+	pattern_stopped.emit()
 
 
 func _reset() -> void:
@@ -280,12 +293,6 @@ func repeat_timed(rate := 1.0, frames := 60, f : Callable = func(): pass) -> voi
 	t = 0
 
 
-# actually fire particle
-func fire(f : Callable) -> void:
-	update_target()
-	f.call()
-
-
 func laser(f : Callable = func(): pass) -> void:
 	pass
 
@@ -319,11 +326,13 @@ func fire_ring() -> void:
 				per_bullet_f.call(bullet)
 				bullet.move_type = move_type
 				#print("firing[%s] - %s" % [line, dir.from_angle(dir.angle() + pattern_rot + (radians * line))])
-				angle = (direction.angle() + pattern_rot + radians) + (radians * line)
+				# 
+				angle = direction.angle() + pattern_rot + radians + (radians * line) # radians  * line 
 				fire_origin = pos + (pattern_origin.from_angle(angle) * origin_offset)
 				fire_direction = pos.from_angle(angle + (i * spread_rad) + ((fire_angle + fire_angle_modifier) * PI / 180))
 				#print("%s, %s,%s" % [pattern_origin, origin, pattern_origin + origin.from_angle(angle) * origin_offset])
-				if max_bounces > 0: bullet.max_bounces = max_bounces
+				if max_bounces > 0: 
+					bullet.max_bounces = max_bounces
 				if move_type == Bullet.MoveType.CURVE:
 					bullet.curve_angle = curve_angle
 				elif move_type == Bullet.MoveType.WAVE:

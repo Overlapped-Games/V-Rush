@@ -57,7 +57,7 @@ func _physics_process(delta : float) -> void:
 		
 		if t >= 1:
 			t = 0
-			print("can be hit")
+			#print("can be hit")
 			set_invulnerable(false)
 	else:
 		t = 0
@@ -82,7 +82,7 @@ func set_invulnerable(inv : bool) -> void:
 
 
 func _on_hit(bullet : Bullet) -> void:
-	print("%s hit for %s..." % [name, bullet.damage])
+	#print("%s hit for %s..." % [name, bullet.damage])
 	if invulnerable: return
 	if invlunerability_time > 0:
 		set_invulnerable(true)
@@ -101,7 +101,7 @@ func _on_hit(bullet : Bullet) -> void:
 
 
 func _hit_by_skill(damage : int) -> void:
-	print("%s hit for %s..." % [name, damage])
+	#print("%s hit for %s..." % [name, damage])
 	if invulnerable: return
 	if invlunerability_time > 0:
 		set_invulnerable(true)

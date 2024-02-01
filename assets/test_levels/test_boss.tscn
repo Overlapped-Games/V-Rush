@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://xejkm3trnv6m"]
+[gd_scene load_steps=55 format=3 uid="uid://xejkm3trnv6m"]
 
 [ext_resource type="Script" path="res://scripts/world/Level.gd" id="1_7av2u"]
 [ext_resource type="Script" path="res://scripts/util/Stage.gd" id="2_slssh"]
@@ -14,7 +14,28 @@
 [ext_resource type="Script" path="res://scripts/events/StopAutoScroll.gd" id="12_fg4e8"]
 [ext_resource type="AudioStream" uid="uid://bwluagay1qtcl" path="res://assets/levels/assets/Power-up.wav" id="13_2d0f1"]
 [ext_resource type="PackedScene" uid="uid://c0dhsh04r64fw" path="res://assets/enemies/triggers/move_trigger.tscn" id="14_bfmcj"]
-[ext_resource type="PackedScene" uid="uid://tx1qcx12ixg7" path="res://assets/enemies/level_1/boss_1.tscn" id="15_uqms2"]
+[ext_resource type="Script" path="res://scripts/enemies/EnemyContainer.gd" id="15_4aq0m"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="16_t6j5i"]
+[ext_resource type="Texture2D" uid="uid://dqq5dwaymoib0" path="res://assets/art/enemies/boss.png" id="17_ycw40"]
+[ext_resource type="Texture2D" uid="uid://bhqxo5x177veh" path="res://assets/art/enemies/boss_eyes.png" id="18_tgl7r"]
+[ext_resource type="Script" path="res://addons/godonmaku/patterns/RingPattern.gd" id="20_6w1bx"]
+[ext_resource type="Script" path="res://scripts/enemies/BasicEnemyAI.gd" id="20_dp7co"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="21_5q7be"]
+[ext_resource type="Script" path="res://scripts/beehaviors/MoveToPoint.gd" id="22_innxd"]
+[ext_resource type="Texture2D" uid="uid://clev7jb1fmmjj" path="res://addons/godonmaku/textures/enemy_bullets.png" id="22_mw0m6"]
+[ext_resource type="Script" path="res://addons/godonmaku/controls/pattern/PatternSpin.gd" id="23_n2ebu"]
+[ext_resource type="Script" path="res://scripts/beehaviors/FirePattern.gd" id="23_tj88b"]
+[ext_resource type="Script" path="res://scripts/beehaviors/AwaitSignal.gd" id="24_1or2h"]
+[ext_resource type="Script" path="res://addons/godonmaku/controls/pattern/MultiControl.gd" id="24_hplg3"]
+[ext_resource type="Script" path="res://addons/godonmaku/controls/pattern/RandomAngle.gd" id="25_1lo4h"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="25_m7krk"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/action.gd" id="26_8ty01"]
+[ext_resource type="Script" path="res://addons/godonmaku/controls/pattern/RandomVelocity.gd" id="26_nsl01"]
+[ext_resource type="Script" path="res://addons/godonmaku/controls/bullet/ZigZag.gd" id="27_skw81"]
+[ext_resource type="PackedScene" uid="uid://buyqh5jdqbl4h" path="res://assets/enemies/enemy_health_bar.tscn" id="27_xpxwc"]
+[ext_resource type="Script" path="res://addons/godonmaku/bullets/BulletData.gd" id="28_5kbmp"]
+[ext_resource type="Script" path="res://addons/godonmaku/controls/pattern/RandomBullets.gd" id="28_ouwnw"]
+[ext_resource type="Script" path="res://addons/godonmaku/patterns/PatternRepeater.gd" id="28_t58d2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0bf26"]
 texture = ExtResource("9_8xp1o")
@@ -25,6 +46,187 @@ sources/2 = SubResource("TileSetAtlasSource_0bf26")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd4ej"]
 size = Vector2(16, 240)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_spjcb"]
+radius = 4.0
+
+[sub_resource type="Resource" id="Resource_3kdhu"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 0
+frame_coords = Vector2i(0, 0)
+shape = SubResource("CircleShape2D_spjcb")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Resource" id="Resource_6x8fy"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 28
+frame_coords = Vector2i(12, 1)
+shape = SubResource("CircleShape2D_spjcb")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Resource" id="Resource_ox0ey"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 8
+vframes = 8
+frame = 16
+frame_coords = Vector2i(0, 2)
+shape = SubResource("CircleShape2D_spjcb")
+damage = 10
+directed = true
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Resource" id="Resource_0mlcc"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 0
+frame_coords = Vector2i(0, 0)
+shape = SubResource("CircleShape2D_spjcb")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eud3p"]
+radius = 8.0
+
+[sub_resource type="Resource" id="Resource_aytm3"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 29
+frame_coords = Vector2i(13, 1)
+shape = SubResource("CircleShape2D_eud3p")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Resource" id="Resource_qi6e4"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 8
+vframes = 8
+frame = 4
+frame_coords = Vector2i(4, 0)
+shape = SubResource("CircleShape2D_eud3p")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Resource" id="Resource_5clo3"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 12
+frame_coords = Vector2i(12, 0)
+shape = SubResource("CircleShape2D_spjcb")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Resource" id="Resource_a7dvo"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 28
+frame_coords = Vector2i(12, 1)
+shape = SubResource("CircleShape2D_spjcb")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uyves"]
+radius = 4.0
+
+[sub_resource type="Resource" id="Resource_tku5x"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 155
+frame_coords = Vector2i(11, 9)
+shape = SubResource("CircleShape2D_uyves")
+damage = 10
+directed = true
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Resource" id="Resource_4s6bf"]
+script = ExtResource("28_5kbmp")
+texture = ExtResource("22_mw0m6")
+hframes = 16
+vframes = 16
+frame = 0
+frame_coords = Vector2i(0, 0)
+shape = SubResource("CircleShape2D_spjcb")
+damage = 10
+directed = false
+bounces = 0
+duration = 0
+hitbox_layer = 16896
+grazebox_layer = 256
+
+[sub_resource type="Animation" id="Animation_sh77w"]
+resource_name = "spin"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q0wyb"]
+_data = {
+"spin": SubResource("Animation_sh77w")
+}
 
 [node name="world" type="Node2D" groups=["level"]]
 script = ExtResource("1_7av2u")
@@ -118,10 +320,361 @@ volume_db = 7.482
 [node name="MoveTrigger19" parent="scroller" instance=ExtResource("14_bfmcj")]
 position = Vector2(200, 0)
 
-[node name="boss_1" parent="scroller/MoveTrigger19" instance=ExtResource("15_uqms2")]
+[node name="boss_1" type="Node2D" parent="scroller/MoveTrigger19"]
+script = ExtResource("15_4aq0m")
 
-[node name="Enemy" parent="scroller/MoveTrigger19/boss_1" index="1"]
+[node name="points" type="Node2D" parent="scroller/MoveTrigger19/boss_1"]
+
+[node name="point" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-104, 0)
+
+[node name="point2" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-112, -104)
+
+[node name="point3" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-96, -88)
+
+[node name="point4" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-80, -64)
+
+[node name="point5" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-64, -32)
+
+[node name="point7" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-112, 103)
+
+[node name="point8" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-96, 87)
+
+[node name="point9" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-80, 64)
+
+[node name="point10" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-64, 32)
+
+[node name="point6" type="Marker2D" parent="scroller/MoveTrigger19/boss_1/points"]
+position = Vector2(-56, 0)
+
+[node name="Enemy" type="RigidBody2D" parent="scroller/MoveTrigger19/boss_1" groups=["boss"]]
+collision_layer = 4
+collision_mask = 514
+gravity_scale = 0.0
+script = ExtResource("16_t6j5i")
 max_health = 500
 current_health = 500
+invlunerability_time = 0.0
+defeat_value = 100000
 
-[editable path="scroller/MoveTrigger19/boss_1"]
+[node name="Collider" type="CollisionPolygon2D" parent="scroller/MoveTrigger19/boss_1/Enemy"]
+visible = false
+polygon = PackedVector2Array(-32, 16, 0, 32, 32, 16, 32, -16, 0, -32, -32, -16)
+
+[node name="Hurtbox" type="Area2D" parent="scroller/MoveTrigger19/boss_1/Enemy"]
+collision_layer = 2048
+collision_mask = 2
+
+[node name="Collider" type="CollisionPolygon2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Hurtbox"]
+visible = false
+polygon = PackedVector2Array(-32, 16, 0, 32, 32, 16, 32, -16, 0, -32, -32, -16)
+
+[node name="Sprite" type="Sprite2D" parent="scroller/MoveTrigger19/boss_1/Enemy"]
+z_index = 1
+texture = ExtResource("17_ycw40")
+hframes = 4
+vframes = 4
+frame = 1
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Sprite"]
+z_index = 1
+position = Vector2(-13, -4)
+texture = ExtResource("18_tgl7r")
+
+[node name="Patterns" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy"]
+
+[node name="stack_1" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns" node_paths=PackedStringArray("sub_patterns")]
+script = ExtResource("20_6w1bx")
+stacks = 4
+stack_velocity = 10
+spread = 6
+spread_degrees = 15.0
+chase = true
+velocity = 50
+bullet_data = SubResource("Resource_3kdhu")
+max_repeats = 3
+repeat_time = 60.0
+sub_patterns = [NodePath("stack_2")]
+
+[node name="stack_2" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/stack_1"]
+script = ExtResource("20_6w1bx")
+stacks = 4
+stack_velocity = 15
+spread = 5
+spread_degrees = 15.0
+chase = true
+velocity = 30
+bullet_data = SubResource("Resource_6x8fy")
+max_repeats = 3
+repeat_time = 60.0
+
+[node name="ring_spin" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns" node_paths=PackedStringArray("pattern_ctrl", "sub_patterns")]
+script = ExtResource("20_6w1bx")
+spawn_count = 16
+origin_offset = 32
+stacks = null
+stack_velocity = null
+spread = null
+spread_degrees = null
+velocity = 80
+bullet_data = SubResource("Resource_ox0ey")
+pattern_ctrl = NodePath("PatternSpin")
+max_repeats = 32
+repeat_time = 15.0
+sub_patterns = [NodePath("../zig_delay"), NodePath("../PatternRepeater")]
+
+[node name="PatternSpin" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/ring_spin"]
+script = ExtResource("23_n2ebu")
+angle = 60
+
+[node name="Random" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns" node_paths=PackedStringArray("pattern_ctrl")]
+script = ExtResource("20_6w1bx")
+spawn_count = 4
+origin_offset = 32
+stacks = null
+stack_velocity = null
+spread = null
+spread_degrees = null
+bullet_data = SubResource("Resource_0mlcc")
+pattern_ctrl = NodePath("MultiControl")
+max_repeats = 128
+repeat_time = 2.0
+
+[node name="MultiControl" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/Random"]
+script = ExtResource("24_hplg3")
+
+[node name="RandomAngle" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/Random/MultiControl"]
+script = ExtResource("25_1lo4h")
+
+[node name="RandomVelocity" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/Random/MultiControl"]
+script = ExtResource("26_nsl01")
+min = 60
+max = 200
+
+[node name="RandomBullets" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/Random/MultiControl"]
+script = ExtResource("28_ouwnw")
+bullets = Array[ExtResource("28_5kbmp")]([SubResource("Resource_aytm3"), SubResource("Resource_qi6e4")])
+weights = Array[int]([4, 1])
+
+[node name="ring_1" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns" node_paths=PackedStringArray("pattern_ctrl", "sub_patterns")]
+script = ExtResource("20_6w1bx")
+spawn_count = 8
+velocity = 80
+bullet_data = SubResource("Resource_5clo3")
+pattern_ctrl = NodePath("PatternSpin")
+max_repeats = 64
+repeat_time = 3.0
+sub_patterns = [NodePath("../ring_2")]
+
+[node name="PatternSpin" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/ring_1"]
+script = ExtResource("23_n2ebu")
+angle = 33
+
+[node name="ring_2" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns" node_paths=PackedStringArray("pattern_ctrl")]
+script = ExtResource("20_6w1bx")
+spawn_count = 8
+velocity = 80
+bullet_data = SubResource("Resource_a7dvo")
+pattern_ctrl = NodePath("back_spin")
+max_repeats = 64
+repeat_time = 3.0
+
+[node name="back_spin" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/ring_2"]
+script = ExtResource("23_n2ebu")
+angle = -33
+
+[node name="zig_delay" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns" node_paths=PackedStringArray("bullet_ctrl")]
+script = ExtResource("20_6w1bx")
+spawn_count = 16
+fire_angle = 210
+velocity = 200
+acceleration = -4
+bullet_data = SubResource("Resource_tku5x")
+bullet_ctrl = NodePath("ZigZag")
+max_repeats = 32
+repeat_time = 15.0
+
+[node name="ZigZag" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/zig_delay"]
+script = ExtResource("27_skw81")
+frames = 40
+angle = 60.0
+delay = 10
+velocity = 200
+
+[node name="PatternRepeater" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns"]
+script = ExtResource("28_t58d2")
+max_repeats = 4
+repeat_time = 120.0
+
+[node name="single_line" type="Node2D" parent="scroller/MoveTrigger19/boss_1/Enemy/Patterns/PatternRepeater"]
+script = ExtResource("20_6w1bx")
+chase = true
+velocity = 160
+bullet_data = SubResource("Resource_4s6bf")
+max_repeats = 6
+repeat_time = 10.0
+
+[node name="BasicEnemyAI" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy" node_paths=PackedStringArray("actor")]
+script = ExtResource("20_dp7co")
+actor_node_path = NodePath("..")
+actor = NodePath("..")
+
+[node name="SequenceComposite" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI"]
+script = ExtResource("21_5q7be")
+
+[node name="MoveToPoint" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point")
+reparent = false
+
+[node name="FirePattern" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("23_tj88b")
+pattern = NodePath("../../../Patterns/ring_spin")
+
+[node name="AwaitSignal" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("node")]
+script = ExtResource("24_1or2h")
+node = NodePath("../../../Patterns/ring_spin")
+signal_name = "finished"
+
+[node name="MoveToPoint2" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point2")
+reparent = false
+
+[node name="FirePattern2" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("23_tj88b")
+pattern = NodePath("../../../Patterns/stack_1")
+
+[node name="MoveToPoint3" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point3")
+reparent = false
+
+[node name="MoveToPoint4" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point4")
+reparent = false
+
+[node name="MoveToPoint5" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point5")
+reparent = false
+
+[node name="MoveToPoint6" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point6")
+reparent = false
+
+[node name="DelayDecorator4" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("25_m7krk")
+wait_time = 4.0
+
+[node name="ActionLeaf" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator4"]
+script = ExtResource("26_8ty01")
+
+[node name="DelayDecorator5" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("25_m7krk")
+wait_time = 4.0
+
+[node name="ActionLeaf" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator5"]
+script = ExtResource("26_8ty01")
+
+[node name="FirePattern3" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("pattern")]
+script = ExtResource("23_tj88b")
+pattern = NodePath("../../../Patterns/ring_1")
+
+[node name="AwaitSignal2" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("node")]
+script = ExtResource("24_1or2h")
+node = NodePath("../../../Patterns/ring_1")
+signal_name = "finished"
+
+[node name="DelayDecorator3" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("25_m7krk")
+wait_time = 1.0
+
+[node name="FirePattern4" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator3" node_paths=PackedStringArray("pattern")]
+script = ExtResource("23_tj88b")
+pattern = NodePath("../../../../Patterns/stack_1")
+
+[node name="MoveToPoint7" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point10")
+reparent = false
+
+[node name="MoveToPoint8" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point9")
+reparent = false
+
+[node name="MoveToPoint9" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point8")
+reparent = false
+
+[node name="MoveToPoint10" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 80
+target = NodePath("../../../../points/point7")
+reparent = false
+
+[node name="MoveToPoint11" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+speed = 100
+target = NodePath("../../../../points/point")
+reparent = false
+
+[node name="DelayDecorator2" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("25_m7krk")
+wait_time = 4.0
+
+[node name="FirePattern5" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator2" node_paths=PackedStringArray("pattern")]
+script = ExtResource("23_tj88b")
+pattern = NodePath("../../../../Patterns/Random")
+
+[node name="AwaitSignal3" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("node")]
+script = ExtResource("24_1or2h")
+node = NodePath("../../../Patterns/Random")
+signal_name = "finished"
+
+[node name="MoveToPoint12" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite" node_paths=PackedStringArray("target")]
+script = ExtResource("22_innxd")
+target = NodePath("../../../../points/point6")
+
+[node name="DelayDecorator" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite"]
+script = ExtResource("25_m7krk")
+wait_time = 4.0
+
+[node name="ActionLeaf" type="Node" parent="scroller/MoveTrigger19/boss_1/Enemy/BasicEnemyAI/SequenceComposite/DelayDecorator"]
+script = ExtResource("26_8ty01")
+
+[node name="HealthBar" parent="scroller/MoveTrigger19/boss_1/Enemy" instance=ExtResource("27_xpxwc")]
+z_index = 4
+custom_minimum_size = Vector2(48, 8)
+offset_left = -24.0
+offset_top = 36.0
+offset_right = 24.0
+offset_bottom = 44.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="scroller/MoveTrigger19/boss_1/Enemy"]
+libraries = {
+"": SubResource("AnimationLibrary_q0wyb")
+}
+autoplay = "spin"

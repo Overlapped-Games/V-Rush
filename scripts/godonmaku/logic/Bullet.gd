@@ -27,6 +27,7 @@ enum FiringState {
 
 @export var damage := 10
 @export var type := Type.ENEMY
+@export var shape : Shape2D
 @export var move_type := MoveType.LINE
 @export var curve_angle := 0.0
 @export var frequency := 0.0
@@ -221,7 +222,8 @@ func _move(origin : Vector2, target_direction : Vector2,  target_position : Vect
 	moving = true
 	global_position = origin
 	virtual_pos = origin
-	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties))
+	#query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties))
+	query.set_shape(shape)
 	current_distance = 0.0
 	velocity = vel
 	max_velocity = max_vel
@@ -236,7 +238,8 @@ func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0,
 	virtual_pos = origin
 	direction = target_direction
 	query.collision_mask = hitbox_layer
-	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, properties))
+	#query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, properties))
+	query.set_shape(shape)
 	current_distance = 0.0
 	velocity = vel
 	acceleration = accel
@@ -247,6 +250,10 @@ func _fire(origin : Vector2, target_direction : Vector2, vel := 100, accel := 0,
 
 func _change_shape(bullet_shape : BulletUtil.BulletShape, shape_properties := {}) -> void:
 	query.set_shape(BulletUtil.get_bullet_shape(bullet_shape, shape_properties))
+	
+
+func _swap_shape(shape : Shape2D) -> void:
+	query.set_shape(shape)
 
 
 func _move_and_fire(origin : Vector2, move_direction : Vector2,  target_position : Vector2, fire_direction : Vector2, bullet_shape : BulletUtil.BulletShape, shape_properties : Dictionary, move_vel := 100, fire_vel := 100) -> void:
@@ -261,7 +268,9 @@ func _disable():
 	active = false
 
 
-#func _swap(bullet_type : BulletUtil.BulletType) -> void:
+func _swap(new_texture : Texture2D, new_shape : Shape2D) -> void:
 	#if bullet_type == bullet_type: return
 	#bullet_type = bullet_type
 	#texture = BulletUtil.BULLET_SPRITES[bullet_type]
+	shape = new_shape
+	texture = new_texture

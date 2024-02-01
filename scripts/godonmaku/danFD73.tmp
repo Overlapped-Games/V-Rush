@@ -1,7 +1,5 @@
 [gd_scene load_steps=9 format=3 uid="uid://cbegfoka0n8io"]
 
-[ext_resource type="Script" path="res://addons/godonmaku/DanmakuTest.gd" id="1_xiarx"]
-[ext_resource type="Script" path="res://addons/godonmaku/Cammaku.gd" id="2_w46du"]
 [ext_resource type="Texture2D" uid="uid://boulhs6lt0o52" path="res://icon.svg" id="3_dq541"]
 [ext_resource type="Texture2D" uid="uid://gg6d3urba687" path="res://addons/godonmaku/black_tile.png" id="3_s4ysv"]
 [ext_resource type="PackedScene" uid="uid://cwf7w3h8xlg15" path="res://assets/player/player.tscn" id="4_jjr3t"]
